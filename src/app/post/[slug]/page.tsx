@@ -12,5 +12,5 @@ export default async function BlogPost({
   console.log("Generating static params for blog posts", await params);
   const { slug } = await params;
   const post = await getPost(slug);
-  return <> {post} </>;
+  return <div dangerouslySetInnerHTML={{ __html: post }} />;
 }
