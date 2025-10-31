@@ -28,3 +28,4 @@ tags: ["dog", "pet", "daily life"]
 bark()
 eat("treat")
 sleep(3600)
+```

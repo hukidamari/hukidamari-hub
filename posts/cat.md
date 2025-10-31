@@ -1,8 +1,3 @@
-
----
-
-### 🐱 `cat.md`
-```md
 ---
 title: "気ままな猫の午後"
 date: "2025-10-31"
@@ -29,3 +24,4 @@ tags: ["cat", "pet", "relax"]
 > 「食べる、寝る、そして支配する。」
 
 ![cat photo](https://placekitten.com/400/250)
+
