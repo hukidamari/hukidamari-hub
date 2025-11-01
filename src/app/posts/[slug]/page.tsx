@@ -1,5 +1,5 @@
 import { getAllPostSlugs } from "@/lib/slug-map";
-import { getPost } from "../../../lib/post";
+import { getPost } from "../../../lib/post-loader";
 import { PostSlug } from "@/types/post";
 
 export const generateStaticParams = (): { slug: PostSlug }[] => {
