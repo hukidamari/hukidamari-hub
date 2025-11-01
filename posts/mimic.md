@@ -4,4 +4,5 @@ date: "2025-10-31"
 tags: ["pet", "daily life"]
 published: false
 ---
-# ちゅ
+# ちゅ❤
+ミミックは肺呼吸だよ❤
