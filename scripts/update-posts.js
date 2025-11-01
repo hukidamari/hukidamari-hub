@@ -32,7 +32,35 @@ const getMdDatas = (filePath) => {
   return matter(fileContent);
 };
 const isValidSlug = (slug) => /^[a-z0-9-]+$/.test(slug);
-const collectImageFiles = (content) => {};
+const collectImageFiles = (content) => {
+  const matches = content.matchAll(/\!\[\[(.+?)\.(png|jpe?g)\]\]/gi);
+
+  for (const match of matches) {
+    const p1 = match[1];
+    const ext = match[2];
+    const parts = p1.split("|");
+    const fileName = `${parts[0]}.${ext}`;
+    const srcPath = path.join(IMAGE_SOURCE_DIR, fileName);
+    const destPath = path.join(IMAGE_DEST_DIR, fileName);
+
+    if (!fs.existsSync(srcPath)) {
+      console.warn(`Not Found: Image ${srcPath} is not found.`);
+      continue;
+    }
+    if (fs.existsSync(destPath)) {
+      continue;
+    }
+
+    const { size } = fs.statSync(srcPath);
+    const sizeMB = size / (1024 * 1024);
+    if (sizeMB > 1) {
+      console.warn(`Large image (${sizeMB.toFixed(2)} MB): ${srcPath}`);
+    }
+
+    fs.mkdirSync(path.dirname(destPath), { recursive: true });
+    fs.cpSync(srcPath, destPath);
+  }
+};
 
 const main = () => {
   // posts ディレクトリを削除して再作成
@@ -58,10 +86,12 @@ const main = () => {
       console.warn(`Warning: Post "${item}" has unvalid slug. Skipping.`);
       return;
     }
+
     const title = item.replace(".md", "");
     slugToTitle[data.slug] = title;
     titleToSlug[title] = data.slug;
 
+    collectImageFiles(content);
     fs.cpSync(srcPath, destPath, { recursive: true });
   });
 

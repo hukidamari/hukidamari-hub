@@ -23,7 +23,7 @@ class ConvertingMarkdown {
   }
 
   convertWikiLinks(): ConvertingMarkdown {
-    this.content = this.content.replace(/\[\[(.*?)\]\]/g, (match, p1) => {
+    this.content = this.content.replace(/\[\[(.+?)\]\]/g, (match, p1) => {
       const parts = p1.split("|");
       const linkText = parts[1] || parts[0];
       const title = parts[0];
