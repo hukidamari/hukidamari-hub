@@ -41,7 +41,7 @@ const collectImageFiles = (content) => {
     const parts = p1.split("|");
     const fileName = `${parts[0]}.${ext}`;
     const srcPath = path.join(IMAGE_SOURCE_DIR, fileName);
-    const destPath = path.join(IMAGE_DEST_DIR, fileName);
+    const destPath = path.join(IMAGE_DEST_DIR, encodeForURI(fileName));
 
     if (!fs.existsSync(srcPath)) {
       console.warn(`Not Found: Image ${srcPath} is not found.`);
@@ -68,6 +68,9 @@ const initImageDestDir = () => {
 const initPostsDestDir = () => {
   fs.rmSync(DEST_DIR, { recursive: true, force: true });
   fs.mkdirSync(DEST_DIR, { recursive: true });
+};
+const encodeForURI = (text) => {
+  return encodeURIComponent(text.replace(/\s/g, "-"));
 };
 
 const main = () => {

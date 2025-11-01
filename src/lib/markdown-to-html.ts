@@ -1,8 +1,10 @@
 import markdownit from "markdown-it";
 import { existsTitle, slugToRoute, titleToSlug } from "./slug-map";
+import { existsPublicImage, imageFileNameToUrl } from "./public-files";
 
 export const markdownToHtml = async (markdown: string): Promise<string> => {
   const result = new ConvertingMarkdown(markdown)
+    .convertImageWikiLinks()
     .convertWikiLinks()
     .mdRender()
     .toString();
@@ -35,6 +37,22 @@ class ConvertingMarkdown {
         return linkText;
       }
     });
+    return this;
+  }
+
+  convertImageWikiLinks(): ConvertingMarkdown {
+    this.content = this.content.replace(
+      /\!\[\[(.+?)\.(png|jpe?g)\]\]/gi,
+      (match, p1, ext) => {
+        const fileName = `${p1}.${ext}`;
+        if (existsPublicImage(fileName)) {
+          const url = imageFileNameToUrl(fileName);
+          return `![${p1}](${url})`;
+        } else {
+          return fileName;
+        }
+      }
+    );
     return this;
   }
 }
