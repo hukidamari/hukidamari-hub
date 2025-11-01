@@ -12,8 +12,7 @@ const getFrontMatter = (filePath) => {
   const { data } = matter(fileContent);
   return data;
 };
-
-console.log("Start Updating Posts");
+const isValidSlug = (slug) => /^[a-z0-9-]+$/.test(slug);
 
 // posts ディレクトリを削除して再作成
 fs.rmSync(DEST_DIR, { recursive: true, force: true });
@@ -34,6 +33,10 @@ fs.readdirSync(SOURCE_DIR).forEach((item) => {
     console.warn(`Warning: Post "${item}" is missing a slug. Skipping.`);
     return;
   }
+  if (!isValidSlug(frontMatter.slug)) {
+    console.warn(`Warning: Post "${item}" has unvalid slug. Skipping.`);
+    return;
+  }
   const title = item.replace(".md", "");
   slugToTitle[frontMatter.slug] = title;
   titleToSlug[title] = frontMatter.slug;
@@ -50,5 +53,3 @@ fs.writeFileSync(
   fs.openSync(path.join(DATA_DIR, "title-to-slug.json"), "w"),
   JSON.stringify(titleToSlug, null, 2)
 );
-
-console.log("Posts Updated");
