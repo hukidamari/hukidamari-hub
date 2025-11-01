@@ -26,3 +26,7 @@ export const existsSlug = (slug: string): boolean => {
 export const existsTitle = (title: string): boolean => {
   return title in TITLE_TO_SLUG;
 };
+
+export const getAllPostSlugs = (): string[] => {
+  return Object.keys(SLUG_TO_TITLE);
+};

@@ -6,13 +6,9 @@ import { slugToTitle } from "./slug";
 
 const DIR_PATH = "posts";
 
-export const getPost = async (slug: string): Promise<string> => {
+export const getPost = (slug: string): Promise<string> => {
   const post = getPostMd(slug, slugToTitle(slug));
   return markdownToHtml(post.content);
-};
-
-export const getAllPostSlugs = async (): Promise<{ slug: string }[]> => {
-  return Object.keys(slugToTitle).map((slug) => ({ slug: slug }));
 };
 
 const getPostMd = (slug: string, title: string): PostMd => {
