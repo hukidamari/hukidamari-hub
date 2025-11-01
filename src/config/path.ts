@@ -1,4 +1,8 @@
-export const POSTS_DIR = "posts"; // 投稿用mdファイルのディレクトリ
+import { config } from "dotenv";
+
+config();
+
+export const POSTS_DIR = process.env.POSTS_DEST_DIR;
 
 export const ROUTES = {
   HOME: "/",
