@@ -61,11 +61,18 @@ const collectImageFiles = (content) => {
     fs.cpSync(srcPath, destPath);
   }
 };
-
-const main = () => {
-  // posts ディレクトリを削除して再作成
+const initImageDestDir = () => {
+  fs.rmSync(IMAGE_DEST_DIR, { recursive: true, force: true });
+  fs.mkdirSync(IMAGE_DEST_DIR, { recursive: true });
+};
+const initPostsDestDir = () => {
   fs.rmSync(DEST_DIR, { recursive: true, force: true });
   fs.mkdirSync(DEST_DIR, { recursive: true });
+};
+
+const main = () => {
+  initPostsDestDir();
+  initImageDestDir();
 
   // SOURCE_DIR 内の全アイテムを DEST_DIR にコピー
   fs.readdirSync(SOURCE_DIR).forEach((item) => {
