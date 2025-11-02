@@ -152,10 +152,10 @@ const main = () => {
   const DATA_DIR = "src/data";
   overwriteJsonFile(path.join(DATA_DIR, "slug-to-title.json"), slugToTitle);
   overwriteJsonFile(path.join(DATA_DIR, "title-to-slug.json"), titleToSlug);
-  overwriteJsonFile(
-    path.join(DATA_DIR, "slug-to-metadata.json"),
-    slugToMetadata
-  );
+  // overwriteJsonFile(
+  //   path.join(DATA_DIR, "slug-to-metadata.json"),
+  //   slugToMetadata
+  // );
 };
 
 main();
