@@ -1,0 +1,77 @@
+{
+  "test-template": {
+    "slug": "test-template",
+    "title": "Test Template",
+    "published": true,
+    "tags": [],
+    "description": null,
+    "thumbnail": null,
+    "createdAt": "2025-11-02T00:00:00.000Z",
+    "updatedAt": "2025-11-02T00:00:00.000Z"
+  },
+  "mimic-whispering": {
+    "slug": "mimic-whispering",
+    "title": "ミミックの囁き",
+    "published": true,
+    "tags": [
+      "pet"
+    ],
+    "createdAt": "2025-10-30T00:00:00.000Z",
+    "updatedAt": "2025-10-31T00:00:00.000Z"
+  },
+  "bird-tweeting": {
+    "slug": "bird-tweeting",
+    "title": "小鳥たちのさえずり",
+    "published": true,
+    "tags": [
+      "bird",
+      "nature",
+      "sound"
+    ],
+    "createdAt": "2025-10-31T00:00:00.000Z",
+    "updatedAt": "2025-10-31T00:00:00.000Z"
+  },
+  "cat-evening": {
+    "slug": "cat-evening",
+    "title": "気ままな猫の午後",
+    "published": true,
+    "tags": [
+      "cat",
+      "pet",
+      "relax"
+    ],
+    "createdAt": "2025-10-31T00:00:00.000Z",
+    "updatedAt": "2025-11-02T00:00:00.000Z"
+  },
+  "dog-one-day": {
+    "slug": "dog-one-day",
+    "title": "犬の一日",
+    "published": true,
+    "tags": [
+      "dog",
+      "pet"
+    ],
+    "createdAt": "2025-10-31T00:00:00.000Z",
+    "updatedAt": "2025-10-31T00:00:00.000Z"
+  },
+  "image-file": {
+    "slug": "image-file",
+    "title": "画像ファイルだね",
+    "published": true,
+    "tags": [
+      "pet"
+    ],
+    "createdAt": "2025-10-31T00:00:00.000Z",
+    "updatedAt": "2025-11-01T00:00:00.000Z"
+  },
+  "blue-sky": {
+    "slug": "blue-sky",
+    "title": "青空",
+    "published": true,
+    "tags": [
+      "pet"
+    ],
+    "createdAt": "2025-10-31T00:00:00.000Z",
+    "updatedAt": "2025-11-02T00:00:00.000Z"
+  }
+}

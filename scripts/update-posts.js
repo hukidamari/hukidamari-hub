@@ -28,6 +28,7 @@ const DEST_DIR = "posts"; // NOTE: must be same with config.DEST_DIR
 const POST_ASSET_DEST_DIR = "public/post-assets"; // NOTE: must be same with config.POST_SSET_DEST_DIR
 let titleToSlug = {};
 let slugToTitle = {};
+let slugToMetadata = {};
 
 const getMdDatas = (filePath) => {
   const fileContent = fs.readFileSync(filePath, "utf-8");
@@ -100,6 +101,9 @@ const parseFrontMatter = (filePath, fm) => {
   };
   return rev;
 };
+const overwriteJsonFile = (filePath, data) => {
+  fs.writeFileSync(fs.openSync(filePath, "w"), JSON.stringify(data, null, 2));
+};
 
 const main = () => {
   initPostsDestDir();
@@ -134,9 +138,9 @@ const main = () => {
       return;
     }
 
-    const title = item.replace(".md", "");
-    slugToTitle[data.slug] = title;
-    titleToSlug[title] = data.slug;
+    slugToTitle[meta.slug] = meta.title;
+    titleToSlug[meta.title] = data.slug;
+    slugToMetadata[meta.slug] = meta;
 
     collectImageFiles(content);
     collectSoundFiles(content);
@@ -146,13 +150,11 @@ const main = () => {
   });
 
   const DATA_DIR = "src/data";
-  fs.writeFileSync(
-    fs.openSync(path.join(DATA_DIR, "slug-to-title.json"), "w"),
-    JSON.stringify(slugToTitle, null, 2)
-  );
-  fs.writeFileSync(
-    fs.openSync(path.join(DATA_DIR, "title-to-slug.json"), "w"),
-    JSON.stringify(titleToSlug, null, 2)
+  overwriteJsonFile(path.join(DATA_DIR, "slug-to-title.json"), slugToTitle);
+  overwriteJsonFile(path.join(DATA_DIR, "title-to-slug.json"), titleToSlug);
+  overwriteJsonFile(
+    path.join(DATA_DIR, "slug-to-metadata.json"),
+    slugToMetadata
   );
 };
 
