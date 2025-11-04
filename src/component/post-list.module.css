@@ -20,6 +20,7 @@
   color: inherit;
   display: flex;
   align-items:stretch;
+  flex-direction: row-reverse;
   gap: 1rem;
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
