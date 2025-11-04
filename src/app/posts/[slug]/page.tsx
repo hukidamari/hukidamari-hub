@@ -1,7 +1,9 @@
 import { getAllSlugs, getPostBySlug, getRelatedPosts } from "@/lib/blog-utils";
 import { PostSlug } from "@/types/post";
+import styles from "./post.module.css"; // ← ✅ CSS Modules に変更
 import Link from "next/link";
 
+// ✅ Promise ではなく普通の params
 export const generateStaticParams = (): { slug: PostSlug }[] => {
   return getAllSlugs().map((slug) => ({ slug }));
 };
@@ -9,42 +11,46 @@ export const generateStaticParams = (): { slug: PostSlug }[] => {
 export default async function BlogPost({
   params,
 }: {
-  params: Promise<{ slug: PostSlug }>;
+  params: { slug: PostSlug };
 }) {
-  console.log("Generating static params for blog posts", await params);
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   const relatedPosts = await getRelatedPosts(post);
+
   return (
-    <div className="post-container">
-      <div className="metadata-container">
-        <div className="date-container">
-          <p className="date created-at">
+    <div className={styles.postContainer}>
+      <div className={styles.metadataContainer}>
+        <div className={styles.dateContainer}>
+          <p className={`${styles.date} ${styles.createdAt}`}>
             投稿日:{post.createdAt.toLocaleDateString("ja-JP")}
           </p>
-          <p className="date updated-at">
+          <p className={`${styles.date} ${styles.updatedAt}`}>
             更新日:{post.updatedAt.toLocaleDateString("ja-JP")}
           </p>
         </div>
-        <ul className="tag-container">
+
+        <ul className={styles.tagContainer}>
           {post.tags.map((tag) => (
-            <li key={tag} className="tag">
-              #{tag}
+            <li key={tag} className={styles.tag}>
+              <Link href={`/tags/${tag}`}>#{tag}</Link>
             </li>
           ))}
         </ul>
+
         <h1>{post.title}</h1>
       </div>
+
       <div
-        className="markdown-body"
+        className={styles.markdownBody}
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
-      <div className="related-posts">
+
+      <div className={styles.relatedPosts}>
         <h2>関連記事</h2>
         <ul>
-          {relatedPosts.map((post) => (
-            <li key={post.slug}>
-              <Link href={`/posts/${post.slug}`}>{post.title}</Link>
+          {relatedPosts.map((related) => (
+            <li key={related.slug}>
+              <Link href={`/posts/${related.slug}`}>{related.title}</Link>
             </li>
           ))}
         </ul>

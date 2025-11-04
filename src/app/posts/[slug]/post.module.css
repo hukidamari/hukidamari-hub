@@ -1,4 +1,4 @@
-.post-container {
+.postContainer {
   max-width: 720px;
   margin: 3rem auto;
   padding: 0 1.5rem;
@@ -8,20 +8,20 @@
 }
 
 /* --- Metadata Section --- */
-.metadata-container {
+.metadataContainer {
   margin-bottom: 2rem;
   border-bottom: 1px solid #ddd;
   padding-bottom: 1rem;
 }
 
-.date-container {
+.dateContainer {
   display: flex;
   gap: 1rem;
   font-size: 0.9rem;
   color: #666;
 }
 
-.tag-container {
+.tagContainer {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
@@ -38,7 +38,7 @@
   font-size: 0.85rem;
 }
 
-.metadata-container h1 {
+.metadataContainer h1 {
   margin-top: 1rem;
   font-size: 2rem;
   font-weight: bold;
@@ -46,31 +46,31 @@
 }
 
 /* --- Markdown Body --- */
-.markdown-body {
+.markdownBody {
   margin-top: 2rem;
 }
 
-.markdown-body h2 {
+.markdownBody h2 {
   margin-top: 2rem;
   font-size: 1.4rem;
   border-bottom: 2px solid #ddd;
   padding-bottom: 0.3rem;
 }
 
-.markdown-body p {
+.markdownBody p {
   margin: 1rem 0;
 }
 
-.markdown-body a {
+.markdownBody a {
   color: #0070f3;
   text-decoration: none;
 }
 
-.markdown-body a:hover {
+.markdownBody a:hover {
   text-decoration: underline;
 }
 
-.markdown-body code {
+.markdownBody code {
   background-color: #f6f8fa;
   padding: 0.2rem 0.4rem;
   border-radius: 0.3rem;
@@ -78,32 +78,33 @@
 }
 
 /* --- Related Posts --- */
-.related-posts {
+.relatedPosts {
   margin-top: 3rem;
   border-top: 1px solid #ddd;
   padding-top: 1.5rem;
 }
 
-.related-posts h2 {
+.relatedPosts h2 {
   font-size: 1.3rem;
   margin-bottom: 1rem;
 }
 
-.related-posts ul {
+.relatedPosts ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.related-posts li {
+.relatedPosts li {
   margin: 0.5rem 0;
 }
 
-.related-posts a {
+.relatedPosts a {
   color: #0070f3;
   text-decoration: none;
 }
 
-.related-posts a:hover {
+.relatedPosts a:hover {
   text-decoration: underline;
 }
+
