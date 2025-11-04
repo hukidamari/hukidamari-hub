@@ -1,5 +1,6 @@
 import { PostHtml } from "@/types/post";
 import { getPost } from "./post-loader";
+import { getAllPostSlugs } from "./slug-map";
 
 // ===== posts =====
 export const getAllPostsSortedByCreatedAt = async (): Promise<PostHtml[]> => {
@@ -10,6 +11,7 @@ export const getAllPostsSortedByCreatedAt = async (): Promise<PostHtml[]> => {
     posts.push(post);
   }
   // sorted by createdAt
+  // new to old
   return posts.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 };
 export const getPostBySlug = async (slug: string): Promise<PostHtml> => {
@@ -36,20 +38,24 @@ export const getAdjacentPosts = async (
   return { prev, next };
 };
 export const getRelatedPosts = async (tags: string[]): Promise<PostHtml[]> => {
-  /* ... */
+  const postsArray = await Promise.all(
+    tags.map(async (tag) => getPostsByTag(tag))
+  );
+  return postsArray.flat();
 };
 export const getAllSlugs = (): string[] => {
-  /* ... */
+  return getAllPostSlugs();
 };
 export const getRecentPosts = async (limit: number): Promise<PostHtml[]> => {
-  /* ... */
+  const allPosts = await getAllPostsSortedByCreatedAt();
+  return allPosts.slice(0, limit);
 };
 
 // ===== tags =====
 export const getAllTags = async () => {
   /* ... */
 };
-export const getPostsByTag = async (tag: string) => {
+export const getPostsByTag = async (tag: string): Promise<PostHtml[]> => {
   /* ... */
 };
 export const getPostCountByTag = async () => {
