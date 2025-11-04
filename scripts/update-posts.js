@@ -26,9 +26,10 @@ if (!MOVIE_SOURCE_DIR) {
 }
 const DEST_DIR = "posts"; // NOTE: must be same with config.DEST_DIR
 const POST_ASSET_DEST_DIR = "public/post-assets"; // NOTE: must be same with config.POST_SSET_DEST_DIR
-let titleToSlug = {};
-let slugToTitle = {};
-let slugToMetadata = {};
+const titleToSlug = {};
+const slugToTitle = {};
+const slugToMetadata = {};
+const tagToSlugs = {};
 
 const getMdDatas = (filePath) => {
   const fileContent = fs.readFileSync(filePath, "utf-8");
@@ -141,6 +142,12 @@ const main = () => {
     slugToTitle[meta.slug] = meta.title;
     titleToSlug[meta.title] = data.slug;
     slugToMetadata[meta.slug] = meta;
+    meta.tags.forEach((tag) => {
+      if (!tagToSlugs[tag]) {
+        tagToSlugs[tag] = [];
+      }
+      tagToSlugs[tag].push(meta.slug);
+    });
 
     collectImageFiles(content);
     collectSoundFiles(content);
@@ -156,6 +163,7 @@ const main = () => {
   //   path.join(DATA_DIR, "slug-to-metadata.json"),
   //   slugToMetadata
   // );
+  overwriteJsonFile(path.join(DATA_DIR, "tag-to-slugs.json"), tagToSlugs);
 };
 
 main();

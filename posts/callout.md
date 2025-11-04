@@ -3,6 +3,7 @@ slug: call-out
 title:
 published: true
 tags:
+  - sample
 description:
 thumbnail:
 createdAt: 2025-11-04

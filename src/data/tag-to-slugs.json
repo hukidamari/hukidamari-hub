@@ -1,0 +1,38 @@
+{
+  "sample": [
+    "call-out"
+  ],
+  "pet": [
+    "mimic-whispering",
+    "cat-evening",
+    "dog-one-day",
+    "image-file"
+  ],
+  "cute": [
+    "mimic-whispering"
+  ],
+  "bird": [
+    "bird-tweeting"
+  ],
+  "nature": [
+    "bird-tweeting"
+  ],
+  "sound": [
+    "bird-tweeting"
+  ],
+  "cat": [
+    "cat-evening"
+  ],
+  "relax": [
+    "cat-evening"
+  ],
+  "dog": [
+    "dog-one-day"
+  ],
+  "environment": [
+    "blue-sky"
+  ],
+  "blue": [
+    "blue-sky"
+  ]
+}
