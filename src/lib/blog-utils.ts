@@ -69,16 +69,3 @@ export const getPostsByTag = async (tag: PostTag): Promise<PostHtml[]> => {
 export const getPostCountByTag = (tag: PostTag): number => {
   return getPostCountByPostTag(tag);
 };
-
-// ===== about =====
-export const getSiteConfig = async () => {
-  /* ... */
-};
-export const getSiteMetadata = async () => {
-  /* ... */
-};
-
-// ===== common =====
-export const getPublicAssetUrl = (fileName: string) => {
-  /* ... */
-};
