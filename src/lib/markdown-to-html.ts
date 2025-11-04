@@ -13,6 +13,7 @@ export const markdownToHtml = async (markdown: string): Promise<string> => {
     .convertMovieWikiLinks()
     .convertSoundWikiLinks()
     .convertWikiLinks()
+    .converCallouts()
     .mdRender()
     .toString();
   return result;
@@ -37,7 +38,14 @@ const embedMovieGenerator = (filename: string, ext: string): string => {
   const url = publicFileNameToUrl(filePath);
   return `<video src="${url}" controls></video>`;
 };
-
+const escapeHtml = (unsafe: string): string => {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
 class ConvertingMarkdown {
   constructor(private content: string) {}
 
@@ -123,8 +131,8 @@ class ConvertingMarkdown {
         : ""
     }
     <div class="cardlink-text">
-      <h3 class="cardlink-title">${data.title || ""}</h3>
-      <p class="cardlink-description">${data.description || ""}</p>
+      <h3 class="cardlink-title">${escapeHtml(data.title) || ""}</h3>
+      <p class="cardlink-description">${escapeHtml(data.description) || ""}</p>
       <div class="cardlink-meta">
         ${
           data.favicon
@@ -138,6 +146,29 @@ class ConvertingMarkdown {
 </a>`;
       }
     );
+    return this;
+  }
+
+  converCallouts(): ConvertingMarkdown {
+    this.content = this.content.replace(
+      /^>\s+\[!(.*?)\]\n((?:>\s+.*\n?)*)/gm,
+      (_, kind: string, content: string) => {
+        const lowerKind = kind.trim().toLowerCase();
+        const cleanedContent = content
+          .split(/\n/)
+          .map((line) => line.replace(/^>\s+/, "").trim())
+          .map((line) => `<p>${line}</p>`)
+          .join("");
+        return `
+<div class="callout callout-${lowerKind}">
+  <div class="callout-title">${escapeHtml(lowerKind)}</div>
+  <div class="callout-content">
+    ${cleanedContent}
+  </div>
+</div>`;
+      }
+    );
+
     return this;
   }
 }
