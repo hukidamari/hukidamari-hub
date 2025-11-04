@@ -19,6 +19,54 @@
   max-width: 100%;
 }
 
+/* コードブロック */
+pre {
+  background-color: #f9fafb; /* やわらかいグレー背景 */
+  color: #1f2937;           /* 文字色：落ち着いた黒 */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco,
+               "Roboto Mono", "Noto Mono", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  overflow-x: auto;
+  margin: 1em 0;
+  white-space: pre;
+}
+
+/* <code> 単体で使う場合（インラインコード） */
+code {
+  background-color: #f3f4f6;
+  color: #111827;
+  font-family: inherit;
+  font-size: 0.95em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+/* コードブロック内の <code> */
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* スクロールバーを控えめに */
+pre::-webkit-scrollbar {
+  height: 8px;
+}
+pre::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 4px;
+}
+pre::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
+}
+
+
+
 /* --- カードリンク --- */
 .cardlink {
   display: block;

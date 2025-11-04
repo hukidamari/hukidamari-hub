@@ -1,5 +1,6 @@
 import { getAllSlugs, getPostBySlug, getRelatedPosts } from "@/lib/blog-utils";
 import { PostSlug } from "@/types/post";
+import Link from "next/link";
 
 export const generateStaticParams = (): { slug: PostSlug }[] => {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -28,7 +29,7 @@ export default async function BlogPost({
         <ul className="tag-container">
           {post.tags.map((tag) => (
             <li key={tag} className="tag">
-              {tag}
+              #{tag}
             </li>
           ))}
         </ul>
@@ -38,12 +39,12 @@ export default async function BlogPost({
         className="markdown-body"
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
-      <div>
+      <div className="related-posts">
         <h2>関連記事</h2>
         <ul>
           {relatedPosts.map((post) => (
             <li key={post.slug}>
-              <a href={`/posts/${post.slug}`}>{post.title}</a>
+              <Link href={`/posts/${post.slug}`}>{post.title}</Link>
             </li>
           ))}
         </ul>
