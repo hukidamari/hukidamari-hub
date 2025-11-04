@@ -27,20 +27,22 @@ export default async function Posts() {
                 </div>
               )}
               <div className={styles.itemText}>
-                <h3 className={styles.postTitle}>{post.title}</h3>
-                <div className={styles.metadataContainer}>
-                  <p className={styles.date}>
-                    投稿日:{post.createdAt.toLocaleDateString("ja-JP")}
-                  </p>
-                  <p className={styles.date}>
-                    更新日:{post.updatedAt.toLocaleDateString("ja-JP")}
-                  </p>
-                  <ul className={styles.tagContainer}>
-                    {post.tags.map((tag) => (
-                      <li key={tag}>{<Tag>{`#${tag}`}</Tag>}</li>
-                    ))}
-                  </ul>
+                <div className={styles.postTitleContainer}>
+                  <h3 className={styles.postTitle}>{post.title}</h3>
+                  <div className={styles.metadataContainer}>
+                    <p className={styles.date}>
+                      投稿日:{post.createdAt.toLocaleDateString("ja-JP")}
+                    </p>
+                    <p className={styles.date}>
+                      更新日:{post.updatedAt.toLocaleDateString("ja-JP")}
+                    </p>
+                  </div>
                 </div>
+                <ul className={styles.tagContainer}>
+                  {post.tags.map((tag) => (
+                    <li key={tag}>{<Tag>{`#${tag}`}</Tag>}</li>
+                  ))}
+                </ul>
                 {post.description && (
                   <p className={styles.description}>{post.description}</p>
                 )}
