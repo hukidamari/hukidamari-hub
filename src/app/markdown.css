@@ -12,12 +12,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.markdown-body audio,
-.markdown-body video {
-  display: block;
-  margin: 1em 0;
-  max-width: 100%;
-}
+
 
 /* コードブロック */
 pre {

@@ -25,6 +25,13 @@ header {
   z-index: 10;
 }
 
+audio,
+video {
+  display: block;
+  margin: 1em 0;
+  max-width: 100%;
+}
+
 .title {
   font-family: var(--font-geist-mono), monospace;
   font-size: 1.6rem;
