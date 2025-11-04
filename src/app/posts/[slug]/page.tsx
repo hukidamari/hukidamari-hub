@@ -15,18 +15,29 @@ export default async function BlogPost({
   const post = await getPostBySlug(slug);
   const relatedPosts = await getRelatedPosts(post);
   return (
-    <div>
-      <div>
-        <p>投稿日:{post.createdAt.toDateString()}</p>
-        <p>投稿日:{post.updatedAt.toDateString()}</p>
-        <ul>
+    <div className="post-container">
+      <div className="metadata-container">
+        <div className="date-container">
+          <p className="date created-at">
+            投稿日:{post.createdAt.toDateString()}
+          </p>
+          <p className="date updated-at">
+            更新日:{post.updatedAt.toDateString()}
+          </p>
+        </div>
+        <ul className="tag-container">
           {post.tags.map((tag) => (
-            <li key={tag}>#{tag}</li>
+            <li key={tag} className="tag">
+              {tag}
+            </li>
           ))}
         </ul>
         <h1>{post.title}</h1>
       </div>
-      <div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+      <div
+        className="markdown-body"
+        dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+      />
       <div>
         <h2>関連記事</h2>
         <ul>

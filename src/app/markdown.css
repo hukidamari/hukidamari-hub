@@ -1,0 +1,232 @@
+/* sample markdown style */
+/* Markdown全体の共通スタイル */
+.markdown-body {
+  line-height: 1.7;
+  color: #222;
+  font-size: 16px;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.markdown-body audio,
+.markdown-body video {
+  display: block;
+  margin: 1em 0;
+  max-width: 100%;
+}
+
+/* --- カードリンク --- */
+.cardlink {
+  display: block;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
+  background-color: #fafafa;
+  color: inherit;
+}
+
+.cardlink:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.cardlink-content {
+  display: flex;
+  align-items: stretch;
+}
+
+.cardlink-image {
+  width: 120px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.cardlink-text {
+  padding: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cardlink-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0 0 0.3em 0;
+}
+
+.cardlink-description {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0 0 0.5em 0;
+  line-height: 1.4;
+}
+
+.cardlink-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.cardlink-favicon {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+}
+
+/* --- Callout --- */
+.callout {
+  border-left: 4px solid #aaa;
+  background-color: #f8f8f8;
+  padding: 0.75em 1em;
+  margin: 1em 0;
+  border-radius: 4px;
+}
+
+.callout-title {
+  font-weight: bold;
+  margin-bottom: 0.4em;
+  text-transform: capitalize;
+}
+
+.callout-content p {
+  margin: 0.3em 0;
+}
+
+/* 種類別色分け（必要に応じて追加） */
+/* === 共通ベース === */
+.callout {
+  border-left: 4px solid #aaa;
+  background-color: #f8f8f8;
+  padding: 0.75em 1em;
+  margin: 1.2em 0;
+  border-radius: 6px;
+}
+
+.callout-title {
+  font-weight: bold;
+  margin-bottom: 0.4em;
+  text-transform: capitalize;
+}
+
+.callout-content p {
+  margin: 0.3em 0;
+  line-height: 1.6;
+}
+
+/* === 色テーマ === */
+/* 情報系（Note, Info, Abstract, Summary, Tldr, Help, Question, Faq） */
+.callout-note,
+.callout-abstract,
+.callout-summary,
+.callout-tldr,
+.callout-info,
+.callout-help,
+.callout-question,
+.callout-faq {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+}
+.callout-note .callout-title,
+.callout-abstract .callout-title,
+.callout-summary .callout-title,
+.callout-tldr .callout-title,
+.callout-info .callout-title,
+.callout-help .callout-title,
+.callout-question .callout-title,
+.callout-faq .callout-title {
+  color: #1d4ed8;
+}
+
+/* 成功・ヒント系（Tip, Hint, Important, Success, Check, Done, Todo） */
+.callout-tip,
+.callout-hint,
+.callout-important,
+.callout-success,
+.callout-check,
+.callout-done,
+.callout-todo {
+  border-color: #10b981;
+  background-color: #ecfdf5;
+}
+.callout-tip .callout-title,
+.callout-hint .callout-title,
+.callout-important .callout-title,
+.callout-success .callout-title,
+.callout-check .callout-title,
+.callout-done .callout-title,
+.callout-todo .callout-title {
+  color: #065f46;
+}
+
+/* 注意・警告系（Warning, Caution, Attention） */
+.callout-warning,
+.callout-caution,
+.callout-attention {
+  border-color: #f59e0b;
+  background-color: #fffbeb;
+}
+.callout-warning .callout-title,
+.callout-caution .callout-title,
+.callout-attention .callout-title {
+  color: #92400e;
+}
+
+/* 失敗・危険系（Failure, Fail, Missing, Danger, Error, Bug） */
+.callout-failure,
+.callout-fail,
+.callout-missing,
+.callout-danger,
+.callout-error,
+.callout-bug {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+.callout-failure .callout-title,
+.callout-fail .callout-title,
+.callout-missing .callout-title,
+.callout-danger .callout-title,
+.callout-error .callout-title,
+.callout-bug .callout-title {
+  color: #7f1d1d;
+}
+
+/* 引用・例示系（Example, Quote, Cite） */
+.callout-example,
+.callout-quote,
+.callout-cite {
+  border-color: #9ca3af;
+  background-color: #f3f4f6;
+}
+.callout-example .callout-title,
+.callout-quote .callout-title,
+.callout-cite .callout-title {
+  color: #374151;
+  font-style: italic;
+}
+
+/* アイコン */
+
+.callout-note .callout-title::before {
+  content: "📝 ";
+}
+.callout-tip .callout-title::before {
+  content: "💡 ";
+}
+.callout-warning .callout-title::before {
+  content: "⚠️ ";
+}
+.callout-danger .callout-title::before {
+  content: "❌ ";
+}
+.callout-example .callout-title::before {
+  content: "📘 ";
+}
