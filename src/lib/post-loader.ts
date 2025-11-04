@@ -26,8 +26,8 @@ const getPostMd = (slug: string, title: string): PostMd => {
     tags: data.tags ?? [],
     description: data.description,
     thumbnail: data.thumbnail,
-    createdAt: new Date(data.createdAt), // TODO: conver to Date
-    updatedAt: new Date(data.updatedAt), // TODO: conver to Date
+    createdAt: new Date(data.createdAt),
+    updatedAt: new Date(data.updatedAt),
     published: data.published,
   };
 };
