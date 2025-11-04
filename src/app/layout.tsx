@@ -28,7 +28,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <header>
-          <h1 className="title">Obsidian Blog</h1>
+          <h1 className="title">
+            <Link href="/">Obsidian Blog</Link>
+          </h1>
           <nav>
             <ul className="nav-ul">
               <li className="nav-li">

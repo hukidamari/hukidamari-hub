@@ -39,6 +39,11 @@ video {
   color: var(--color-accent);
 }
 
+.title a {
+  text-decoration: none;
+  color: var(--color-accent);
+}
+
 nav {
   margin-top: 0.6rem;
 }
