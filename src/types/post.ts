@@ -12,7 +12,7 @@ export interface PostMeta {
   published: boolean;
   tags: PostTag[];
   description?: string;
-  thumbnail?: string;
+  thumbnail: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
