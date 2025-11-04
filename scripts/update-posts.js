@@ -138,6 +138,14 @@ const main = () => {
       console.warn(`Warning: Post "${item}" is missing a updatedAt. Skipping.`);
       return;
     }
+    if (Object.keys(slugToMetadata).includes(meta.slug)) {
+      console.warn(
+        `Warning: Post "${item}" has duplicate slug with ${meta.slug} of "${
+          slugToMetadata[meta.slug].title
+        }". Skipping.`
+      );
+      return;
+    }
 
     slugToTitle[meta.slug] = meta.title;
     titleToSlug[meta.title] = data.slug;
