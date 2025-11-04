@@ -34,6 +34,10 @@ const getPostMd = (slug: string, title: string): PostMd => {
 };
 
 const convertThumbnailPath = (thumbnailFm: string): string | null => {
+  if (!thumbnailFm) {
+    return null;
+  }
+
   const regex = new RegExp(`\\[\\[(.+?)\\.(png|jpg|gif)\\]\\]`);
   const match = thumbnailFm.match(regex);
 
