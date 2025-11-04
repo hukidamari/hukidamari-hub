@@ -1,3 +1,4 @@
+import Tag from "@/component/tag";
 import { getAllTags, getPostsByTag } from "@/lib/blog-utils";
 import { PostTag } from "@/types/post";
 import Link from "next/link";
@@ -11,7 +12,9 @@ export default async function TagPage({ params }: { params: { tag: string } }) {
   const posts = await getPostsByTag(tag);
   return (
     <div>
-      <h1>{tag} の記事一覧</h1>
+      <h1>
+        <Tag>{`#${tag}`}</Tag>の記事一覧
+      </h1>
       <ul className="all-tags">
         {posts.map((post) => (
           <li key={post.slug}>
