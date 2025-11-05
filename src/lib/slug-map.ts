@@ -1,7 +1,7 @@
-import { PostSlug, PostTitle, SlugTitleMap } from "@/types/post";
+import { PostSlug, PostTitle, SlugTitleMap } from "../../types/post";
 import _slugToTitleJson from "../data/slug-to-title.json";
 import _titleToSlugJson from "../data/title-to-slug.json";
-import { ROUTES } from "@/config/path";
+import { ROUTES } from "@/config/route";
 
 const SLUG_TO_TITLE: SlugTitleMap = _slugToTitleJson;
 const TITLE_TO_SLUG: SlugTitleMap = _titleToSlugJson;

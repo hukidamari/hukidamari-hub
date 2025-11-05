@@ -1,4 +1,4 @@
-import { PostHtml, PostTag } from "@/types/post";
+import { PostHtml, PostTag } from "../../types/post";
 import { getPost } from "./post-loader";
 import { getAllPostSlugs } from "./slug-map";
 import {

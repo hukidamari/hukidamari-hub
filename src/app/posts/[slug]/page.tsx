@@ -1,5 +1,5 @@
 import { getAllSlugs, getPostBySlug, getRelatedPosts } from "@/lib/blog-utils";
-import { PostSlug } from "@/types/post";
+import { PostSlug } from "../../../../types/post";
 import styles from "./post.module.css";
 import Link from "next/link";
 import Tag from "@/component/tag";

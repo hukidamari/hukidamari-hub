@@ -1,7 +1,7 @@
 import PostList from "@/component/post-list";
 import Tag from "@/component/tag";
 import { getAllTags, getPostsByTag } from "@/lib/blog-utils";
-import { PostTag } from "@/types/post";
+import { PostTag } from "../../../../types/post";
 
 export const generateStaticParams = (): { tag: PostTag }[] => {
   return getAllTags().map((tag) => ({ tag }));

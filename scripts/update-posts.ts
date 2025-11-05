@@ -1,16 +1,18 @@
-require("dotenv").config();
+import "dotenv/config";
 
-const fs = require("fs");
-const path = require("path");
-const matter = require("gray-matter");
-const {
+import { FrontMatter, PostMeta, PostSlug, PostTag } from "../types/post";
+import * as fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import {
   initSourceDestDir,
   collectImageFiles,
   collectSoundFiles,
   collectMovieFiles,
   collectThumbnailFile,
-} = require("./collect-source-files");
-const { canPublish } = require("./config");
+} from "./collect-source-files";
+import { canPublish } from "./config";
+import { parseFrontMatter } from "../lib/parse-post";
 
 const SOURCE_DIR = process.env.POSTS_SOURCE_DIR;
 if (!SOURCE_DIR) {
@@ -22,34 +24,21 @@ if (SOURCE_DIR === DEST_DIR) {
   console.error(`You can't set ${DEST_DIR} as POSTS_SOURCE_DIR.`);
   process.exit(1);
 }
-const titleToSlug = {};
-const slugToTitle = {};
-const slugToMetadata = {};
-const tagToSlugs = {};
+const titleToSlug: Record<string, PostSlug> = {};
+const slugToTitle: Record<PostSlug, string> = {};
+const slugToMetadata: Record<PostSlug, PostMeta> = {};
+const tagToSlugs: Record<PostTag, PostSlug[]> = {};
 
-const getMdDatas = (filePath) => {
+const getMdDatas = (filePath: string) => {
   const fileContent = fs.readFileSync(filePath, "utf-8");
   return matter(fileContent);
 };
-const isValidSlug = (slug) => /^[a-z0-9-]+$/.test(slug);
+const isValidSlug = (slug: PostSlug) => /^[a-z0-9-]+$/.test(slug);
 const initPostsDestDir = () => {
   fs.rmSync(DEST_DIR, { recursive: true, force: true });
   fs.mkdirSync(DEST_DIR, { recursive: true });
 };
-const parseFrontMatter = (filePath, fm) => {
-  const rev = {
-    slug: fm.slug,
-    title: filePath.replace(".md", ""),
-    published: fm.published,
-    tags: fm.tags ?? [],
-    description: fm.description,
-    thumbnail: fm.thumbnail,
-    createdAt: fm.createdAt,
-    updatedAt: fm.updatedAt,
-  };
-  return rev;
-};
-const overwriteJsonFile = (filePath, data) => {
+const overwriteJsonFile = (filePath: string, data: Record<string, any>) => {
   fs.writeFileSync(fs.openSync(filePath, "w"), JSON.stringify(data, null, 2));
 };
 
@@ -58,19 +47,21 @@ const main = () => {
   initSourceDestDir();
 
   // SOURCE_DIR 内の全アイテムを DEST_DIR にコピー
-  fs.readdirSync(SOURCE_DIR).forEach((item) => {
+  fs.readdirSync(SOURCE_DIR).forEach((item: string) => {
     const srcPath = path.join(SOURCE_DIR, item);
     const destPath = path.join(DEST_DIR, item);
 
     // validate front matter
     const { data, content } = getMdDatas(srcPath);
-    const meta = parseFrontMatter(item, data);
     if (!canPublish(data)) {
       console.log(
         `Skipping unpublished post: ${item} because your canPublish function returned false.`
       );
       return;
     }
+
+    const meta = parseFrontMatter(item, data as FrontMatter);
+
     if (!meta.slug) {
       console.warn(`Warning: Post "${item}" is missing a slug. Skipping.`);
       return;
@@ -99,7 +90,7 @@ const main = () => {
     slugToTitle[meta.slug] = meta.title;
     titleToSlug[meta.title] = data.slug;
     slugToMetadata[meta.slug] = meta;
-    meta.tags.forEach((tag) => {
+    meta.tags.forEach((tag: PostTag) => {
       if (!tagToSlugs[tag]) {
         tagToSlugs[tag] = [];
       }

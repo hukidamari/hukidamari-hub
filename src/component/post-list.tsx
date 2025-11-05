@@ -1,4 +1,4 @@
-import { PostHtml } from "@/types/post";
+import { PostHtml } from "../../types/post";
 import styles from "./post-list.module.css";
 import Link from "next/link";
 import Image from "next/image";

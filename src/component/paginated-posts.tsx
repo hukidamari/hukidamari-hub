@@ -1,4 +1,4 @@
-import { PostHtml } from "@/types/post";
+import { PostHtml } from "../../types/post";
 import PostList from "./post-list";
 import Link from "next/link";
 

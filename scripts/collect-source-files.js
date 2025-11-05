@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+import * as fs from "fs";
+import path from "path";
 
 const IMAGE_SOURCE_DIR = process.env.IMAGE_SOURCE_DIR;
 const SOUND_SOURCE_DIR = process.env.SOUND_SOURCE_DIR;
@@ -34,7 +34,7 @@ if (
   process.exit(1);
 }
 
-const initSourceDestDir = () => {
+export const initSourceDestDir = () => {
   fs.rmSync(POST_ASSET_DEST_DIR, { recursive: true, force: true });
   fs.mkdirSync(POST_ASSET_DEST_DIR, { recursive: true });
 };
@@ -46,13 +46,13 @@ const sourceWikiLinksRegex = (exts) => {
   // EX: exts = ["png", "jpg", "gif"]
   return new RegExp(`!\\[\\[(.+?)\\.(${exts.join("|")})\\]\\]`, "gi");
 };
-const collectImageFiles = (content) => {
+export const collectImageFiles = (content) => {
   collectSourceFiles(content, ["png", "jpg", "jpeg", "gif"], IMAGE_SOURCE_DIR);
 };
-const collectSoundFiles = (content) => {
+export const collectSoundFiles = (content) => {
   collectSourceFiles(content, ["mp3", "wav"], SOUND_SOURCE_DIR);
 };
-const collectMovieFiles = (content) => {
+export const collectMovieFiles = (content) => {
   collectSourceFiles(content, ["mp4", "mov", "avi"], MOVIE_SOURCE_DIR);
 };
 const collectSourceFiles = (content, exts, sourceDir) => {
@@ -69,7 +69,7 @@ const collectSourceFiles = (content, exts, sourceDir) => {
     collectSourceFile(srcPath, destPath);
   }
 };
-const collectThumbnailFile = (thumbnailFm) => {
+export const collectThumbnailFile = (thumbnailFm) => {
   if (!thumbnailFm) {
     return;
   }
@@ -108,12 +108,4 @@ const collectSourceFile = (srcPath, destPath) => {
 
   fs.mkdirSync(path.dirname(destPath), { recursive: true });
   fs.cpSync(srcPath, destPath);
-};
-
-module.exports = {
-  initSourceDestDir,
-  collectImageFiles,
-  collectSoundFiles,
-  collectMovieFiles,
-  collectThumbnailFile,
 };
