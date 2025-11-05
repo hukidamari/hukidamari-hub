@@ -9,6 +9,7 @@ import {
   getAboutUrl,
   getHomeUrl,
   getPostsUrl,
+  getRssUrl,
   getTagsUrl,
 } from "../../lib/path-utils";
 
@@ -62,6 +63,14 @@ export default function RootLayout({
                 <Link href={getTagsUrl()}>Tags</Link>
               </li>
             </ul>
+            <Link
+              href={getRssUrl()}
+              target="_blank"
+              title="RSS Feed"
+              className="rss-link"
+            >
+              RSS
+            </Link>
           </nav>
         </header>
         <main className="main-content">{children}</main>

@@ -56,6 +56,9 @@ video {
 
 nav {
   margin-top: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center
 }
 
 .nav-ul {
@@ -77,6 +80,15 @@ nav {
 .nav-li a:hover {
   color: var(--color-accent);
   border-color: var(--color-accent);
+}
+
+.rss-link  {
+  color: #f26522; /* RSSオレンジ */
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+.rss-link:hover  {
+  color: #ff8c42;
 }
 
 .main-content {
