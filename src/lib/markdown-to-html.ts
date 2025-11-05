@@ -1,5 +1,5 @@
 import markdownit from "markdown-it";
-import { existsTitle, slugToRoute, titleToSlug } from "./slug-map";
+import { existsTitle, titleToSlug } from "./slug-map";
 import {
   allEmbedWikiLinksRegex,
   allWikiLinksRegex,
@@ -19,6 +19,7 @@ import {
   MOVIE_EXTENSIONS,
   SOUND_EXTENSIONS,
 } from "../../config/extensions";
+import { getPostUrl } from "../../lib/path-utils";
 
 export const markdownToHtml = async (markdown: string): Promise<string> => {
   const result = new ConvertingMarkdown(markdown)
@@ -54,7 +55,7 @@ class ConvertingMarkdown {
           // This is .md in Obsidian
           if (existsTitle(filename)) {
             const slug = titleToSlug(filename);
-            return embedPageGenerator(alt || filename, slugToRoute(slug));
+            return embedPageGenerator(alt || filename, getPostUrl(slug));
           }
           return alt || filename;
         }
@@ -81,7 +82,7 @@ class ConvertingMarkdown {
         // This is .md in Obsidian
         if (existsTitle(filename)) {
           const slug = titleToSlug(filename);
-          return pageLinkGenerator(filename, slugToRoute(slug));
+          return pageLinkGenerator(filename, getPostUrl(slug));
         }
         return alt || filename;
       }
