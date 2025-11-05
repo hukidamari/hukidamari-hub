@@ -2,7 +2,7 @@ import matter from "gray-matter";
 import { FrontMatter, PostMd, PostMeta } from "../types/post";
 import { POSTS_DIR } from "../config/path";
 import * as fs from "fs";
-import { publicFileNameToUrl } from "./public-files";
+import { publicFileNameToUrl } from "./path-utils";
 
 export const parseFrontMatter = (
   filePath: string,

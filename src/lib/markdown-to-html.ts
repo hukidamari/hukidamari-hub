@@ -4,7 +4,7 @@ import {
   encodeForURI,
   existsPublicFile,
   publicFileNameToUrl,
-} from "../../lib/public-files";
+} from "../../lib/path-utils";
 
 export const markdownToHtml = async (markdown: string): Promise<string> => {
   const result = new ConvertingMarkdown(markdown)

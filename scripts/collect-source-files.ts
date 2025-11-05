@@ -7,15 +7,13 @@ import {
   SOUND_SOURCE_DIR,
   THUMBNAIL_SOURCE_DIR,
 } from "./config";
+import { encodeForURI } from "../lib/path-utils";
 
 export const initSourceDestDir = () => {
   fs.rmSync(POST_ASSET_DEST_DIR, { recursive: true, force: true });
   fs.mkdirSync(POST_ASSET_DEST_DIR, { recursive: true });
 };
 
-const encodeForURI = (text: string) => {
-  return encodeURIComponent(text.replace(/\s/g, "-"));
-};
 const sourceWikiLinksRegex = (exts: string[]) => {
   // EX: exts = ["png", "jpg", "gif"]
   return new RegExp(`!\\[\\[(.+?)\\.(${exts.join("|")})\\]\\]`, "gi");
