@@ -5,12 +5,11 @@
   --color-accent: #0070f3;
   --color-border: #eaeaea;
 }
-
 html,
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;        
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
@@ -40,10 +39,14 @@ video {
 }
 
 .title {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 2rem;
   margin: 0;
   color: var(--color-accent);
+  font-family: "Fredoka", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 500;
+  font-variation-settings: "wdth" 100;
+  font-size: 2rem;
 }
 
 .title a {
