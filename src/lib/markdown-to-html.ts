@@ -1,10 +1,6 @@
 import markdownit from "markdown-it";
 import { existsTitle, slugToRoute, titleToSlug } from "./slug-map";
-import {
-  encodeForURI,
-  existsPublicFile,
-  publicFileNameToUrl,
-} from "../../lib/path-utils";
+import { publicFileNameToUrl } from "../../lib/path-utils";
 import {
   allEmbedWikiLinksRegex,
   allWikiLinksRegex,
