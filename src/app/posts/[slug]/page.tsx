@@ -18,7 +18,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
-  let data: Metadata = { ...DEFAULT_METADATA };
+  let data: Metadata = { ...DEFAULT_METADATA, ...{ title: post.title } };
   if (post.description) {
     data = {
       ...data,
