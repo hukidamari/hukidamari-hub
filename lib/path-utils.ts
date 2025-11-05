@@ -38,14 +38,6 @@ export const getTagUrl = (tag: string) => `/tags/${encodeForURI(tag)}`;
 export const getAboutUrl = () => `/about`;
 
 /**
- * 画像・サムネイル関連
- */
-export const getThumbnailFilePath = (filename: string) =>
-  path.join(POST_ASSET_DEST_DIR, filename);
-
-export const getThumbnailUrl = (filename: string) => `/${filename}`;
-
-/**
  * RSS / フィードなど
  */
 export const getRssUrl = () => `/feed.xml`;
