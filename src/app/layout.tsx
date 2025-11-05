@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./markdown.css";
 import Link from "next/link";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,9 +29,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <header>
-          <h1 className="title">
-            <Link href="/">Obsidian Blog</Link>
-          </h1>
+          <Link href="/" className="title-link">
+            <Image
+              src="/images/logo-small.png"
+              alt="Vault Blog Logo"
+              width={40}
+              height={40}
+              className="logo"
+            />
+            <h1 className="title">Obsidian Blog</h1>
+          </Link>
           <nav>
             <ul className="nav-ul">
               <li className="nav-li">

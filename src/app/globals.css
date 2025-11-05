@@ -32,9 +32,16 @@ video {
   max-width: 100%;
 }
 
+.title-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;;
+  text-decoration: none;
+}
+
 .title {
   font-family: var(--font-geist-mono), monospace;
-  font-size: 1.6rem;
+  font-size: 2rem;
   margin: 0;
   color: var(--color-accent);
 }
