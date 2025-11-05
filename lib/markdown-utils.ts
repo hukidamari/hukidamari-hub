@@ -1,7 +1,11 @@
 import matter from "gray-matter";
 import { FrontMatter, PostMd, PostMeta, PostSlug } from "../types/post";
 import * as fs from "fs";
-import { getPostAssetUrlByFilename, getPostMdFilePath } from "./path-utils";
+import {
+  getPostAssetUrlByFilename,
+  getPostMdFilePath,
+  getPostUrl,
+} from "./path-utils";
 
 export const extractFrontMatter = (filePath: string) => {
   const fileContent = fs.readFileSync(filePath, "utf-8");
@@ -96,7 +100,7 @@ export const embedPageGenerator = (alt: string, url: PostSlug): string => {
 export const embedImageGenerator = (basename: string, ext: string): string => {
   const filename = `${basename}.${ext}`;
   const url = getPostAssetUrlByFilename(filename);
-  return `![${basename}](${url})`;
+  return `<img src="${url}" alt="${basename}"></img>`;
 };
 export const embedSoundGenerator = (basename: string, ext: string): string => {
   const filename = `${basename}.${ext}`;
@@ -108,8 +112,8 @@ export const embedMovieGenerator = (basename: string, ext: string): string => {
   const url = getPostAssetUrlByFilename(filename);
   return `<video src="${url}" controls></video>`;
 };
-export const pageLinkGenerator = (alt: string, url: PostSlug): string => {
-  return `[${alt}](${url})`;
+export const pageLinkGenerator = (alt: string, slug: PostSlug): string => {
+  return `<a href="${getPostUrl(slug)}">${alt}</a>`;
 };
 export const imageLinkGenerator = (basename: string, ext: string): string => {
   return embedImageGenerator(basename, ext);

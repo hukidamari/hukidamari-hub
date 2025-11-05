@@ -24,20 +24,21 @@ import { getPostUrl } from "../../lib/path-utils";
 
 export const markdownToHtml = async (markdown: string): Promise<string> => {
   const result = new ConvertingMarkdown(markdown)
-    .escapeCodeBlocks()
+    .converCallouts()
+    .convertEmbedLinks()
     .convertCardlinkBlocks()
+    .mdRender()
+    .escapeHtmlCodeBlocks()
     .convertEmbedWikiLinks()
     .convertWikiLinks()
-    .convertEmbedLinks() // ← ここでYouTube/Twitter両方対応
-    .converCallouts()
-    .restoreCodeBlocks()
-    .mdRender()
+    .restoreHtmlCodeBlocks()
     .toString();
   return result;
 };
 
 class ConvertingMarkdown {
   private codeBlocks: string[] = [];
+  private codeBlockHtmls: string[] = [];
 
   constructor(private content: string) {
     this.content = content;
@@ -209,6 +210,26 @@ class ConvertingMarkdown {
     this.content = this.content.replace(
       /@@CODE_BLOCK_(\d+)@@/g,
       (_, index) => this.codeBlocks[Number(index)]
+    );
+    return this;
+  }
+
+  escapeHtmlCodeBlocks(): ConvertingMarkdown {
+    this.content = this.content.replace(
+      /<code[\s\S]*?>[\s\S]*?<\/code>/g,
+      (block) => {
+        const index = this.codeBlockHtmls.length;
+        this.codeBlockHtmls.push(block);
+        return `@@CODE_BLOCK_HTML_${index}@@`; // placeholder
+      }
+    );
+    return this;
+  }
+
+  restoreHtmlCodeBlocks(): ConvertingMarkdown {
+    this.content = this.content.replace(
+      /@@CODE_BLOCK_HTML_(\d+)@@/g,
+      (_, index) => this.codeBlockHtmls[Number(index)]
     );
     return this;
   }
