@@ -1,18 +1,24 @@
 import markdownit from "markdown-it";
 import { existsTitle, slugToRoute, titleToSlug } from "./slug-map";
-import { publicFileNameToUrl } from "../../lib/path-utils";
 import {
   allEmbedWikiLinksRegex,
   allWikiLinksRegex,
+  embedImageGenerator,
+  embedMovieGenerator,
+  embedPageGenerator,
+  embedSoundGenerator,
   escapeHtml,
+  imageLinkGenerator,
+  movieLinkGenerator,
+  pageLinkGenerator,
   parseWikiLinkContent,
+  soundLinkGenerator,
 } from "../../lib/markdown-utils";
 import {
   IMAGE_EXTENSIONS,
   MOVIE_EXTENSIONS,
   SOUND_EXTENSIONS,
 } from "../../config/extensions";
-import { PostSlug } from "../../types/post";
 
 export const markdownToHtml = async (markdown: string): Promise<string> => {
   const result = new ConvertingMarkdown(markdown)
@@ -23,37 +29,6 @@ export const markdownToHtml = async (markdown: string): Promise<string> => {
     .mdRender()
     .toString();
   return result;
-};
-
-const embedPageGenerator = (alt: string, url: PostSlug): string => {
-  return pageLinkGenerator(alt, url);
-};
-const embedImageGenerator = (filename: string, ext: string): string => {
-  const filePath = `${filename}.${ext}`;
-  const url = publicFileNameToUrl(filePath);
-  return `![${filename}](${url})`;
-};
-const embedSoundGenerator = (filename: string, ext: string): string => {
-  const filePath = `${filename}.${ext}`;
-  const url = publicFileNameToUrl(filePath);
-  return `<audio src="${url}" controls></audio>`;
-};
-const embedMovieGenerator = (filename: string, ext: string): string => {
-  const filePath = `${filename}.${ext}`;
-  const url = publicFileNameToUrl(filePath);
-  return `<video src="${url}" controls></video>`;
-};
-const pageLinkGenerator = (alt: string, url: PostSlug): string => {
-  return `[${alt}](${url})`;
-};
-const imageLinkGenerator = (filename: string, ext: string): string => {
-  return embedImageGenerator(filename, ext);
-};
-const soundLinkGenerator = (filename: string, ext: string): string => {
-  return embedSoundGenerator(filename, ext);
-};
-const movieLinkGenerator = (filename: string, ext: string): string => {
-  return embedMovieGenerator(filename, ext);
 };
 
 class ConvertingMarkdown {

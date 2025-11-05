@@ -1,8 +1,8 @@
 import matter from "gray-matter";
-import { FrontMatter, PostMd, PostMeta } from "../types/post";
+import { FrontMatter, PostMd, PostMeta, PostSlug } from "../types/post";
 import { POSTS_DIR } from "../config/path";
 import * as fs from "fs";
-import { publicFileNameToUrl } from "./path-utils";
+import { getPostAssetUrlByFilename } from "./path-utils";
 
 export const extractFrontMatter = (filePath: string) => {
   const fileContent = fs.readFileSync(filePath, "utf-8");
@@ -55,7 +55,7 @@ const convertThumbnailPath = (thumbnailFm: string): string | null => {
   const parts = p1.split("|");
   const fileName = `${parts[0]}.${ext}`;
 
-  return publicFileNameToUrl(fileName);
+  return getPostAssetUrlByFilename(fileName);
 };
 
 export const allEmbedWikiLinksRegex = (): RegExp => {
@@ -91,4 +91,35 @@ export const escapeHtml = (unsafe: string): string => {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+};
+
+export const embedPageGenerator = (alt: string, url: PostSlug): string => {
+  return pageLinkGenerator(alt, url);
+};
+export const embedImageGenerator = (filename: string, ext: string): string => {
+  const filePath = `${filename}.${ext}`;
+  const url = getPostAssetUrlByFilename(filePath);
+  return `![${filename}](${url})`;
+};
+export const embedSoundGenerator = (filename: string, ext: string): string => {
+  const filePath = `${filename}.${ext}`;
+  const url = getPostAssetUrlByFilename(filePath);
+  return `<audio src="${url}" controls></audio>`;
+};
+export const embedMovieGenerator = (filename: string, ext: string): string => {
+  const filePath = `${filename}.${ext}`;
+  const url = getPostAssetUrlByFilename(filePath);
+  return `<video src="${url}" controls></video>`;
+};
+export const pageLinkGenerator = (alt: string, url: PostSlug): string => {
+  return `[${alt}](${url})`;
+};
+export const imageLinkGenerator = (filename: string, ext: string): string => {
+  return embedImageGenerator(filename, ext);
+};
+export const soundLinkGenerator = (filename: string, ext: string): string => {
+  return embedSoundGenerator(filename, ext);
+};
+export const movieLinkGenerator = (filename: string, ext: string): string => {
+  return embedMovieGenerator(filename, ext);
 };
