@@ -4,7 +4,7 @@ const _IMAGE_SOURCE_DIR = process.env.IMAGE_SOURCE_DIR;
 const _SOUND_SOURCE_DIR = process.env.SOUND_SOURCE_DIR;
 const _MOVIE_SOURCE_DIR = process.env.MOVIE_SOURCE_DIR;
 const _THUMBNAIL_SOURCE_DIR = process.env.THUMBNAIL_SOURCE_DIR;
-const _POST_SOURCE_DIR = process.env.POSTS_SOURCE_DIR;
+const _POST_SOURCE_DIR = process.env.POST_SOURCE_DIR;
 
 if (!_POST_SOURCE_DIR) {
   console.error("Not Found POST_SOURCE_DIR env");
