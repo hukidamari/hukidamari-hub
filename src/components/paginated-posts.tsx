@@ -46,13 +46,13 @@ const PaginatedPosts = ({
           gap: "3rem",
         }}
       >
-        <Link href={getPostsUrl()}>最初のページ</Link>
+        <Link href={getPostsUrl()}>先頭へ</Link>
         {page - 1 > 1 && <Link href={getPostsPageUrl(page - 1)}>前へ</Link>}
         {page - 1 === 1 && <Link href={getPostsUrl()}>前へ</Link>}
         {page + 1 <= totalPages && (
           <Link href={getPostsPageUrl(page + 1)}>次へ</Link>
         )}
-        <Link href={getPostsPageUrl(totalPages)}>最後のページ</Link>
+        <Link href={getPostsPageUrl(totalPages)}>最後へ</Link>
       </div>
     </div>
   );
