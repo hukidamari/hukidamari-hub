@@ -1,6 +1,6 @@
 ---
 slug: introduce
-title: Untitled
+title: Vault Blog Coreとは？
 published: true
 tags:
   - Introduce
