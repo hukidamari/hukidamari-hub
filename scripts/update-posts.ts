@@ -12,7 +12,7 @@ import {
 } from "./collect-source-files";
 import { canPublish } from "../config/can-publish";
 import { extractFrontMatter, parseFrontMatter } from "../lib/markdown-utils";
-import { POSTS_DIR } from "../config/path";
+import { DATA_DIR, POSTS_DIR } from "../config/path";
 import { POST_SOURCE_DIR } from "./config";
 
 const titleToSlug: Record<string, PostSlug> = {};
@@ -94,7 +94,6 @@ const main = () => {
     fs.cpSync(srcPath, destPath, { recursive: true });
   });
 
-  const DATA_DIR = "src/data";
   overwriteJsonFile(path.join(DATA_DIR, "slug-to-title.json"), slugToTitle);
   overwriteJsonFile(path.join(DATA_DIR, "title-to-slug.json"), titleToSlug);
   overwriteJsonFile(path.join(DATA_DIR, "tag-to-slugs.json"), tagToSlugs);
