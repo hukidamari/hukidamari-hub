@@ -30,6 +30,6 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "scripts/update-posts.js"
-  ],
+, "scripts/postbuild.js"  ],
   "exclude": ["node_modules"]
 }

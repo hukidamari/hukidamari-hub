@@ -1,13 +1,13 @@
 import * as fs from "fs";
 import path from "path";
-import { POST_ASSET_DEST_DIR } from "../config/path";
 import {
+  POST_ASSET_DEST_DIR,
   IMAGE_SOURCE_DIR,
   MOVIE_SOURCE_DIR,
   SOUND_SOURCE_DIR,
   THUMBNAIL_SOURCE_DIR,
-} from "./config";
-import { encodeForURI } from "../lib/path-utils";
+} from "../config/path";
+import { encodeForURI } from "./path-utils";
 import {
   IMAGE_EXTENSIONS,
   MOVIE_EXTENSIONS,

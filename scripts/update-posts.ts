@@ -9,11 +9,10 @@ import {
   collectSoundFiles,
   collectMovieFiles,
   collectThumbnailFile,
-} from "./collect-source-files";
+} from "../lib/collect-source-files";
 import { canPublish } from "../config/can-publish";
 import { extractFrontMatter, parseFrontMatter } from "../lib/markdown-utils";
-import { DATA_DIR, POSTS_DIR } from "../config/path";
-import { POST_SOURCE_DIR } from "./config";
+import { DATA_DIR, POST_SOURCE_DIR, POSTS_DIR } from "../config/path";
 
 const titleToSlug: Record<string, PostSlug> = {};
 const slugToTitle: Record<PostSlug, string> = {};

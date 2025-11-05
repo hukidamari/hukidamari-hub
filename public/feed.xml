@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[Vault Blog Core]]></title>
+        <description><![CDATA[Latest posts from Vault Blog Core]]></description>
+        <link>http://localhost:3000</link>
+        <generator>RSS for Node</generator>
+        <lastBuildDate>Wed, 05 Nov 2025 08:31:01 GMT</lastBuildDate>
+        <atom:link href="http://localhost:3000/feed.xml" rel="self" type="application/rss+xml"/>
+        <language><![CDATA[ja]]></language>
+        <item>
+            <title><![CDATA[callout一覧]]></title>
+            <description><![CDATA[note abstract summary tldr info todo tip hint important success check done question help faq warning caution attention failure fail missing danger error bug example quote cite その他を指定した場合]]></description>
+            <link>http://localhost:3000/posts/call-out</link>
+            <guid isPermaLink="true">http://localhost:3000/posts/call-out</guid>
+            <pubDate>Tue, 04 Nov 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[mimic2]]></title>
+            <description><![CDATA[test]]></description>
+            <link>http://localhost:3000/posts/mimic-2</link>
+            <guid isPermaLink="true">http://localhost:3000/posts/mimic-2</guid>
+            <pubDate>Tue, 04 Nov 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[これタイトルが長いとどういう表示になるんだろうね。うまく行くと良いけどなあ...]]></title>
+            <description><![CDATA[あいうえおかきくけこ あいうえおかきくけこ あいうえおかきくけこ あいうえおかきくけこ あいうえおかきくけこ]]></description>
+            <link>http://localhost:3000/posts/long-title-sample</link>
+            <guid isPermaLink="true">http://localhost:3000/posts/long-title-sample</guid>
+            <pubDate>Tue, 04 Nov 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Test Template]]></title>
+            <link>http://localhost:3000/posts/test-template</link>
+            <guid isPermaLink="true">http://localhost:3000/posts/test-template</guid>
+            <pubDate>Sun, 02 Nov 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[小鳥たちのさえずり]]></title>
+            <description><![CDATA[朝の静けさを破るのは、スズメやヒヨドリの声。 小鳥たちは毎日同じ時間に集まり、まるで会議をしているようです。 鳴き声の種類 鳥の名前 鳴き声 意味 スズメ ちゅんちゅん 仲間との会話 ヒヨドリ ぴーよぴよ ナワバリ宣言 メジロ ちーちー あいさつ 観察メモ 早朝（6時〜7時）がもっとも活発 雨の日は静か 冬は数が減る 詩 風に乗って 声が届く 森のメロディ]]></description>
+            <link>http://localhost:3000/posts/bird-tweeting</link>
+            <guid isPermaLink="true">http://localhost:3000/posts/bird-tweeting</guid>
+            <pubDate>Fri, 31 Oct 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[気ままな猫の午後]]></title>
+            <description><![CDATA[午前中は窓際で日向ぼっこ、午後はソファの上でゴロゴロ。 気分が乗ったときだけ遊んでくれます。 ルーティン 起床（9:00ごろ） ごはん 監視活動（窓の外の鳥をチェック） お昼寝（約3時間） 夜の大運動会 飼い主が仕事を始めると、必ずキーボードの上に座る不思議な習性。 猫の哲学 「食べる、寝る、そして支配する。」]]></description>
+            <link>http://localhost:3000/posts/cat-evening</link>
+            <guid isPermaLink="true">http://localhost:3000/posts/cat-evening</guid>
+            <pubDate>Fri, 31 Oct 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[犬の一日]]></title>
+            <description><![CDATA[朝、飼い主が起きる前からしっぽを振ってお出迎え。 お気に入りの散歩コースは近くの公園です。 好きなこと 散歩 おやつ（特にビスケット） 日向ぼっこ 苦手なこと 雷の音 ⚡ シャンプーの日 留守番 「ワン！」と言えば何かもらえると思っている節がある。 コード例（犬語） bark() eat(&quot;treat&quot;) sleep(3600)]]></description>
+            <link>http://localhost:3000/posts/dog-one-day</link>
+            <guid isPermaLink="true">http://localhost:3000/posts/dog-one-day</guid>
+            <pubDate>Fri, 31 Oct 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[画像ファイルだね]]></title>
+            <description><![CDATA[Graph viewだね。きれいだ。]]></description>
+            <link>http://localhost:3000/posts/image-file</link>
+            <guid isPermaLink="true">http://localhost:3000/posts/image-file</guid>
+            <pubDate>Fri, 31 Oct 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[青空]]></title>
+            <description><![CDATA[空が青いね。うれしいね。 Vercel完全ガイド🔥 初心者でも簡単にできるWebサイト高速デプロイ！ - Qiita Vercel 入門：次世代デプロイメントでWebサイトを高速構築！🚀 こんにちは、@YushiYamamotoです！ 今回は、Vercel を利用したモダンなデプロイメントの手法について、エンジニア初心者でも分かりやすく、かつ専門的な内容を盛り込んで解説していきます。Ve......]]></description>
+            <link>http://localhost:3000/posts/blue-sky</link>
+            <guid isPermaLink="true">http://localhost:3000/posts/blue-sky</guid>
+            <pubDate>Fri, 31 Oct 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[ミミックの囁き]]></title>
+            <description><![CDATA[ちゅ❤ ミミックは肺呼吸だよ🫁 犬の一日はおいしくなかったよ🤮 お山の大将どすこい三昧]]></description>
+            <link>http://localhost:3000/posts/mimic-whispering</link>
+            <guid isPermaLink="true">http://localhost:3000/posts/mimic-whispering</guid>
+            <pubDate>Thu, 30 Oct 2025 00:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>
