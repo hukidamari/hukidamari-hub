@@ -1,5 +1,5 @@
 import { PostSlug, PostTag } from "../../types/post";
-import _TAG_TO_SLUGS from "@/data/tag-to-slugs.json";
+import _TAG_TO_SLUGS from "../../data/tag-to-slugs.json";
 
 const TAG_TO_SLUGS: Record<string, string[]> = _TAG_TO_SLUGS;
 
