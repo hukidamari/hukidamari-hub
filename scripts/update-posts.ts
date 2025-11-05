@@ -100,7 +100,9 @@ const main = () => {
     collectImageFiles(content);
     collectSoundFiles(content);
     collectMovieFiles(content);
-    collectThumbnailFile(meta.thumbnail);
+    if (meta.thumbnail) {
+      collectThumbnailFile(meta.thumbnail);
+    }
 
     fs.cpSync(srcPath, destPath, { recursive: true });
   });

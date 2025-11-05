@@ -1,61 +1,39 @@
 import * as fs from "fs";
 import path from "path";
-
-const IMAGE_SOURCE_DIR = process.env.IMAGE_SOURCE_DIR;
-const SOUND_SOURCE_DIR = process.env.SOUND_SOURCE_DIR;
-const MOVIE_SOURCE_DIR = process.env.MOVIE_SOURCE_DIR;
-const THUMBNAIL_SOURCE_DIR = process.env.THUMBNAIL_SOURCE_DIR;
-if (!IMAGE_SOURCE_DIR) {
-  console.error("Not Found IMAGE_SOURCE_DIR env");
-  process.exit(1);
-}
-if (!SOUND_SOURCE_DIR) {
-  console.error("Not Found SOUND_SOURCE_DIR env");
-  process.exit(1);
-}
-if (!MOVIE_SOURCE_DIR) {
-  console.error("Not Found MOVIE_SOURCE_DIR env");
-  process.exit(1);
-}
-if (!THUMBNAIL_SOURCE_DIR) {
-  console.error("Not Found THUMBNAIL_SOURCE_DIR env");
-  process.exit(1);
-}
-const POST_ASSET_DEST_DIR = "public/post-assets"; // NOTE: must be same with config.POST_SSET_DEST_DIR
-if (
-  POST_ASSET_DEST_DIR === IMAGE_SOURCE_DIR ||
-  POST_ASSET_DEST_DIR === SOUND_SOURCE_DIR ||
-  POST_ASSET_DEST_DIR === MOVIE_SOURCE_DIR ||
-  POST_ASSET_DEST_DIR === THUMBNAIL_SOURCE_DIR
-) {
-  console.error(
-    `You can't set ${POST_ASSET_DEST_DIR} as IMAGE_SOURCE_DIR, SOUND_SOURCE_DIR, MOVIE_SOURCE_DIR, or THUMBNAIL_SOURCE_DIR.`
-  );
-  process.exit(1);
-}
+import { POST_ASSET_DEST_DIR } from "../config/path";
+import {
+  IMAGE_SOURCE_DIR,
+  MOVIE_SOURCE_DIR,
+  SOUND_SOURCE_DIR,
+  THUMBNAIL_SOURCE_DIR,
+} from "./config";
 
 export const initSourceDestDir = () => {
   fs.rmSync(POST_ASSET_DEST_DIR, { recursive: true, force: true });
   fs.mkdirSync(POST_ASSET_DEST_DIR, { recursive: true });
 };
 
-const encodeForURI = (text) => {
+const encodeForURI = (text: string) => {
   return encodeURIComponent(text.replace(/\s/g, "-"));
 };
-const sourceWikiLinksRegex = (exts) => {
+const sourceWikiLinksRegex = (exts: string[]) => {
   // EX: exts = ["png", "jpg", "gif"]
   return new RegExp(`!\\[\\[(.+?)\\.(${exts.join("|")})\\]\\]`, "gi");
 };
-export const collectImageFiles = (content) => {
+export const collectImageFiles = (content: string) => {
   collectSourceFiles(content, ["png", "jpg", "jpeg", "gif"], IMAGE_SOURCE_DIR);
 };
-export const collectSoundFiles = (content) => {
+export const collectSoundFiles = (content: string) => {
   collectSourceFiles(content, ["mp3", "wav"], SOUND_SOURCE_DIR);
 };
-export const collectMovieFiles = (content) => {
+export const collectMovieFiles = (content: string) => {
   collectSourceFiles(content, ["mp4", "mov", "avi"], MOVIE_SOURCE_DIR);
 };
-const collectSourceFiles = (content, exts, sourceDir) => {
+const collectSourceFiles = (
+  content: string,
+  exts: string[],
+  sourceDir: string
+) => {
   const matches = content.matchAll(sourceWikiLinksRegex(exts));
 
   for (const match of matches) {
@@ -69,12 +47,16 @@ const collectSourceFiles = (content, exts, sourceDir) => {
     collectSourceFile(srcPath, destPath);
   }
 };
-export const collectThumbnailFile = (thumbnailFm) => {
+export const collectThumbnailFile = (thumbnailFm: string) => {
   if (!thumbnailFm) {
     return;
   }
   const regex = new RegExp(`\\[\\[(.+?)\\.(png|jpg|gif)\\]\\]`);
   const match = thumbnailFm.match(regex);
+
+  if (!match) {
+    return;
+  }
 
   const p1 = match[1];
   const ext = match[2];
@@ -86,12 +68,10 @@ export const collectThumbnailFile = (thumbnailFm) => {
   collectSourceFile(srcPath, destPath);
 
   if (ext === "gif" || ext === "png") {
-    console.warn(
-      `Large file: ${srcPath} is Successfuly copied but gif and png are not recommended for thumbnails. Please use jpg.`
-    );
+    console.warn(`Large file: ${srcPath} success BUT You should use jpg.`);
   }
 };
-const collectSourceFile = (srcPath, destPath) => {
+const collectSourceFile = (srcPath: string, destPath: string) => {
   if (!fs.existsSync(srcPath)) {
     console.warn(`Not Found: source directory ${srcPath} is not found.`);
     return;
