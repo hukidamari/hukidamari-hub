@@ -5,7 +5,6 @@ import Link from "next/link";
 import Tag from "@/component/tag";
 import { Metadata } from "next";
 import { DEFAULT_METADATA } from "@/config/metadata";
-import PageThumbnail from "@/component/page-thumbnail";
 
 export const generateStaticParams = (): { slug: PostSlug }[] => {
   return getAllSlugs().map((slug) => ({ slug }));
