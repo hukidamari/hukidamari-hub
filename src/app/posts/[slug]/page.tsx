@@ -3,10 +3,45 @@ import { PostSlug } from "@/types/post";
 import styles from "./post.module.css";
 import Link from "next/link";
 import Tag from "@/component/tag";
+import { Metadata } from "next";
+import { DEFAULT_METADATA } from "@/config/metadata";
 
 export const generateStaticParams = (): { slug: PostSlug }[] => {
   return getAllSlugs().map((slug) => ({ slug }));
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: PostSlug };
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+
+  let data: Metadata = { ...DEFAULT_METADATA };
+  if (post.description) {
+    data = {
+      ...data,
+      openGraph: { ...data.openGraph, description: post.description },
+    };
+  }
+  if (post.thumbnail) {
+    data = {
+      ...data,
+      openGraph: {
+        ...data.openGraph,
+        images: [
+          {
+            url: post.thumbnail,
+            width: 1200,
+            height: 630,
+          },
+        ],
+      },
+    };
+  }
+  return data;
+}
 
 export default async function BlogPost({
   params,

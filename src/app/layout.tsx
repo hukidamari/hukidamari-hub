@@ -4,6 +4,7 @@ import "./globals.css";
 import "./markdown.css";
 import Link from "next/link";
 import Image from "next/image";
+import { DEFAULT_METADATA } from "@/config/metadata";
 
 const fredoka = Fredoka({
   variable: "--font-fredoka",
@@ -20,19 +21,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  openGraph: {
-    title: "Vault Blog Core",
-    description: "Markdownファイル群をブログとして公開するためのフレームワーク",
-    images: [
-      {
-        url: "/images/ogp-main.jpg", // 🌟 静的画像の指定
-        width: 1200,
-        height: 630,
-      },
-    ],
-  },
-};
+export const metadata: Metadata = DEFAULT_METADATA;
 export default function RootLayout({
   children,
 }: Readonly<{
