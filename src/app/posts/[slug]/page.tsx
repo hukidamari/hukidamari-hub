@@ -5,6 +5,7 @@ import Link from "next/link";
 import Tag from "@/component/tag";
 import { Metadata } from "next";
 import { DEFAULT_METADATA } from "@/config/metadata";
+import PageThumbnail from "@/component/page-thumbnail";
 
 export const generateStaticParams = (): { slug: PostSlug }[] => {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -73,10 +74,8 @@ export default async function BlogPost({
             </li>
           ))}
         </ul>
-
         <h1>{post.title}</h1>
       </div>
-
       <div
         className={styles.markdownBody}
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}

@@ -2,7 +2,7 @@ import Link from "next/link";
 import styles from "./page.module.css";
 import { getRecentPosts } from "@/lib/blog-utils";
 import PostList from "@/component/post-list";
-import Image from "next/image";
+import PageThumbnail from "@/component/page-thumbnail";
 
 export default async function Home() {
   const features = [
@@ -16,13 +16,7 @@ export default async function Home() {
 
   return (
     <div className={styles.container}>
-      <Image
-        src="/images/ogp-main.jpg"
-        alt="Vault Blog Thumbnail"
-        width={1200}
-        height={630}
-        className={styles.thumbnail}
-      />
+      <PageThumbnail alt="Vault Blog Thumbnail" src="/images/ogp-main.jpg" />
       <h1>Vault Blog Core</h1>
       <p className={styles.catchcopy}>
         Markdownで運用できる静的ブログテンプレート
