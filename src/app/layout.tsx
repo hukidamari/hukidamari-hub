@@ -21,10 +21,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vault Blog Core",
-  description: "A Sapmle of Vault Blog Core",
+  openGraph: {
+    title: "Vault Blog Core",
+    description: "Markdownファイル群をブログとして公開するためのフレームワーク",
+    images: [
+      {
+        url: "/images/ogp-main.jpg", // 🌟 静的画像の指定
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
