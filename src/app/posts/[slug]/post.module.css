@@ -43,38 +43,6 @@
   color: #111;
 }
 
-/* --- Markdown Body --- */
-.markdownBody {
-  margin-top: 2rem;
-}
-
-.markdownBody h2 {
-  margin-top: 2rem;
-  font-size: 1.4rem;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 0.3rem;
-}
-
-.markdownBody p {
-  margin: 1rem 0;
-}
-
-.markdownBody a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-.markdownBody a:hover {
-  text-decoration: underline;
-}
-
-.markdownBody code {
-  background-color: #f6f8fa;
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.3rem;
-  font-family: "Consolas", monospace;
-}
-
 /* --- Related Posts --- */
 .relatedPosts {
   margin-top: 3rem;
