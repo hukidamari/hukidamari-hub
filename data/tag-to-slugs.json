@@ -1,6 +1,7 @@
 {
   "sample": [
-    "call-out"
+    "call-out",
+    "dinner-today-2025-11-05"
   ],
   "pet": [
     "mimic-whispering",
@@ -10,6 +11,10 @@
   ],
   "cute": [
     "mimic-whispering"
+  ],
+  "relax": [
+    "dinner-today-2025-11-05",
+    "cat-evening"
   ],
   "bird": [
     "bird-tweeting"
@@ -21,9 +26,6 @@
     "bird-tweeting"
   ],
   "cat": [
-    "cat-evening"
-  ],
-  "relax": [
     "cat-evening"
   ],
   "dog": [
