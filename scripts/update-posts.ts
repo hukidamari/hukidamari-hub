@@ -12,17 +12,9 @@ import {
 } from "./collect-source-files";
 import { canPublish } from "../config/can-publish";
 import { extractFrontMatter, parseFrontMatter } from "../lib/markdown-utils";
+import { POSTS_DIR } from "../config/path";
+import { POST_SOURCE_DIR } from "./config";
 
-const SOURCE_DIR = process.env.POSTS_SOURCE_DIR;
-if (!SOURCE_DIR) {
-  console.error("Not Found SOURCE_DIR env");
-  process.exit(1);
-}
-const DEST_DIR = "posts"; // NOTE: must be same with config.DEST_DIR
-if (SOURCE_DIR === DEST_DIR) {
-  console.error(`You can't set ${DEST_DIR} as POSTS_SOURCE_DIR.`);
-  process.exit(1);
-}
 const titleToSlug: Record<string, PostSlug> = {};
 const slugToTitle: Record<PostSlug, string> = {};
 const slugToMetadata: Record<PostSlug, PostMeta> = {};
@@ -30,8 +22,8 @@ const tagToSlugs: Record<PostTag, PostSlug[]> = {};
 
 const isValidSlug = (slug: PostSlug) => /^[a-z0-9-]+$/.test(slug);
 const initPostsDestDir = () => {
-  fs.rmSync(DEST_DIR, { recursive: true, force: true });
-  fs.mkdirSync(DEST_DIR, { recursive: true });
+  fs.rmSync(POSTS_DIR, { recursive: true, force: true });
+  fs.mkdirSync(POSTS_DIR, { recursive: true });
 };
 const overwriteJsonFile = (filePath: string, data: Record<string, any>) => {
   fs.writeFileSync(fs.openSync(filePath, "w"), JSON.stringify(data, null, 2));
@@ -42,9 +34,9 @@ const main = () => {
   initSourceDestDir();
 
   // SOURCE_DIR 内の全アイテムを DEST_DIR にコピー
-  fs.readdirSync(SOURCE_DIR).forEach((item: string) => {
-    const srcPath = path.join(SOURCE_DIR, item);
-    const destPath = path.join(DEST_DIR, item);
+  fs.readdirSync(POST_SOURCE_DIR).forEach((item: string) => {
+    const srcPath = path.join(POST_SOURCE_DIR, item);
+    const destPath = path.join(POSTS_DIR, item);
 
     // validate front matter
     const { data, content } = extractFrontMatter(srcPath);
