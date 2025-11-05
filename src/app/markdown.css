@@ -200,6 +200,25 @@ blockquote > :last-child {
   color: #555;
 }
 
+/* --- embed links --- */
+.embed-youtube-container {
+  position: relative;
+  width: 100%;         /* 横幅いっぱいに広げる */
+  padding-bottom: 56.25%; /* 16:9 の比率を維持 */
+  height: 0;
+  overflow: hidden;
+}
+
+.embed-youtube-container .embed-youtube-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+
 
 /* --- Callout --- */
 .callout {

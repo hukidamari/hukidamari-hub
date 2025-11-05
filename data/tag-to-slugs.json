@@ -1,40 +1,8 @@
 {
+  "Introduce": [
+    "introduce"
+  ],
   "sample": [
-    "call-out",
-    "dinner-today-2025-11-05"
-  ],
-  "pet": [
-    "mimic-whispering",
-    "cat-evening",
-    "dog-one-day",
-    "image-file"
-  ],
-  "cute": [
-    "mimic-whispering"
-  ],
-  "relax": [
-    "dinner-today-2025-11-05",
-    "cat-evening"
-  ],
-  "bird": [
-    "bird-tweeting"
-  ],
-  "nature": [
-    "bird-tweeting"
-  ],
-  "sound": [
-    "bird-tweeting"
-  ],
-  "cat": [
-    "cat-evening"
-  ],
-  "dog": [
-    "dog-one-day"
-  ],
-  "environment": [
-    "blue-sky"
-  ],
-  "blue": [
-    "blue-sky"
+    "embed-youtube-sample"
   ]
 }

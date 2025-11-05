@@ -26,6 +26,7 @@ export const markdownToHtml = async (markdown: string): Promise<string> => {
     .convertCardlinkBlocks()
     .convertEmbedWikiLinks()
     .convertWikiLinks()
+    .convertEmbedLinks()
     .converCallouts()
     .mdRender()
     .toString();
@@ -164,4 +165,62 @@ class ConvertingMarkdown {
 
     return this;
   }
+
+  convertEmbedLinks(): ConvertingMarkdown {
+    this.content = this.content.replace(
+      /!\[(.+?)\]\((.+?)\)/g,
+      (match, alt, url) => {
+        const embedYoutubeUrl = embeddableYouTubeUrl(url);
+        if (!embedYoutubeUrl) {
+          return match;
+        }
+
+        return `
+<div class="embed-youtube-container">
+<iframe
+  src="${embedYoutubeUrl}"
+  frameborder="0"
+  allowfullscreen
+  title="YouTube Video${alt ? `: ${alt}` : ""}"
+  class="embed-youtube-video"
+></iframe>
+</div>
+`;
+      }
+    );
+    return this;
+  }
 }
+
+const embeddableYouTubeUrl = (url: string): string | null => {
+  try {
+    const u = new URL(url);
+    const hostname = u.hostname.toLowerCase();
+
+    // YouTubeのドメインかチェック
+    if (
+      hostname !== "www.youtube.com" &&
+      hostname !== "youtube.com" &&
+      hostname !== "youtu.be"
+    ) {
+      return null;
+    }
+
+    let videoId = null;
+
+    // youtube.com/watch?v=xxxx
+    if (hostname.includes("youtube.com")) {
+      videoId = u.searchParams.get("v");
+    }
+
+    // youtu.be/xxxx
+    if (hostname === "youtu.be") {
+      videoId = u.pathname.slice(1); // 先頭の / を削除
+    }
+
+    // 動画IDが取得できれば埋め込み可能
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  } catch {
+    return null;
+  }
+};

@@ -1,14 +1,4 @@
 {
-  "call-out": "callout一覧.md",
-  "mimic-2": "mimic2.md",
-  "test-template": "Test Template.md",
-  "long-title-sample": "これタイトルが長いとどういう表示になるんだろうね。うまく行くと良いけどなあ....md",
-  "mimic-whispering": "ミミックの囁き.md",
-  "dinner-today-2025-11-05": "今日の夜ご飯.md",
-  "bird-tweeting": "小鳥たちのさえずり.md",
-  "cat-evening": "気ままな猫の午後.md",
-  "dog-one-day": "犬の一日.md",
-  "moc-note-with-image": "画像がある記事一覧.md",
-  "image-file": "画像ファイルだね.md",
-  "blue-sky": "青空.md"
+  "introduce": "Vault Blog Coreとは？.md",
+  "embed-youtube-sample": "Youtube動画の埋め込み.md"
 }
