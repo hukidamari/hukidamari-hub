@@ -12,7 +12,8 @@ import {
 } from "../lib/collect-source-files";
 import { canPublish } from "../config/can-publish";
 import { extractFrontMatter, parseFrontMatter } from "../lib/markdown-utils";
-import { DATA_DIR, POST_SOURCE_DIR, POSTS_DIR } from "../config/path";
+import { DATA_DIR, POSTS_DIR } from "../config/path";
+import { POST_SOURCE_DIR } from "../config/external-path";
 
 const filenameToSlug: Record<string, PostSlug> = {};
 const slugToFilename: Record<PostSlug, string> = {};
