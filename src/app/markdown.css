@@ -12,6 +12,9 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+.markdown-body hr {
+  color: #8991b2;
+}
 
 
 /* コードブロック */
