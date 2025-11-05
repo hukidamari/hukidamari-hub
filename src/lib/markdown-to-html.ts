@@ -27,6 +27,7 @@ export const markdownToHtml = async (markdown: string): Promise<string> => {
     .converCallouts()
     .convertEmbedLinks()
     .convertCardlinkBlocks()
+    .convertTabToSpaces()
     .mdRender()
     .escapeHtmlCodeBlocks()
     .convertEmbedWikiLinks()
@@ -51,6 +52,11 @@ class ConvertingMarkdown {
   mdRender(): ConvertingMarkdown {
     const md = markdownit({ html: true, breaks: true });
     this.content = md.render(this.toString());
+    return this;
+  }
+
+  convertTabToSpaces(): ConvertingMarkdown {
+    this.content = this.content.replace(/\t/g, " ".repeat(4));
     return this;
   }
 
