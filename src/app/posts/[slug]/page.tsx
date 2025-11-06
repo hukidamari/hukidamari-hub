@@ -11,6 +11,7 @@ import Tag from "@/components/tag";
 import { Metadata } from "next";
 import { DEFAULT_METADATA, gnerateMetadataTitle } from "@/config/metadata";
 import { getPostUrl, getTagUrl } from "../../../../lib/path-utils";
+import PostCard from "@/components/post-card";
 
 export const generateStaticParams = (): { slug: PostSlug }[] => {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -83,26 +84,18 @@ export default async function BlogPost({
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
       <div className={styles.adjacentPosts}>
-        <div>
-          {adjacentPosts.prev && (
-            <div>
-              <h3>前の記事</h3>
-              <Link href={getPostUrl(adjacentPosts.prev.slug)}>
-                {adjacentPosts.prev.title}
-              </Link>
-            </div>
-          )}
-        </div>
-        <div>
-          {adjacentPosts.next && (
-            <div>
-              <h3>次の記事</h3>
-              <Link href={getPostUrl(adjacentPosts.next.slug)}>
-                {adjacentPosts.next.title}
-              </Link>
-            </div>
-          )}
-        </div>
+        {adjacentPosts.next && (
+          <div>
+            <h2>次の記事</h2>
+            <PostCard post={adjacentPosts.next} />
+          </div>
+        )}
+        {adjacentPosts.prev && (
+          <div>
+            <h2>前の記事</h2>
+            <PostCard post={adjacentPosts.prev} />
+          </div>
+        )}
       </div>
 
       <div className={styles.relatedPosts}>
