@@ -1,4 +1,9 @@
-import { getAllSlugs, getPostBySlug, getRelatedPosts } from "@/lib/blog-utils";
+import {
+  getAdjacentPosts,
+  getAllSlugs,
+  getPostBySlug,
+  getRelatedPosts,
+} from "@/lib/blog-utils";
 import { PostSlug } from "../../../../types/post";
 import styles from "./post.module.css";
 import Link from "next/link";
@@ -48,6 +53,7 @@ export default async function BlogPost({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   const relatedPosts = await getRelatedPosts(post);
+  const adjacentPosts = await getAdjacentPosts(slug);
 
   return (
     <div className={styles.postContainer}>
@@ -76,6 +82,28 @@ export default async function BlogPost({
         className={`markdown-body`}
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
+      <div className={styles.adjacentPosts}>
+        <div>
+          {adjacentPosts.prev && (
+            <div>
+              <h3>前の記事</h3>
+              <Link href={getPostUrl(adjacentPosts.prev.slug)}>
+                {adjacentPosts.prev.title}
+              </Link>
+            </div>
+          )}
+        </div>
+        <div>
+          {adjacentPosts.next && (
+            <div>
+              <h3>次の記事</h3>
+              <Link href={getPostUrl(adjacentPosts.next.slug)}>
+                {adjacentPosts.next.title}
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
 
       <div className={styles.relatedPosts}>
         <h2>関連記事</h2>

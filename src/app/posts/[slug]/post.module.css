@@ -43,6 +43,19 @@
   color: #111;
 }
 
+/* Adjacent Posts */
+.adjacentPosts {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+  border-top: 1px solid #ddd;
+  padding-top: 1.5rem;
+}
+
+.adjacentPosts h3 {
+  font-size: 1rem;
+}
+
 /* --- Related Posts --- */
 .relatedPosts {
   margin-top: 3rem;
