@@ -4,23 +4,24 @@ import {
   allCodeBlocksSimpleRegex,
   allEmbedWikiLinksRegex,
   allWikiLinksRegex,
-  embedImageGenerator,
-  embedMovieGenerator,
-  embedPageGenerator,
-  embedSoundGenerator,
   escapeHtml,
-  imageLinkGenerator,
-  movieLinkGenerator,
-  pageLinkGenerator,
   parseWikiLinkContent,
-  soundLinkGenerator,
-} from "../../lib/markdown-utils";
+} from "../../lib/parse-markdown-utils";
 import {
   IMAGE_EXTENSIONS,
   MOVIE_EXTENSIONS,
   SOUND_EXTENSIONS,
 } from "../../config/extensions";
-import { getPostUrl } from "../../lib/path-utils";
+import {
+  embedImageGenerator,
+  embedMovieGenerator,
+  embedPageGenerator,
+  embedSoundGenerator,
+  imageLinkGenerator,
+  pageLinkGenerator,
+  soundLinkGenerator,
+} from "./convert-markdown-utils";
+import { getPostUrl } from "./routes";
 
 export const markdownToHtml = async (markdown: string): Promise<string> => {
   const result = new ConvertingMarkdown(markdown)
@@ -111,7 +112,7 @@ class ConvertingMarkdown {
       } else if (SOUND_EXTENSIONS.includes(ext)) {
         return soundLinkGenerator(basename, ext);
       } else if (MOVIE_EXTENSIONS.includes(ext)) {
-        return movieLinkGenerator(basename, ext);
+        return soundLinkGenerator(basename, ext);
       } else {
         return alt || filename;
       }

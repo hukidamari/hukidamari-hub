@@ -1,4 +1,4 @@
-import { getPostsPageUrl, getPostsUrl } from "../../lib/path-utils";
+import { getPostsPageUrl, getPostsUrl } from "@/lib/routes";
 import { PostHtml } from "../../types/post";
 import PostList from "./post-list";
 import Link from "next/link";

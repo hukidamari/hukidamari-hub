@@ -2,7 +2,7 @@ import { getAllSlugs, getPaginatedPosts } from "@/lib/blog-utils";
 import PaginatedPosts from "@/components/paginated-posts";
 import { POST_PER_PAGE } from "@/config/pagination";
 import { notFound, redirect } from "next/navigation";
-import { getPostsUrl } from "../../../../../lib/path-utils";
+import { getPostsUrl } from "@/lib/routes";
 
 export const generateStaticParams = (): { page: string }[] => {
   const totalPages = Math.ceil(getAllSlugs().length / POST_PER_PAGE);

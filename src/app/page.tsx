@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import { getRecentPosts } from "@/lib/blog-utils";
 import PostList from "@/components/post-list";
 import PageThumbnail from "@/components/page-thumbnail";
-import { getAboutUrl, getPostsUrl } from "../../lib/path-utils";
+import { getAboutUrl, getPostsUrl } from "@/lib/routes";
 
 export default async function Home() {
   const features = [

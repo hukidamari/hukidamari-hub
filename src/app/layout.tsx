@@ -11,7 +11,7 @@ import {
   getPostsUrl,
   getRssUrl,
   getTagsUrl,
-} from "../../lib/path-utils";
+} from "@/lib/routes";
 
 const fredoka = Fredoka({
   variable: "--font-fredoka",

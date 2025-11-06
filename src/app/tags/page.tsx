@@ -2,7 +2,7 @@ import Tag from "@/components/tag";
 import { getAllTags, getPostCountByTag } from "@/lib/blog-utils";
 import Link from "next/link";
 import styles from "./tags.module.css";
-import { getTagUrl } from "../../../lib/path-utils";
+import { getTagUrl } from "@/lib/routes";
 
 export default function Tags() {
   const tags = getAllTags();

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./about.module.css";
-import { getHomeUrl } from "../../../lib/path-utils";
 import { POSTS_DIR } from "../../../config/path";
+import { getHomeUrl } from "@/lib/routes";
 
 export default function About() {
   const techStack = [

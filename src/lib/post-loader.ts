@@ -1,4 +1,4 @@
-import { getPostMd } from "../../lib/markdown-utils";
+import { getPostMd } from "../../lib/parse-markdown-utils";
 import { PostHtml, PostMeta } from "../../types/post";
 import { markdownToHtml } from "./markdown-to-html";
 import { getAllPostSlugs, slugToFilename } from "./slug-map";

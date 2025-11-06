@@ -11,7 +11,10 @@ import {
   collectThumbnailFile,
 } from "../lib/collect-source-files";
 import { canPublish } from "../config/can-publish";
-import { extractFrontMatter, parseFrontMatter } from "../lib/markdown-utils";
+import {
+  extractFrontMatter,
+  parseFrontMatter,
+} from "../lib/parse-markdown-utils";
 import { DATA_DIR, POSTS_DIR } from "../config/path";
 import { POST_SOURCE_DIR } from "../config/external-path";
 

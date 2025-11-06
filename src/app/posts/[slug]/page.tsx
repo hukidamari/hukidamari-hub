@@ -10,8 +10,8 @@ import Link from "next/link";
 import Tag from "@/components/tag";
 import { Metadata } from "next";
 import { DEFAULT_METADATA, gnerateMetadataTitle } from "@/config/metadata";
-import { getPostUrl, getTagUrl } from "../../../../lib/path-utils";
 import PostCard from "@/components/post-card";
+import { getPostUrl, getTagUrl } from "@/lib/routes";
 
 export const generateStaticParams = (): { slug: PostSlug }[] => {
   return getAllSlugs().map((slug) => ({ slug }));

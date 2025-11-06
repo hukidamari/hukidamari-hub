@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Tag from "@/components/tag";
 import { PostHtml } from "../../types/post";
-import { getPostAssetUrlByFilename, getPostUrl } from "../../lib/path-utils";
+import { getPostAssetUrlByFilename, getPostUrl } from "@/lib/routes";
 import styles from "./post-card.module.css";
 
 const PostCard = ({ post }: { post: PostHtml }) => {
