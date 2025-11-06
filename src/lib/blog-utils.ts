@@ -37,8 +37,8 @@ export const getAdjacentPosts = async (
   const allPosts = await getAllPostsSortedByCreatedAt();
   const currentIndex = allPosts.findIndex((post) => post.slug === slug);
 
-  const prev = allPosts[currentIndex - 1] ?? null;
-  const next = allPosts[currentIndex + 1] ?? null;
+  const prev = allPosts[currentIndex + 1] ?? null;
+  const next = allPosts[currentIndex - 1] ?? null;
 
   return { prev, next };
 };
