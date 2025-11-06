@@ -7,6 +7,10 @@
   ],
   "Introduce": [
     "introduce",
+    "how-to-setup",
     "introduce-detail"
+  ],
+  "setup": [
+    "how-to-setup"
   ]
 }

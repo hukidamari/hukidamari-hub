@@ -2,7 +2,9 @@
 slug: how-to-setup
 title:
 published: true
-tags: []
+tags:
+  - Introduce
+  - setup
 description:
 thumbnail:
 createdAt: 2025-11-06T15:37:20+09:00
@@ -12,7 +14,7 @@ updatedAt: 2025-11-06T15:37:20+09:00
 
 ## リポジトリの準備
 
-まずは Git のリポジトリを準備します。
+まずは Git リポジトリを準備します。
 下記手順で進めてください。
 
 1. [GitHub - no-la/vault-blog-core](https://github.com/no-la/vault-blog-core) に行き、右上にある `Fork` ボタンから fork を作成
@@ -86,5 +88,6 @@ pnpm run dev
 ```
 
 ブラウザで [http://localhost:3000](http://localhost:3000) にアクセスし、このサイトと同じ内容が表示されればセットアップ完了です！🎉
+
 
 
