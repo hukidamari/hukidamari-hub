@@ -2,7 +2,8 @@
 slug: converted-markdown-sample
 title:
 published: true
-tags: []
+tags:
+  - sample
 description:
 thumbnail:
 createdAt: 2025-11-06T00:35:50+09:00
@@ -30,7 +31,6 @@ updatedAt: 2025-11-06T00:35:50+09:00
 	- サブ項目2-1
 	- サブ項目2-2
 * 項目3
-+ 項目4
 ```
 
 - 項目1
@@ -38,7 +38,6 @@ updatedAt: 2025-11-06T00:35:50+09:00
 	- サブ項目2-1
 	- サブ項目2-2
 * 項目3
-+ 項目4
 
 ### 順序付きリスト
 ```
@@ -147,6 +146,8 @@ function hello() {
 ## HTML埋め込み
 ```
 <div style="color:red;">赤文字の例</div> 
+<div style="text-align:right">右寄せもできる</div>
 ```
 
 <div style="color:red;">赤文字の例</div> 
+<div style="text-align:right">右寄せもできる</div>

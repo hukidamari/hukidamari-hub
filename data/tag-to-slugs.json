@@ -1,8 +1,9 @@
 {
+  "sample": [
+    "converted-markdown-sample",
+    "embed-youtube-sample"
+  ],
   "Introduce": [
     "introduce"
-  ],
-  "sample": [
-    "embed-youtube-sample"
   ]
 }

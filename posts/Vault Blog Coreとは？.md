@@ -9,11 +9,8 @@ thumbnail:
 createdAt: 2025-11-05T22:41:48+09:00
 updatedAt: 2025-11-05T22:41:48+09:00
 ---
-
-# Vault Blog Core とは？
-
 Vault Blog Core は、**Markdownベースの軽量ブログフレームワーク**です。  
-Obsidian などのノートエディタで管理している Markdown ファイルをそのままブログとして公開できることを目的に設計されています。
+Obsidian などのノートエディタで管理している Markdown ファイルをそのままブログとして公開することを目的に設計されています。
 
 ## 特徴
 
@@ -23,22 +20,20 @@ Obsidian などのノートエディタで管理している Markdown ファイ�
 - 見出し、リスト、コードブロック、表など標準的な Markdown がそのまま反映
 
 ### 2. Wikiリンク対応
-- `[[別記事タイトル]]` の形式で記事間リンクを作成可能
-- Obsidian のリンクルールをブログでも再現
-- リンク切れ防止のサンプル記事も自動生成可能
+- Obsidian のWikiリンク `[[別記事タイトル]]` の形式で記事間リンクを作成可能
+- 同様に `![[ファイル名.jpg]]` で画像・動画・音声ファイルの埋め込みも可能
 
 ### 3. タグ管理
 - FrontMatter に `tags` を設定するだけで自動分類
 - タグ一覧ページやタグ別記事一覧ページも自動生成
 - 記事の整理・検索が簡単
 
-### 4. OGP / SEO 対応
-- FrontMatter に `description` や `thumbnail` を設定
-- SNS でのシェアや検索エンジン向けのメタ情報も自動生成
+### 4. RSS 対応
+- ビルド時に <a src="/feed.xml">RSS</a> を自動生成
 
-### 5. 画像・動画対応
-- ローカル動画や YouTube 埋め込みにも対応
-- 記事内にリッチメディアを簡単に挿入可能
+### 5. リンクの埋め込み
+- `![タイトル](YouTube動画URL)` で[[Youtube動画の埋め込み]]が可能
+- [GitHub - nekoshita/obsidian-auto-card-link](https://github.com/nekoshita/obsidian-auto-card-link) によるカードリンクに対応
 
 ## まとめ
 
