@@ -10,7 +10,7 @@ thumbnail:
 createdAt: 2025-11-06T15:37:20+09:00
 updatedAt: 2025-11-06T15:37:20+09:00
 ---
-**Vault Blog Core** の導入手順を説明します！
+**Vault Blog Core** の導入手順を説明します。
 
 ## リポジトリの準備
 
