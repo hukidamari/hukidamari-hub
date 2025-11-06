@@ -1,11 +1,7 @@
 import matter from "gray-matter";
 import { FrontMatter, PostMd, PostMeta, PostSlug } from "../types/post";
 import * as fs from "fs";
-import {
-  getPostAssetUrlByFilename,
-  getPostMdFilePath,
-  getPostUrl,
-} from "./path-utils";
+import { getPostAssetUrlByFilename, getPostMdFilePath } from "./path-utils";
 
 export const extractFrontMatter = (filePath: string) => {
   const fileContent = fs.readFileSync(filePath, "utf-8");
