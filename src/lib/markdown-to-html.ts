@@ -77,6 +77,7 @@ class ConvertingMarkdown {
           return alt || basename;
         }
 
+        const filename = `${basename}.${ext}`;
         if (IMAGE_EXTENSIONS.includes(ext)) {
           return embedImageGenerator(basename, ext);
         } else if (SOUND_EXTENSIONS.includes(ext)) {
@@ -84,7 +85,7 @@ class ConvertingMarkdown {
         } else if (MOVIE_EXTENSIONS.includes(ext)) {
           return embedMovieGenerator(basename, ext);
         } else {
-          return alt || basename;
+          return alt || filename;
         }
       }
     );
@@ -101,9 +102,10 @@ class ConvertingMarkdown {
           const slug = filenameToSlug(filename);
           return pageLinkGenerator(basename, getPostUrl(slug));
         }
-        return alt || filename;
+        return alt || basename;
       }
 
+      const filename = `${basename}.${ext}`;
       if (IMAGE_EXTENSIONS.includes(ext)) {
         return imageLinkGenerator(basename, ext);
       } else if (SOUND_EXTENSIONS.includes(ext)) {
@@ -111,7 +113,7 @@ class ConvertingMarkdown {
       } else if (MOVIE_EXTENSIONS.includes(ext)) {
         return movieLinkGenerator(basename, ext);
       } else {
-        return alt || basename;
+        return alt || filename;
       }
     });
     return this;
