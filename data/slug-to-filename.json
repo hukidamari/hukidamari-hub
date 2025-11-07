@@ -3,11 +3,12 @@
   "converted-markdown-sample": "Markdown の変換例.md",
   "introduce-detail": "Vault Blog Coore は何ができる？.md",
   "introduce": "Vault Blog Core とは？.md",
+  "how-to-post": "Vault Blog Core による記事投稿までの手順.md",
+  "how-to-customize": "Vault Blog Core のカスタマイズ.md",
   "how-to-setup": "Vault Blog Core の導入手順.md",
   "deploy-to-vercel": "Vercelにデプロイするまでの手順.md",
   "embed-youtube-sample": "Youtube動画の埋め込み.md",
   "card-link-sample": "カードリンクの埋め込み.md",
   "remark-file-path": "ファイルパスの扱いについて.md",
-  "how-to-post": "実際に記事を書いて投稿するまでの手順.md",
   "post-frontmatter": "投稿記事用フロントマターについて.md"
 }

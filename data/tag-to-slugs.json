@@ -8,21 +8,23 @@
   "introduce": [
     "introduce-detail",
     "introduce",
+    "how-to-post",
     "how-to-setup",
     "deploy-to-vercel",
-    "how-to-post",
     "post-frontmatter"
   ],
-  "setup": [
-    "how-to-setup",
-    "deploy-to-vercel"
-  ],
   "usage": [
+    "how-to-post",
+    "how-to-customize",
     "how-to-setup",
     "deploy-to-vercel",
     "remark-file-path",
-    "how-to-post",
     "post-frontmatter"
+  ],
+  "setup": [
+    "how-to-customize",
+    "how-to-setup",
+    "deploy-to-vercel"
   ],
   "remark": [
     "remark-file-path"
