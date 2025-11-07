@@ -83,6 +83,7 @@ const parseYouTubeUrl = (url: string): string | null => {
 
 export class ConvertingMarkdown {
   private codeBlocks: string[] = [];
+  private inlineCodeBlocks: string[] = [];
   private codeBlockHtmls: string[] = [];
 
   constructor(private content: string) {
@@ -263,6 +264,25 @@ export class ConvertingMarkdown {
       /@@CODE_BLOCK_(\d+)@@/g,
       (_, index) => this.codeBlocks[Number(index)]
     );
+    this.codeBlocks = [];
+    return this;
+  }
+
+  escapeInlineCodeBlocks(): ConvertingMarkdown {
+    this.content = this.content.replace(/`([^`]+)`/g, (block) => {
+      const index = this.inlineCodeBlocks.length;
+      this.inlineCodeBlocks.push(block);
+      return `@@INLINE_CODE_BLOCK_${index}@@`; // placeholder
+    });
+    return this;
+  }
+
+  restoreInlineCodeBlocks(): ConvertingMarkdown {
+    this.content = this.content.replace(
+      /@@INLINE_CODE_BLOCK_(\d+)@@/g,
+      (_, index) => this.inlineCodeBlocks[Number(index)]
+    );
+    this.inlineCodeBlocks = [];
     return this;
   }
 
@@ -283,6 +303,7 @@ export class ConvertingMarkdown {
       /@@CODE_BLOCK_HTML_(\d+)@@/g,
       (_, index) => this.codeBlockHtmls[Number(index)]
     );
+    this.codeBlockHtmls = [];
     return this;
   }
 }
