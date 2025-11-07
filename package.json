@@ -1,5 +1,5 @@
 {
-  "name": "obsidian-blog",
+  "name": "vault-blog-core",
   "version": "0.1.0",
   "private": true,
   "scripts": {
