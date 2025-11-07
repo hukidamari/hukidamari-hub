@@ -14,6 +14,7 @@ import {
   SOUND_EXTENSIONS,
 } from "../../config/extensions";
 import { escapeHtml } from "markdown-it/lib/common/utils.mjs";
+import taskLists from "markdown-it-task-lists";
 
 const embedPageGenerator = (alt: string, url: PostSlug): string => {
   return pageLinkGenerator(alt, url);
@@ -112,7 +113,7 @@ export class ConvertingMarkdown {
   }
 
   mdRender(): ConvertingMarkdown {
-    const md = MarkdownIt({ html: true, breaks: true });
+    const md = MarkdownIt({ html: true, breaks: true }).use(taskLists);
     this.content = md.render(this.toString());
     return this;
   }
