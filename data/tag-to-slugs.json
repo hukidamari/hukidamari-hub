@@ -14,11 +14,13 @@
     "how-to-setup",
     "post-frontmatter",
     "introduce-detail",
-    "deploy-to-vercel"
+    "deploy-to-vercel",
+    "next-develop"
   ],
   "remark": [
     "remark-file-path",
-    "explani-directories"
+    "explani-directories",
+    "next-develop"
   ],
   "usage": [
     "remark-file-path",

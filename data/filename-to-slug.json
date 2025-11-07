@@ -11,5 +11,6 @@
   "Vault Blog Core は何ができる？.md": "introduce-detail",
   "Vercelにデプロイするまでの手順.md": "deploy-to-vercel",
   "Youtube動画の埋め込み.md": "embed-youtube-sample",
-  "カードリンクの埋め込み.md": "card-link-sample"
+  "カードリンクの埋め込み.md": "card-link-sample",
+  "今後の開発予定.md": "next-develop"
 }
