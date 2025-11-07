@@ -1,35 +1,61 @@
 import Link from "next/link";
 import styles from "./about.module.css";
-import { POSTS_DIR } from "../../../config/path";
 import { getHomeUrl } from "@/lib/routes";
 
 export default function About() {
   const techStack = [
-    "Next.js (App Router, SSG)",
+    "Next.js (App Router, SSG対応)",
     "TypeScript",
-    "Markdown運用",
-    "Vercel / GitHub Pagesでのデプロイ",
+    "Markdown 運用",
+    "Vercel / GitHub Pages デプロイ対応",
   ];
 
   const features = [
-    "SSG対応で高速表示",
-    "Markdownで記事管理",
-    "タグ・ページネーション機能",
-    "ロジックと表示部分を分離した設計",
-    "見た目をカスタマイズしやすい構造",
+    "Obsidianなどのローカル環境と連携しやすい構造",
+    "SSGによる高速なページ表示",
+    "Markdownファイルから自動で記事・タグ・ページ生成",
+    "ロジックとUIを分離した柔軟な設計",
+    "デザインやルーティングの自由なカスタマイズが可能",
   ];
 
   return (
     <div className={styles.container}>
-      <h1>プロジェクト詳細 </h1>
+      <h1>Vault Blog Core について</h1>
 
       <section className={styles.section}>
         <h2>概要</h2>
         <p>
-          このフレームワークは、Markdownで記事を書くだけで静的ブログを構築できるNext.jsテンプレートです。
-          記事はSSGで生成され、高速表示が可能です。タグ・ページネーションも対応しています。
-          Markdown エディタは Obsidian を使うことを前提に開発したので、特に
-          Obsidiadn との相性が良いはずです。
+          <strong>Vault Blog Core</strong> は、
+          <strong>
+            Obsidian などのローカルノート環境で書いた Markdown
+          </strong>{" "}
+          をそのまま Web ブログとして公開できるようにするための、
+          <strong>Next.js 製ブログテンプレート</strong>です。
+        </p>
+        <p>
+          投稿データの構造や変換ロジックを分離しており、
+          開発者が「自分の好みのデザイン構成」でブログを作れるように設計されています。
+        </p>
+        <p>
+          プロジェクトのソースコードは
+          <Link
+            href="https://github.com/no-la/vault-blog-core"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.repoLink}
+          >
+            GitHub リポジトリ
+          </Link>
+          で公開しています。
+        </p>
+      </section>
+
+      <section className={styles.section}>
+        <h2>目的</h2>
+        <p>
+          開発主の「Obsidian で書いたノートをそのままブログ化したい」
+          「記事データとデザインを完全に分けたい」
+          という発想から生まれたプロジェクトです。
         </p>
       </section>
 
@@ -52,15 +78,83 @@ export default function About() {
       </section>
 
       <section className={styles.section}>
-        <h2>サンプル使い方</h2>
+        <h2>基本的な使い方</h2>
         <ul>
           <li>
-            <code>./{POSTS_DIR}</code> 配下に Markdown
-            を置くだけで記事が表示されます。
+            Markdown ファイルがあるディレクトリのパスなどを <code>.env</code>{" "}
+            ファイルに設定します
           </li>
-          <li>タグページやカテゴリーページも自動生成されます。</li>
           <li>
-            表示部分とロジック部分が分離されているので、デザインや機能のカスタマイズが容易です。
+            コマンド <code>sh scripts/run-update-posts.sh</code> を実行すると、
+            記事データが自動で収集・解析されます
+          </li>
+          <li>
+            <code>pnpm build</code>{" "}
+            コマンドで、収集・解析したデータを元に各ページを生成します
+          </li>
+          <li>
+            デザイン部分は <code>src/app</code> 配下の React
+            コンポーネントとして分離されており、 CSS Modules や Emotion
+            など自由なスタイル手法でカスタマイズ可能です
+          </li>
+          <li>
+            <p>
+              <strong>
+                より詳細な説明や使い方は、{" "}
+                <Link href="/posts" className={styles.inlineLink}>
+                  投稿一覧ページ
+                </Link>
+                から確認できます。
+              </strong>
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <section className={styles.section}>
+        <h2>想定する利用シーン</h2>
+        <ul>
+          <li>Obsidian ノートをブログ化したい個人開発者</li>
+          <li>SSG（静的サイト生成）型のブログを自作したい人</li>
+          <li>自分のブログを完全に TypeScript で管理したい人</li>
+          <li>Markdown ベースで執筆したいエンジニア・研究者</li>
+        </ul>
+      </section>
+      <section className={styles.section}>
+        <h2>開発者情報</h2>
+        <p>
+          本プロジェクトは{" "}
+          <Link
+            href="https://twitter.com/nola_0216"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.inlineLink}
+          >
+            @nola_0216
+          </Link>{" "}
+          によって開発されています。
+        </p>
+        <p>ご連絡は以下のリンクからどうぞ。</p>
+        <ul>
+          <li>
+            <Link
+              href="https://twitter.com/nola_0216"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.inlineLink}
+            >
+              Twitter (現 X)
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="https://github.com/no-la"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.inlineLink}
+            >
+              GitHub
+            </Link>
           </li>
         </ul>
       </section>

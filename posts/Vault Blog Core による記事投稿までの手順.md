@@ -56,7 +56,7 @@ updatedAt: 2030-01-01T00:00:00+09:00
 
 
 せっかくなので画像ファイルの埋め込みも試してみましょう。
-お好きな画像を `IMAGE_SOURCE_DIR` に置き、`サンプル.md` に追記してください。
+お好きな画像を `IMAGE_SOURCE_DIR` に置き、下記内容を `サンプル.md` に追記してください。
 
 ```
 ## 画像サンプル
@@ -80,7 +80,7 @@ pnpm dev
 
 > [!Note]
 > `scripts/run-update-posts.sh` はUnix系シェルを想定して書かれています。
-> Windows の方は Git Bash などを用いて実行すると良いと思います。あるいは、`scripts/run-update-posts.sh` を直接書き換えても構いません。
+> Windows の方は Git Bash などを用いて実行すると良いと思います。あるいは、`scripts/run-update-posts.sh` を自身の環境用に書き換えてください。
 
 
  [http://localhost:3000](http://localhost:3000) で動きの確認ができたら完了です！

@@ -77,8 +77,10 @@ cp .env.sample .env
 `SITE_URL` については、開発環境での実行用に `"http://localhost:3000"` としています。
 
 > [!Note]
-> 作者は `IMAGE_SOURCE_DIR`, `SOUND_SOURCE_DIR`, `MOVIE_SOURCE_DIR`, `THUMBNAIL_SOURCE_DIR` を全て同じディレクトリにしています。
+> 開発主は `IMAGE_SOURCE_DIR`, `SOUND_SOURCE_DIR`, `MOVIE_SOURCE_DIR`, `THUMBNAIL_SOURCE_DIR` を全て同じディレクトリにしています。
 
+> [!Hint]
+> このページではサンプルのままにしておいても大丈夫だと思いますが、今後 Markdown ファイルの収集コマンド `sh script/run-update-posts.sh` を実行する前に **必ず自分用に変更してください。**
 
 ## 起動確認
 
@@ -91,4 +93,4 @@ pnpm run dev
 ブラウザで [http://localhost:3000](http://localhost:3000) にアクセスし、このサイトと同じ内容が表示されればセットアップ完了です！🎉
 
 次は、[[Vercelにデプロイするまでの手順]]で、実際にデプロイをして、プロジェクトを公開してみましょう！
-
+「まだデプロイはしたくないよ～」という方は、[[Vault Blog Core による記事投稿までの手順]]で、実際に自分の記事を投稿してみましょう！

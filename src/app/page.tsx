@@ -7,11 +7,12 @@ import { getAboutUrl, getPostsUrl } from "@/lib/routes";
 
 export default async function Home() {
   const features = [
-    "SSG 対応で高速表示",
     "Markdownで記事管理",
     "タグ管理",
+    "見た目をカスタマイズしやすい構造",
     "ページネーション対応",
-    "表示部分とロジック部分を分離",
+    "SSG 対応で高速表示",
+    "RSS自動生成",
   ];
   const samplePosts = await getRecentPosts(3);
 
@@ -41,9 +42,11 @@ export default async function Home() {
       </section>
 
       <section className={styles.about}>
-        <h2>使い方</h2>
+        <h2>このサイトについて</h2>
+        このサイトは <strong>Vault Blog Core</strong> の説明 &
+        サンプルサイトです。
         <Link href={getAboutUrl()} className={styles.right}>
-          プロジェクト詳細・使い方はこちら
+          詳細はこちら
         </Link>
       </section>
     </div>

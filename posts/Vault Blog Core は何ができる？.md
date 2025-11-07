@@ -50,6 +50,8 @@ updatedAt: 2025-11-05T23:00:35+09:00
 - [[Youtube動画の埋め込み]]
 - [[Callout の変換例]]
 
+また、[GitHubリポジトリ](https://github.com/no-la/vault-blog-core/tree/main/posts) にて、このサイトにある全記事の変換前の Markdown ファイルを見ることができます。
+
 ## まとめ
 
 **Vault Blog Core** は、Markdown ファイルをもとに静的ブログを生成するためのツールであり、主に以下の2つの処理を行います。
@@ -65,3 +67,5 @@ updatedAt: 2025-11-05T23:00:35+09:00
    * カードリンクや Callout、動画埋め込み、Wikiリンクの変換を行う
 
 これにより、Obsidian などで管理している Markdown を効率的にブログ記事として公開できる環境を提供します。
+
+興味を持ってくれた方は、是非[[Vault Blog Core の導入手順]]を見ながら実際に動かしてみてください！
