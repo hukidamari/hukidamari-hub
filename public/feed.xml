@@ -4,12 +4,19 @@
         <description><![CDATA[Latest posts from Vault Blog Core]]></description>
         <link>http://localhost:3000</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Fri, 07 Nov 2025 05:07:14 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 11 Nov 2025 01:58:15 GMT</lastBuildDate>
         <atom:link href="http://localhost:3000/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[ja]]></language>
         <item>
+            <title><![CDATA[Sample Post]]></title>
+            <description><![CDATA[タイトル 記事を書いていきます。あいうえおかき]]></description>
+            <link>http://localhost:3000//posts/sample-post</link>
+            <guid isPermaLink="true">http://localhost:3000//posts/sample-post</guid>
+            <pubDate>Tue, 11 Nov 2025 01:29:58 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Youtube動画の埋め込み]]></title>
-            <description><![CDATA[Youtube動画の埋め込みサンプル 元のMarkdown ## Youtube動画の埋め込みサンプル ![5歳児に殴られたい君へ。 - YouTube](https://www.youtube.com/watch?v=NoyQs-NDH40)]]></description>
+            <description><![CDATA[Youtube動画の埋め込みサンプル 元のMarkdown ## Youtube動画の埋め込みサンプル ![Gboard 湯呑みバージョン - YouTube](https://www.youtube.com/watch?v=20pC05yisRM&amp;list=PLLkq-mu9c_kYR7DJ4evrYLT82FNCBnqXS&amp;index=5)]]></description>
             <link>http://localhost:3000//posts/embed-youtube-sample</link>
             <guid isPermaLink="true">http://localhost:3000//posts/embed-youtube-sample</guid>
             <pubDate>Sat, 08 Nov 2025 13:47:59 GMT</pubDate>
@@ -23,7 +30,7 @@
         </item>
         <item>
             <title><![CDATA[カードリンクの埋め込み]]></title>
-            <description><![CDATA[カードリンクの埋め込みサンプル GitHub - nekoshita/obsidian-auto-card-link Contribute to nekoshita/obsidian-auto-card-link development by creating an account on GitHub. github.com 元のMarkdown \`\`\`cardlink url: https...]]></description>
+            <description><![CDATA[カードリンクの埋め込みサンプル Vault Blog Core Markdownファイル群をブログとして公開するためのフレームワーク vault-blog-core.vercel.app 元のMarkdown \`\`\`cardlink url: https://vault-blog-core.vercel.app/ title: &quot;Vault Blog Core&quot; desc...]]></description>
             <link>http://localhost:3000//posts/card-link-sample</link>
             <guid isPermaLink="true">http://localhost:3000//posts/card-link-sample</guid>
             <pubDate>Sat, 08 Nov 2025 00:05:53 GMT</pubDate>
@@ -34,6 +41,13 @@
             <link>http://localhost:3000//posts/converted-markdown-sample</link>
             <guid isPermaLink="true">http://localhost:3000//posts/converted-markdown-sample</guid>
             <pubDate>Fri, 07 Nov 2025 15:35:50 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[今後の開発予定]]></title>
+            <description><![CDATA[Vault Blog Core は今後もしばらく機能追加や改良をしていく予定です。 現在予定している or 出来たらいいなと思っている開発は、下記のとおりです。 タグごとの記事一覧でのページネーション OGP 画像の自動生成 コードブロックの構文ハイライト コードブロックにコピーボタンを追加 サイト外 / サイト内リンクの見た目を変える YouTube 以外の埋め込み対応 Twitter 他はなん...]]></description>
+            <link>http://localhost:3000//posts/next-develop</link>
+            <guid isPermaLink="true">http://localhost:3000//posts/next-develop</guid>
+            <pubDate>Fri, 07 Nov 2025 06:20:36 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Vault Blog Core の各ディレクトリの説明]]></title>
@@ -72,7 +86,7 @@
         </item>
         <item>
             <title><![CDATA[Vercelにデプロイするまでの手順]]></title>
-            <description><![CDATA[Next.js のプロジェクトは Vercel にデプロイするのが便利らしく、このサイトも Vercel にデプロイしています。 そこで、Vault Blog Coreの導入手順で用意したプロジェクトをVercelにデプロイするまでの流れを、簡易的にですが、紹介しておきます。 Vercel にデプロイするまでの手順 Vercel にログインし、画面の指示に従って Create New Projec...]]></description>
+            <description><![CDATA[Next.js のプロジェクトは Vercel にデプロイするのが便利らしく、このサイトも Vercel にデプロイしています。 そこで、Vault Blog Core の導入手順で用意したプロジェクトを Vercel にデプロイするまでの流れを、簡易的にですが、紹介しておきます。 Vercel にデプロイするまでの手順 Vercel にログインし、画面の指示に従って Create New Pro...]]></description>
             <link>http://localhost:3000//posts/deploy-to-vercel</link>
             <guid isPermaLink="true">http://localhost:3000//posts/deploy-to-vercel</guid>
             <pubDate>Wed, 05 Nov 2025 16:17:27 GMT</pubDate>

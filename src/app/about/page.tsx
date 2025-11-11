@@ -47,6 +47,18 @@ export default function About() {
           </Link>
           で公開しています。
         </p>
+        <p>
+          このサイト管理用の Obsidian Vault も
+          <Link
+            href="https://github.com/no-la/vault-blog-sample-vault/tree/main"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.repoLink}
+          >
+            別の GitHub リポジトリ
+          </Link>
+          で公開しています。
+        </p>
       </section>
 
       <section className={styles.section}>
@@ -83,39 +95,65 @@ export default function About() {
             Markdown で記事を書く
             <div>
               <Image
-                src="/images/sample01.png"
-                alt="sample01"
-                width={500}
+                src="/images/sample05.png"
+                alt="sample05"
+                width={520}
                 height={500}
                 className={styles.shadow}
               ></Image>
             </div>
           </li>
           <li>
-            コマンド <code>sh scripts/run-update-posts.sh</code> を実行すると、
-            記事データが自動で収集・解析されます
+            コマンド <code>sh scripts/run-update-posts.sh</code> で
+            記事データを自動で収集・解析
+            <div>
+              <Image
+                src="/images/sample02.png"
+                alt="sample02"
+                width={620}
+                height={100}
+                className={styles.shadow}
+              ></Image>
+            </div>
           </li>
           <li>
             <code>pnpm build</code>{" "}
-            コマンドで、収集・解析したデータを元に各ページを生成します
+            コマンドで、収集・解析したデータを元に各ページを生成
+            <div>
+              <Image
+                src="/images/sample03.png"
+                alt="sample03"
+                width={500}
+                height={220}
+                className={styles.shadow}
+              ></Image>
+            </div>
           </li>
           <li>
-            デザイン部分は <code>src/app</code> 配下の React
-            コンポーネントとして分離されており、 CSS Modules や Emotion
-            など自由なスタイル手法でカスタマイズ可能です
-          </li>
-          <li>
-            <p>
-              <strong>
-                より詳細な説明や使い方は、{" "}
-                <Link href="/posts" className={styles.inlineLink}>
-                  投稿一覧ページ
-                </Link>
-                から確認できます。
-              </strong>
-            </p>
+            投稿完了!🎉
+            <div>
+              <Image
+                src="/images/sample06.png"
+                alt="sample06"
+                width={500}
+                height={550}
+                className={styles.shadow}
+              ></Image>
+            </div>
           </li>
         </ol>
+        <div>
+          <p>
+            <strong>
+              より詳細な説明や導入方法・使い方は、{" "}
+              <Link href="/posts" className={styles.inlineLink}>
+                投稿一覧ページ
+              </Link>
+              {"  "}
+              から確認できます。
+            </strong>
+          </p>
+        </div>
       </section>
 
       <section className={styles.section}>
@@ -150,7 +188,7 @@ export default function About() {
               rel="noopener noreferrer"
               className={styles.inlineLink}
             >
-              Twitter (現 X)
+              Twitter
             </Link>
           </li>
           <li>

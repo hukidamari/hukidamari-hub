@@ -61,7 +61,7 @@ export const collectThumbnailFile = (filename: string) => {
 };
 const collectSourceFile = (srcPath: string, destPath: string) => {
   if (!fs.existsSync(srcPath)) {
-    console.warn(`Not Found: source directory ${srcPath} is not found.`);
+    // console.warn(`Not Found: source directory ${srcPath} is not found.`);
     return;
   }
   if (fs.existsSync(destPath)) {

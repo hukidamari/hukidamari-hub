@@ -1,7 +1,6 @@
 {
   "Callout の変換例.md": "callout-sample",
   "Markdown の変換例.md": "converted-markdown-sample",
-  "Sample Post.md": "sample-post",
   "Vault Blog Core とは？.md": "introduce",
   "Vault Blog Core におけるファイルパスの扱いについて.md": "remark-file-path",
   "Vault Blog Core による記事投稿までの手順.md": "how-to-post",
