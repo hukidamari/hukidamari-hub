@@ -111,9 +111,7 @@ const processSinglePost = (
   // 1. FrontMatterを抽出し、公開可能かチェック
   const { data, content } = extractFrontMatter(srcPath);
   if (!canPublish(data)) {
-    console.log(
-      `Skipping unpublished post: ${filename} because your canPublish function returned false.`
-    );
+    console.log(`Skipping: ${filename}; canPublish() returned false.`);
     return null;
   }
 
@@ -165,7 +163,8 @@ const processAllPosts = (): MetadataBundle => {
       tagToSlugs[tag].push(meta.slug);
     });
   }
-
+  console.log("-".repeat(40));
+  console.log(`${Object.keys(slugToMetadata).length} posts are collected.`);
   return { filenameToSlug, slugToFilename, slugToMetadata, tagToSlugs };
 };
 
