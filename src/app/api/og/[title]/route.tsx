@@ -12,11 +12,11 @@ const titleColor = (): string => {
   return "#0077ff";
 };
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const titleTemp = searchParams.get("title");
-  const title = titleTemp || "";
-
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ title: string }> }
+) {
+  const { title } = await params;
   // Font loading, process.cwd() is Next.js project directory
   const zenKakuGothicNewBold = await readFile(
     join(process.cwd(), "assets/Fredoka-Medium.ttf")

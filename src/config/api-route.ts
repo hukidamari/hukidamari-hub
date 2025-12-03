@@ -1,1 +1,1 @@
-export const ogApiUrl = (title: string) => `/api/og?title=${title}`;
+export const ogApiUrl = (title: string) => `/api/og/${title}`;

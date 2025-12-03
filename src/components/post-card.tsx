@@ -21,7 +21,6 @@ const PostCard = ({ post }: { post: PostHtml }) => {
             src={ogApiUrl(post.title)}
             alt={`${post.title}のサムネイル`}
             fill
-            unoptimized
           />
         )}
       </div>
