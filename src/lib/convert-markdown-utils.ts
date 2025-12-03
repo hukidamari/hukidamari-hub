@@ -89,6 +89,7 @@ export class ConvertingMarkdown {
   private codeBlocks: string[] = [];
   private inlineCodeBlocks: string[] = [];
   private codeBlockHtmls: string[] = [];
+  private codeBlockWrappers: string[] = [];
   headings: HeadingWithId[] = [];
 
   constructor(private content: string) {
@@ -105,10 +106,12 @@ export class ConvertingMarkdown {
       .restoreInlineCodeBlocks()
       .restoreCodeBlocks()
       .mdRender()
+      .escapeCodeBlockWrappers()
       .escapeHtmlCodeBlocks()
       .convertEmbedWikiLinks()
       .convertWikiLinks()
       .restoreHtmlCodeBlocks()
+      .restoreCodeBlockWrappers()
       .addHtmlTableWrapper()
       .toString();
   }
@@ -385,6 +388,27 @@ export class ConvertingMarkdown {
       (_, index) => this.codeBlockHtmls[Number(index)]
     );
     this.codeBlockHtmls = [];
+    return this;
+  }
+
+  escapeCodeBlockWrappers(): ConvertingMarkdown {
+    this.content = this.content.replace(
+      /<div class="code-block-wrapper">[\s\S]*?<\/div>/g,
+      (block) => {
+        const index = this.codeBlockWrappers.length;
+        this.codeBlockWrappers.push(block);
+        return `@@CODE_BLOCK_WRAPPER_${index}@@`; // placeholder
+      }
+    );
+    return this;
+  }
+
+  restoreCodeBlockWrappers(): ConvertingMarkdown {
+    this.content = this.content.replace(
+      /@@CODE_BLOCK_WRAPPER_(\d+)@@/g,
+      (_, index) => this.codeBlockWrappers[Number(index)]
+    );
+    this.codeBlockWrappers = [];
     return this;
   }
 
