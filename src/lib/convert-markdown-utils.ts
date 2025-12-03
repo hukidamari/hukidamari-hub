@@ -1,5 +1,5 @@
 import MarkdownIt from "markdown-it";
-import { PostSlug } from "../../types/post";
+import { HeadingWithId, PostSlug } from "../../types/post";
 import { getPostAssetUrlByFilename, getPostUrl } from "./routes";
 import {
   allCodeBlocksSimpleRegex,
@@ -15,6 +15,7 @@ import {
 } from "../../config/extensions";
 import { escapeHtml } from "markdown-it/lib/common/utils.mjs";
 import taskLists from "markdown-it-task-lists";
+import anchor from "markdown-it-anchor";
 
 const embedPageGenerator = (alt: string, url: PostSlug): string => {
   return pageLinkGenerator(alt, url);
@@ -86,6 +87,7 @@ export class ConvertingMarkdown {
   private codeBlocks: string[] = [];
   private inlineCodeBlocks: string[] = [];
   private codeBlockHtmls: string[] = [];
+  headings: HeadingWithId[] = [];
 
   constructor(private content: string) {
     this.content = content;
@@ -105,6 +107,7 @@ export class ConvertingMarkdown {
       .convertEmbedWikiLinks()
       .convertWikiLinks()
       .restoreHtmlCodeBlocks()
+      .addHtmlTableWrapper()
       .toString();
   }
 
@@ -113,7 +116,19 @@ export class ConvertingMarkdown {
   }
 
   mdRender(): ConvertingMarkdown {
-    const md = MarkdownIt({ html: true, breaks: true }).use(taskLists);
+    const md = MarkdownIt({ html: true, breaks: true })
+      .use(taskLists)
+      .use(anchor, {
+        level: [1, 2, 3],
+        permalink: anchor.permalink.headerLink(),
+        callback: (token, info) => {
+          this.headings.push({
+            level: token.markup.trim().length,
+            text: info.title,
+            id: info.slug,
+          });
+        },
+      });
     this.content = md.render(this.toString());
     return this;
   }
@@ -366,6 +381,15 @@ export class ConvertingMarkdown {
       (_, index) => this.codeBlockHtmls[Number(index)]
     );
     this.codeBlockHtmls = [];
+    return this;
+  }
+
+  addHtmlTableWrapper(): ConvertingMarkdown {
+    // <table>〜</table> をすべて検索してラップする
+    this.content = this.content.replace(
+      /<table[\s\S]*?<\/table>/g,
+      (match) => `<div class="table-wrapper">${match}</div>`
+    );
     return this;
   }
 }

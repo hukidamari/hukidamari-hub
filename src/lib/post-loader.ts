@@ -1,36 +1,22 @@
-import { POST_DESCRIPTION_LIMIT } from "@/config/post-settings";
-import { getPostMd } from "../../lib/parse-markdown-utils";
+import { generateDescription, getPostMd } from "../../lib/parse-markdown-utils";
 import { PostHtml, PostMeta } from "../../types/post";
-import { markdownToHtml } from "./markdown-to-html";
 import { getAllPostSlugs, slugToFilename } from "./slug-map";
+import { ConvertingMarkdown } from "./convert-markdown-utils";
 
 export const getPostHtml = async (slug: string): Promise<PostHtml> => {
   const postMd = getPostMd(slugToFilename(slug));
-  const contentHtml = await markdownToHtml(postMd.contentMd);
+  const convertingMarkdown = new ConvertingMarkdown(postMd.contentMd);
+  const contentHtml = convertingMarkdown.executeAll();
   const postHtml: PostHtml = {
     ...postMd,
     ...{
       contentHtml: contentHtml,
-      description: generateDescription(postMd, contentHtml),
+      description: generateDescription(postMd.description, contentHtml),
+      headings: convertingMarkdown.headings,
     },
   };
   return postHtml;
 };
-
-const generateDescription = (postMd: PostMeta, contentHtml: string): string => {
-  if (postMd.description) {
-    return postMd.description;
-  }
-
-  const textContent = contentHtml.replace(/<[^>]+>/g, "");
-  const cleanText = textContent.replace(/\s+/g, " ").trim();
-
-  if (cleanText.length > POST_DESCRIPTION_LIMIT) {
-    return cleanText.slice(0, POST_DESCRIPTION_LIMIT) + "...";
-  }
-  return cleanText;
-};
-
 export const getAllPostMetas = (): PostMeta[] => {
   const allSlugs = getAllPostSlugs();
   return allSlugs.map((slug) => getPostMd(slugToFilename(slug)));

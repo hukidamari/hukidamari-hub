@@ -7,7 +7,7 @@ import { getTagUrl } from "@/lib/routes";
 export default function Tags() {
   const tags = getAllTags();
   return (
-    <div>
+    <main>
       <h1>タグ一覧</h1>
       <div>
         <ul className={styles.tagList}>
@@ -20,6 +20,6 @@ export default function Tags() {
           ))}
         </ul>
       </div>
-    </div>
+    </main>
   );
 }

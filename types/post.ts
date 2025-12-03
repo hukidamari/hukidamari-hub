@@ -5,6 +5,7 @@ export interface PostMd extends PostMeta {
 export interface PostHtml extends PostMeta {
   contentHtml: string;
   description: string;
+  headings: HeadingWithId[];
 }
 
 export interface PostMeta {
@@ -34,3 +35,18 @@ export type SlugFilenameMap = Record<string, string>;
 export type PostSlug = string;
 export type PostTitle = string;
 export type PostTag = string;
+
+export interface HeadingWithId {
+  level: number;
+  text: string;
+  id: string;
+}
+
+export interface ReactionData {
+  emoji: string;
+  count: number;
+}
+
+export interface PostReactionDatas {
+  [postSlug: string]: ReactionData[];
+}

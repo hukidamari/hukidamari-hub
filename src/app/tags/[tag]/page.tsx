@@ -11,11 +11,11 @@ export default async function TagPage({ params }: { params: { tag: string } }) {
   const { tag } = await params;
   const posts = await getPostsByTag(tag, { oldToNew: true });
   return (
-    <div>
+    <main>
       <h1>
         <Tag>{`#${tag}`}</Tag>の記事一覧
       </h1>
       <PostList posts={posts} />
-    </div>
+    </main>
   );
 }

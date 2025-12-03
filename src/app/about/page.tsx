@@ -19,7 +19,7 @@ export default function About() {
   ];
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <h1>Vault Blog Core について</h1>
 
       <section className={styles.section}>
@@ -186,7 +186,7 @@ export default function About() {
               href="https://twitter.com/nola_0216"
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.inlineLink}
+              className={styles.snsLink}
             >
               Twitter
             </Link>
@@ -196,7 +196,7 @@ export default function About() {
               href="https://github.com/no-la"
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.inlineLink}
+              className={styles.snsLink}
             >
               GitHub
             </Link>
@@ -207,6 +207,6 @@ export default function About() {
       <Link href={getHomeUrl()} className={styles.homeLink}>
         ← トップページへ戻る
       </Link>
-    </div>
+    </main>
   );
 }

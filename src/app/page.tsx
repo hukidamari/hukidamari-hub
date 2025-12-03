@@ -16,7 +16,7 @@ export default async function Home() {
   const samplePosts = await getRecentPosts(3);
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <PageThumbnail alt="Vault Blog Thumbnail" src="/images/ogp-main.jpg" />
       <h1>Vault Blog Core</h1>
       <p className={styles.catchcopy}>
@@ -35,19 +35,23 @@ export default async function Home() {
       <section className={styles.posts}>
         <h2>サンプル記事</h2>
         <PostList posts={samplePosts} />
-        <Link href={getPostsUrl()} className={styles.right}>
-          もっと見る
-        </Link>
+        <p>
+          <Link href={getPostsUrl()} className={styles.right}>
+            もっと見る
+          </Link>
+        </p>
       </section>
 
       <section className={styles.about}>
         <h2>このサイトについて</h2>
         このサイトは <strong>Vault Blog Core</strong> の説明 &
         サンプルサイトです。
-        <Link href={getAboutUrl()} className={styles.right}>
-          詳細はこちら
-        </Link>
+        <p>
+          <Link href={getAboutUrl()} className={styles.right}>
+            詳細はこちら
+          </Link>
+        </p>
       </section>
-    </div>
+    </main>
   );
 }

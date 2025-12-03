@@ -30,5 +30,9 @@ export default async function BlogPosts({
     oldToNew: true,
   });
 
-  return <PaginatedPosts posts={posts} page={page} totalPages={totalPages} />;
+  return (
+    <main>
+      <PaginatedPosts posts={posts} page={page} totalPages={totalPages} />
+    </main>
+  );
 }

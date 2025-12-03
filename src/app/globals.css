@@ -49,6 +49,19 @@ video {
   font-size: 2rem;
 }
 
+a {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+p a {
+  border-bottom: 1px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+h1, h2, h3, h4 {
+    scroll-margin-top: 9rem; /* ヘッダーの高さに合わせる */
+}
 .title a {
   text-decoration: none;
   color: var(--color-accent);
@@ -91,10 +104,10 @@ nav {
   color: #ff8c42;
 }
 
-.main-content {
+main {
   max-width: 800px;
   margin: 2rem auto;
-  padding: 0 1.2rem;
+  padding: 1.5rem 1.5rem;
   padding-bottom: 32px;
   background: #fff;
   border: 1px solid var(--color-border);

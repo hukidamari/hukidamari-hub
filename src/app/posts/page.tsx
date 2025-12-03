@@ -9,5 +9,9 @@ export default async function Posts() {
   });
   const tottalPages = Math.ceil(getAllSlugs().length / POST_PER_PAGE);
 
-  return <PaginatedPosts posts={posts} page={page} totalPages={tottalPages} />;
+  return (
+    <main>
+      <PaginatedPosts posts={posts} page={page} totalPages={tottalPages} />
+    </main>
+  );
 }

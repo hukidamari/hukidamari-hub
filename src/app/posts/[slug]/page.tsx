@@ -12,6 +12,7 @@ import { Metadata } from "next";
 import { DEFAULT_METADATA, gnerateMetadataTitle } from "@/config/metadata";
 import PostCard from "@/components/post-card";
 import { getPostUrl, getTagUrl } from "@/lib/routes";
+import TableOfContents from "@/components/table-of-content";
 
 export const generateStaticParams = (): { slug: PostSlug }[] => {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -57,68 +58,73 @@ export default async function BlogPost({
   const adjacentPosts = await getAdjacentPosts(slug);
 
   return (
-    <div className={styles.postContainer}>
-      <div className={styles.metadataContainer}>
-        <div className={styles.dateContainer}>
-          <p className={`${styles.date} ${styles.createdAt}`}>
-            投稿日:{post.createdAt.toLocaleDateString("ja-JP")}
-          </p>
-          <p className={`${styles.date} ${styles.updatedAt}`}>
-            更新日:{post.updatedAt.toLocaleDateString("ja-JP")}
-          </p>
+    <div className={styles.container}>
+      <main className={styles.postContainer}>
+        <div className={styles.metadataContainer}>
+          <div className={styles.dateContainer}>
+            <p className={`${styles.date} ${styles.createdAt}`}>
+              投稿日:{post.createdAt.toLocaleDateString("ja-JP")}
+            </p>
+            <p className={`${styles.date} ${styles.updatedAt}`}>
+              更新日:{post.updatedAt.toLocaleDateString("ja-JP")}
+            </p>
+          </div>
+
+          <ul className={styles.tagContainer}>
+            {post.tags.map((tag) => (
+              <li key={tag} className={styles.tag}>
+                <Link href={getTagUrl(tag)}>
+                  <Tag>{`#${tag}`}</Tag>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <h1>{post.title}</h1>
+        </div>
+        <div
+          className={`markdown-body`}
+          dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+        />
+        <div className={styles.adjacentPosts}>
+          {adjacentPosts.next && (
+            <div>
+              <h2>次の記事</h2>
+              <PostCard post={adjacentPosts.next} />
+            </div>
+          )}
+          {adjacentPosts.prev && (
+            <div>
+              <h2>前の記事</h2>
+              <PostCard post={adjacentPosts.prev} />
+            </div>
+          )}
         </div>
 
-        <ul className={styles.tagContainer}>
-          {post.tags.map((tag) => (
-            <li key={tag} className={styles.tag}>
-              <Link href={getTagUrl(tag)}>
-                <Tag>{`#${tag}`}</Tag>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <h1>{post.title}</h1>
-      </div>
-      <div
-        className={`markdown-body`}
-        dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-      />
-      <div className={styles.adjacentPosts}>
-        {adjacentPosts.next && (
-          <div>
-            <h2>次の記事</h2>
-            <PostCard post={adjacentPosts.next} />
-          </div>
-        )}
-        {adjacentPosts.prev && (
-          <div>
-            <h2>前の記事</h2>
-            <PostCard post={adjacentPosts.prev} />
-          </div>
-        )}
-      </div>
-
-      <div className={styles.relatedPosts}>
-        <h2>関連記事</h2>
-        <ul>
-          {relatedPosts.map((post) => (
-            <li key={post.slug}>
-              <span>
-                <Link href={getPostUrl(post.slug)}>{post.title}</Link>
-                <ul className={styles.tagContainer}>
-                  {post.tags.map((tag) => (
-                    <li key={tag}>
-                      <Link href={getTagUrl(tag)}>
-                        <Tag>{`#${tag}`}</Tag>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+        <div className={styles.relatedPosts}>
+          <h2>関連記事</h2>
+          <ul>
+            {relatedPosts.map((post) => (
+              <li key={post.slug}>
+                <span>
+                  <Link href={getPostUrl(post.slug)}>{post.title}</Link>
+                  <ul className={styles.tagContainer}>
+                    {post.tags.map((tag) => (
+                      <li key={tag}>
+                        <Link href={getTagUrl(tag)}>
+                          <Tag>{`#${tag}`}</Tag>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </main>
+      <aside className={styles.tocContainer}>
+        <TableOfContents headings={post.headings} />
+      </aside>
     </div>
   );
 }
