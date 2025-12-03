@@ -16,8 +16,7 @@
 .thumbnailWrapper {
   position: relative;
   min-width: 40%;
-  max-width: 640px;
-  aspect-ratio: 16 / 9;
+  height: 10rem;
   overflow: hidden;
   border-radius: 8px;
   margin-bottom: 0.75rem;

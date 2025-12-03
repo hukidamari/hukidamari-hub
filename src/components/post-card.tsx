@@ -4,21 +4,27 @@ import Tag from "@/components/tag";
 import { PostHtml } from "../../types/post";
 import { getPostAssetUrlByFilename, getPostUrl } from "@/lib/routes";
 import styles from "./post-card.module.css";
+import { ogApiUrl } from "@/config/api-route";
 
 const PostCard = ({ post }: { post: PostHtml }) => {
   return (
     <Link href={getPostUrl(post.slug)} className={styles.link}>
-      {post.thumbnail && (
-        <div className={styles.thumbnailWrapper}>
+      <div className={styles.thumbnailWrapper}>
+        {post.thumbnail ? (
           <Image
             src={getPostAssetUrlByFilename(post.thumbnail)}
             alt={`${post.title}のサムネイル`}
             fill
-            sizes="(max-width: 768px) 100vw, 640px"
-            className={styles.thumbnail}
           />
-        </div>
-      )}
+        ) : (
+          <Image
+            src={ogApiUrl(post.title)}
+            alt={`${post.title}のサムネイル`}
+            fill
+            unoptimized
+          />
+        )}
+      </div>
       <div className={styles.itemText}>
         <div className={styles.postTitleContainer}>
           <h3 className={styles.postTitle}>{post.title}</h3>
