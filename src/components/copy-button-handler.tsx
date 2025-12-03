@@ -1,8 +1,11 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 const CopyButtonHandler = () => {
+  const pathname = usePathname();
+
   useEffect(() => {
     document.querySelectorAll<HTMLButtonElement>(".copy-btn").forEach((btn) => {
       btn.addEventListener("click", async () => {
@@ -16,7 +19,7 @@ const CopyButtonHandler = () => {
         }
       });
     });
-  }, []);
+  }, [pathname]);
 
   return null; // UI はなし
 };
