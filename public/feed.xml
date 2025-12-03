@@ -4,103 +4,103 @@
         <description><![CDATA[Latest posts from Vault Blog Core]]></description>
         <link>http://localhost:3000</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Tue, 11 Nov 2025 01:58:15 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 03 Dec 2025 09:22:13 GMT</lastBuildDate>
         <atom:link href="http://localhost:3000/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[ja]]></language>
         <item>
-            <title><![CDATA[Sample Post]]></title>
-            <description><![CDATA[タイトル 記事を書いていきます。あいうえおかき]]></description>
-            <link>http://localhost:3000//posts/sample-post</link>
-            <guid isPermaLink="true">http://localhost:3000//posts/sample-post</guid>
-            <pubDate>Tue, 11 Nov 2025 01:29:58 GMT</pubDate>
+            <title><![CDATA[シンタックスハイライトについて]]></title>
+            <description><![CDATA[シンタックスハイライトについては、[Prism](https://prismjs.com/) (より正確には [markdown-it-prism - npm](https://www.npmjs.c...]]></description>
+            <link>http://localhost:3000//posts/syntax-highlight</link>
+            <guid isPermaLink="true">http://localhost:3000//posts/syntax-highlight</guid>
+            <pubDate>Wed, 03 Dec 2025 07:49:43 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Youtube動画の埋め込み]]></title>
-            <description><![CDATA[Youtube動画の埋め込みサンプル 元のMarkdown ## Youtube動画の埋め込みサンプル ![Gboard 湯呑みバージョン - YouTube](https://www.youtube.com/watch?v=20pC05yisRM&amp;list=PLLkq-mu9c_kYR7DJ4evrYLT82FNCBnqXS&amp;index=5)]]></description>
+            <description><![CDATA[## Youtube動画の埋め込みサンプル ![Gboard 湯呑みバージョン - YouTube](https://www.youtube.com/watch?v=20pC05yisRM&list=...]]></description>
             <link>http://localhost:3000//posts/embed-youtube-sample</link>
             <guid isPermaLink="true">http://localhost:3000//posts/embed-youtube-sample</guid>
             <pubDate>Sat, 08 Nov 2025 13:47:59 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Callout の変換例]]></title>
-            <description><![CDATA[Callout変換サンプル Note サンプルテキスト。 Abstract Summary Tldr Info Todo Tip Hint Important Success Check Done Question Help Faq Warning Caution Attention Failure Fail Missing Danger Error Bug Example Quote Cite ...]]></description>
+            <description><![CDATA[## Callout変換サンプル > [!Note] > サンプルテキスト。 > [!Abstract] > [!Summary] > [!Tldr] > [!Info] > [!Todo] > [!...]]></description>
             <link>http://localhost:3000//posts/callout-sample</link>
             <guid isPermaLink="true">http://localhost:3000//posts/callout-sample</guid>
             <pubDate>Sat, 08 Nov 2025 00:23:29 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[カードリンクの埋め込み]]></title>
-            <description><![CDATA[カードリンクの埋め込みサンプル Vault Blog Core Markdownファイル群をブログとして公開するためのフレームワーク vault-blog-core.vercel.app 元のMarkdown \`\`\`cardlink url: https://vault-blog-core.vercel.app/ title: &quot;Vault Blog Core&quot; desc...]]></description>
+            <description><![CDATA[## カードリンクの埋め込みサンプル ```cardlink url: https://vault-blog-core.vercel.app/ title: "Vault Blog Core" des...]]></description>
             <link>http://localhost:3000//posts/card-link-sample</link>
             <guid isPermaLink="true">http://localhost:3000//posts/card-link-sample</guid>
             <pubDate>Sat, 08 Nov 2025 00:05:53 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Markdown の変換例]]></title>
-            <description><![CDATA[見出しサンプル 強調 *斜体* / _斜体_ **太字** / __太字__ ***太字かつ斜体*** / ___太字かつ斜体___ 斜体 / 斜体 太字 / 太字 太字かつ斜体 / 太字かつ斜体 リスト 無順序リスト - 項目1 - 項目2 - サブ項目2-1 - サブ項目2-2 * 項目3 項目1 項目2 サブ項目2-1 サブ項目2-2 項目3 順序付きリスト 1. 項目1 2. 項目2 1....]]></description>
+            <description><![CDATA[# 見出しサンプル ## 強調 ``` *斜体* / _斜体_ **太字** / __太字__ ***太字かつ斜体*** / ___太字かつ斜体___ ``` *斜体* / _斜体_ **太字** /...]]></description>
             <link>http://localhost:3000//posts/converted-markdown-sample</link>
             <guid isPermaLink="true">http://localhost:3000//posts/converted-markdown-sample</guid>
             <pubDate>Fri, 07 Nov 2025 15:35:50 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[今後の開発予定]]></title>
-            <description><![CDATA[Vault Blog Core は今後もしばらく機能追加や改良をしていく予定です。 現在予定している or 出来たらいいなと思っている開発は、下記のとおりです。 タグごとの記事一覧でのページネーション OGP 画像の自動生成 コードブロックの構文ハイライト コードブロックにコピーボタンを追加 サイト外 / サイト内リンクの見た目を変える YouTube 以外の埋め込み対応 Twitter 他はなん...]]></description>
+            <description><![CDATA[**Vault Blog Core** は今後もしばらく機能追加や改良をしていく予定です。 現在予定している or 出来たらいいなと思っている開発は、下記のとおりです。 - [ ] タグごとの記事一覧...]]></description>
             <link>http://localhost:3000//posts/next-develop</link>
             <guid isPermaLink="true">http://localhost:3000//posts/next-develop</guid>
             <pubDate>Fri, 07 Nov 2025 06:20:36 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Vault Blog Core の各ディレクトリの説明]]></title>
-            <description><![CDATA[Vault Blog Core の各ディレクトリの役割・使い方を説明をします。 主要なフォルダは下記のとおりです。 . ├─ config ├─ data ├─ lib ├─ posts ├─ public │ ├─ images │ └─ post-assets ├─ scripts ├─ src │ ├─ app │ │ ├─ about │ │ ├─ posts │ │ │ ├─ page ...]]></description>
+            <description><![CDATA[**Vault Blog Core** の各ディレクトリの役割・使い方を説明をします。 主要なフォルダは下記のとおりです。 ``` . ├─ config ├─ data ├─ lib ├─ post...]]></description>
             <link>http://localhost:3000//posts/explani-directories</link>
             <guid isPermaLink="true">http://localhost:3000//posts/explani-directories</guid>
             <pubDate>Fri, 07 Nov 2025 02:51:48 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Vault Blog Core のカスタマイズ]]></title>
-            <description><![CDATA[Vault Blog Core を用いて自分だけのブログを作る方法を説明します。 現時点では、主に以下の4つのカスタマイズを想定しています。 環境変数の設定 投稿条件の変更 ルーティングの変更 見た目の変更 1. 環境変数の設定 これについてはVault Blog Core の導入手順で説明しています。 2. 投稿条件の変更 ここでは、どのMarkdownファイルを「記事として公開するか」の条件を...]]></description>
+            <description><![CDATA[**Vault Blog Core** を用いて自分だけのブログを作る方法を説明します。 現時点では、主に以下の4つのカスタマイズを想定しています。 1. 環境変数の設定 2. 投稿条件の変更 3. ...]]></description>
             <link>http://localhost:3000//posts/how-to-customize</link>
             <guid isPermaLink="true">http://localhost:3000//posts/how-to-customize</guid>
             <pubDate>Thu, 06 Nov 2025 22:55:15 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Vault Blog Core の投稿記事用フロントマターについて]]></title>
-            <description><![CDATA[Vault Blog Core で投稿するための Markdown ファイルのフロントマターを説明します。 フロントマターのテンプレート テンプレートはこちらで、YAML フロントマターを想定しています。 --- slug: title: published: false tags: description: thumbnail: createdAt: updatedAt: --- Note gr...]]></description>
+            <description><![CDATA[**Vault Blog Core** で投稿するための Markdown ファイルのフロントマターを説明します。 ## フロントマターのテンプレート テンプレートはこちらで、YAML フロントマター...]]></description>
             <link>http://localhost:3000//posts/post-frontmatter</link>
             <guid isPermaLink="true">http://localhost:3000//posts/post-frontmatter</guid>
             <pubDate>Thu, 06 Nov 2025 02:49:24 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Vault Blog Core におけるファイルパスの扱いについて]]></title>
-            <description><![CDATA[Vault Blog Core における投稿用ファイルのパスの扱いには、いくつか注意点があります。 Markdown ファイル、画像、音声、動画など、すべての種類のファイルに共通して次の点に注意してください。 ディレクトリ構造は入れ子にしない Vault Blog Core の導入手順 などで説明した POST_SOURCE_DIR IMAGE_SOURCE_DIR SOUND_SOURCE_DI...]]></description>
+            <description><![CDATA[**Vault Blog Core** における投稿用ファイルのパスの扱いには、いくつか注意点があります。 Markdown ファイル、画像、音声、動画など、すべての種類のファイルに共通して次の点に注...]]></description>
             <link>http://localhost:3000//posts/remark-file-path</link>
             <guid isPermaLink="true">http://localhost:3000//posts/remark-file-path</guid>
             <pubDate>Wed, 05 Nov 2025 18:16:39 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Vault Blog Core による記事投稿までの手順]]></title>
-            <description><![CDATA[Vault Blog Core の導入手順で導入した Vault Blog Core を用いて、実際に記事を投稿するまでの手順を説明します。 大まかな流れは次の通りです。 ディレクトリの確認 サンプル.md の作成 投稿 1. ディレクトリの確認 Vault Blog Core の導入手順で言及した、各ディレクトリと .env の各変数の対応に注意してください。 変数名 説明 POST_SOURC...]]></description>
+            <description><![CDATA[[[Vault Blog Core の導入手順]]で導入した **Vault Blog Core** を用いて、実際に記事を投稿するまでの手順を説明します。 大まかな流れは次の通りです。 1. ディレ...]]></description>
             <link>http://localhost:3000//posts/how-to-post</link>
             <guid isPermaLink="true">http://localhost:3000//posts/how-to-post</guid>
             <pubDate>Wed, 05 Nov 2025 17:46:04 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Vercelにデプロイするまでの手順]]></title>
-            <description><![CDATA[Next.js のプロジェクトは Vercel にデプロイするのが便利らしく、このサイトも Vercel にデプロイしています。 そこで、Vault Blog Core の導入手順で用意したプロジェクトを Vercel にデプロイするまでの流れを、簡易的にですが、紹介しておきます。 Vercel にデプロイするまでの手順 Vercel にログインし、画面の指示に従って Create New Pro...]]></description>
+            <description><![CDATA[Next.js のプロジェクトは Vercel にデプロイするのが便利らしく、このサイトも Vercel にデプロイしています。 そこで、[[Vault Blog Core の導入手順]]で用意したプ...]]></description>
             <link>http://localhost:3000//posts/deploy-to-vercel</link>
             <guid isPermaLink="true">http://localhost:3000//posts/deploy-to-vercel</guid>
             <pubDate>Wed, 05 Nov 2025 16:17:27 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Vault Blog Core の導入手順]]></title>
-            <description><![CDATA[Vault Blog Core の導入手順を説明します。 リポジトリの準備 まずは Git リポジトリを準備します。 下記手順で進めてください。 GitHub - no-la/vault-blog-core に行き、右上にある Fork ボタンから fork を作成 プロジェクトを置きたいディレクトリに移動し git clone &lt;リポジトリURL&gt; で clone を作成 Note ...]]></description>
+            <description><![CDATA[**Vault Blog Core** の導入手順を説明します。 ## リポジトリの準備 まずは Git リポジトリを準備します。 下記手順で進めてください。 1. [GitHub - no-la/v...]]></description>
             <link>http://localhost:3000//posts/how-to-setup</link>
             <guid isPermaLink="true">http://localhost:3000//posts/how-to-setup</guid>
             <pubDate>Wed, 05 Nov 2025 15:37:20 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Vault Blog Core は何ができる？]]></title>
-            <description><![CDATA[Vault Blog Core が実際に行うことは、主に .md ファイルの収集と解析 各記事のHTMLを生成 です。 1. .md ファイルの収集と解析 プロジェクトルートでコマンド sh scripts/run-update-posts.sh を実行することで、以下の処理を行います。 指定したディレクトリにある .md ファイルをプロジェクト内にコピーする フロントマターや本文を解析し、 各ペ...]]></description>
+            <description><![CDATA[**Vault Blog Core** が実際に行うことは、主に 1. `.md` ファイルの収集と解析 2. 各記事のHTMLを生成 です。 ## 1. `.md` ファイルの収集と解析 プロジェク...]]></description>
             <link>http://localhost:3000//posts/introduce-detail</link>
             <guid isPermaLink="true">http://localhost:3000//posts/introduce-detail</guid>
             <pubDate>Wed, 05 Nov 2025 14:00:35 GMT</pubDate>

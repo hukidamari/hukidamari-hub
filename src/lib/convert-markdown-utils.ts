@@ -17,6 +17,7 @@ import { escapeHtml } from "markdown-it/lib/common/utils.mjs";
 import taskLists from "markdown-it-task-lists";
 import anchor from "markdown-it-anchor";
 import markdownItCopyButton from "./markdown/plugins/markdown-it-copy-button";
+import markdownItHighlight from "./markdown/plugins/markdown-it-syntax-highlight.prism";
 
 const embedPageGenerator = (alt: string, url: PostSlug): string => {
   return pageLinkGenerator(alt, url);
@@ -130,6 +131,7 @@ export class ConvertingMarkdown {
           });
         },
       })
+      .use(markdownItHighlight)
       .use(markdownItCopyButton);
     this.content = md.render(this.toString());
     return this;
