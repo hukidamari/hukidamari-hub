@@ -166,6 +166,16 @@
     "createdAt": "2025-11-08T00:05:53.000Z",
     "updatedAt": "2025-11-08T00:05:53.000Z"
   },
+  "syntax-highlight": {
+    "slug": "syntax-highlight",
+    "title": "シンタックスハイライトについて",
+    "filename": "シンタックスハイライトについて.md",
+    "tags": [],
+    "description": "シンタックスハイライトについては、[Prism](https://prismjs.com/) (より正確には [markdown-it-prism - npm](https://www.npmjs.c...",
+    "thumbnail": null,
+    "createdAt": "2025-12-03T07:49:43.000Z",
+    "updatedAt": "2025-12-03T07:49:43.000Z"
+  },
   "next-develop": {
     "slug": "next-develop",
     "title": "今後の開発予定",

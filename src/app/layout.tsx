@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Fredoka } from "next/font/google";
 import "./globals.css";
 import "./markdown.css";
+import "./prism.css";
 import Link from "next/link";
 import Image from "next/image";
 import { DEFAULT_METADATA } from "@/config/metadata";

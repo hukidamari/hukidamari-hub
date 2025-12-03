@@ -20,6 +20,9 @@ importers:
       markdown-it-anchor:
         specifier: ^9.2.0
         version: 9.2.0(@types/markdown-it@14.1.2)(markdown-it@14.1.0)
+      markdown-it-prism:
+        specifier: ^3.0.1
+        version: 3.0.1(markdown-it@14.1.0)
       markdown-it-task-lists:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1527,6 +1530,12 @@ packages:
       '@types/markdown-it': '*'
       markdown-it: '*'
 
+  markdown-it-prism@3.0.1:
+    resolution: {integrity: sha512-JVnVGW8Gjw1TUtArXApnb/paeWye9TZW0kWzV2iqIUp1bxw+Rjh0WGg/BschKxn6fd1lCfv4FebSPMlcviGYSQ==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      markdown-it: '>=7.0.1 <15.0.0'
+
   markdown-it-task-lists@2.1.1:
     resolution: {integrity: sha512-TxFAc76Jnhb2OUu+n3yz9RMu4CwGfaT788br6HhEDlvWfdeJcLUsxk1Hgw2yJio0OXsxv7pyIPmvECY7bMbluA==}
 
@@ -1692,6 +1701,10 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+
+  prismjs@1.30.0:
+    resolution: {integrity: sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==}
+    engines: {node: '>=6'}
 
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
@@ -3579,6 +3592,11 @@ snapshots:
       '@types/markdown-it': 14.1.2
       markdown-it: 14.1.0
 
+  markdown-it-prism@3.0.1(markdown-it@14.1.0):
+    dependencies:
+      markdown-it: 14.1.0
+      prismjs: 1.30.0
+
   markdown-it-task-lists@2.1.1: {}
 
   markdown-it@14.1.0:
@@ -3741,6 +3759,8 @@ snapshots:
       source-map-js: 1.2.1
 
   prelude-ls@1.2.1: {}
+
+  prismjs@1.30.0: {}
 
   prop-types@15.8.1:
     dependencies:
