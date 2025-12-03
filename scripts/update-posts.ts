@@ -15,7 +15,7 @@ import {
   extractFrontMatter,
   parseFrontMatter,
 } from "../lib/parse-markdown-utils";
-import { DATA_DIR, POSTS_DIR } from "../config/path";
+import { DATA_DIR, POSTS_DIR, PUBLIC_DIR } from "../config/path";
 import { POST_SOURCE_DIR } from "../config/external-path";
 
 type MetadataBundle = {
@@ -116,7 +116,7 @@ const processSinglePost = (
   }
 
   // 2. FrontMatterをパース
-  const meta = parseFrontMatter(filename, data as FrontMatter);
+  const meta = parseFrontMatter(filename, data as FrontMatter, content);
 
   // 3. メタデータを検証
   if (!validatePostMeta(meta, filename, existingSlugMeta)) {
@@ -175,6 +175,7 @@ const writeMetadataFiles = ({
   filenameToSlug,
   slugToFilename,
   tagToSlugs,
+  slugToMetadata,
 }: MetadataBundle) => {
   overwriteJsonFile(
     path.join(DATA_DIR, "slug-to-filename.json"),
@@ -185,7 +186,7 @@ const writeMetadataFiles = ({
     filenameToSlug
   );
   overwriteJsonFile(path.join(DATA_DIR, "tag-to-slugs.json"), tagToSlugs);
-  // slug-to-metadata.json は現状なし
+  overwriteJsonFile(path.join(PUBLIC_DIR, "posts-meta.json"), slugToMetadata);
 };
 
 // --- メイン処理 ---

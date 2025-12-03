@@ -1,7 +1,8 @@
 import matter from "gray-matter";
 import { FrontMatter, PostMd, PostMeta } from "../types/post";
 import * as fs from "fs";
-import { getPostMdFilePath } from "./path-utils";
+import { encodeForURI, getPostMdFilePath } from "./path-utils";
+import { POST_DESCRIPTION_LIMIT } from "../config/post-settings";
 
 export const extractFrontMatter = (filePath: string) => {
   const fileContent = fs.readFileSync(filePath, "utf-8");
@@ -10,25 +11,43 @@ export const extractFrontMatter = (filePath: string) => {
 
 export const parseFrontMatter = (
   filename: string,
-  fm: FrontMatter
+  fm: FrontMatter,
+  content: string
 ): PostMeta => {
   return {
     slug: fm.slug,
     title: fm.title ?? filename.replace(".md", ""),
     filename: filename,
     tags: fm.tags ?? [],
-    description: fm.description,
+    description: generateDescription(fm.description, content),
     thumbnail: fm.thumbnail ? getThumbnailFilename(fm.thumbnail) : null,
     createdAt: new Date(fm.createdAt),
     updatedAt: new Date(fm.updatedAt),
   };
 };
 
+export const generateDescription = (
+  pre: string | undefined,
+  content: string
+): string => {
+  if (pre) {
+    return pre;
+  }
+
+  const textContent = content.replace(/<[^>]+>/g, "");
+  const cleanText = textContent.replace(/\s+/g, " ").trim();
+
+  if (cleanText.length > POST_DESCRIPTION_LIMIT) {
+    return cleanText.slice(0, POST_DESCRIPTION_LIMIT) + "...";
+  }
+  return cleanText;
+};
+
 export const getPostMd = (filename: string): PostMd => {
   const { content, data } = extractFrontMatter(getPostMdFilePath(filename));
   return {
     contentMd: content,
-    ...parseFrontMatter(filename, data as FrontMatter),
+    ...parseFrontMatter(filename, data as FrontMatter, content),
   };
 };
 
@@ -49,7 +68,7 @@ const getThumbnailFilename = (thumbnailFm: string): string | null => {
   const parts = p1.split("|");
   const filename = `${parts[0]}.${ext}`;
 
-  return filename;
+  return encodeForURI(filename);
 };
 
 export const allCodeBlocksSimpleRegex = (): RegExp => {
