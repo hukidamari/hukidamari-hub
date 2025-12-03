@@ -13,6 +13,7 @@ import {
   getRssUrl,
   getTagsUrl,
 } from "@/lib/routes";
+import CopyButtonHandler from "@/components/copy-button-handler";
 
 const fredoka = Fredoka({
   variable: "--font-fredoka",
@@ -38,6 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <CopyButtonHandler />
         <header>
           <Link href={getHomeUrl()} className="title-link">
             <Image
