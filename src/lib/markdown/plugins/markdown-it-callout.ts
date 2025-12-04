@@ -2,7 +2,7 @@ import type MarkdownIt from "markdown-it";
 
 const calloutRegex = /^\[!(.+)\](?:\s+(.*))?$/;
 
-export function markdownItCallout(md: MarkdownIt) {
+const markdownItCallout = (md: MarkdownIt) => {
   md.core.ruler.push("obsidian-callout", (state) => {
     const tokens = state.tokens;
     const srcLines = state.src.split("\n"); // ← 元の Markdown 全行
@@ -83,4 +83,6 @@ export function markdownItCallout(md: MarkdownIt) {
     return `<div class="${cls}">\n`;
   };
   md.renderer.rules.callout_close = () => `</div>\n`;
-}
+};
+
+export default markdownItCallout;

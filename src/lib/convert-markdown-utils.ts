@@ -17,7 +17,7 @@ import taskLists from "markdown-it-task-lists";
 import anchor from "markdown-it-anchor";
 import markdownItCopyButton from "./markdown/plugins/markdown-it-copy-button";
 import markdownItHighlight from "./markdown/plugins/markdown-it-syntax-highlight.prism";
-import { markdownItCallout } from "./markdown/plugins/markdown-it-callout";
+import markdownItCallout from "./markdown/plugins/markdown-it-callout";
 import markdownItCardlink from "./markdown/plugins/markdown-it-cardlink";
 
 const embedPageGenerator = (alt: string, url: PostSlug): string => {
