@@ -19,6 +19,8 @@ import anchor from "markdown-it-anchor";
 import markdownItCopyButton from "./markdown/plugins/markdown-it-copy-button";
 import markdownItHighlight from "./markdown/plugins/markdown-it-syntax-highlight.prism";
 import { markdownItCallout } from "./markdown/plugins/markdown-it-callout";
+import markdownItCardlink from "./markdown/plugins/markdown-it-cardlink";
+import { installTokenDumper } from "./markdown/plugins/token-dump";
 
 const embedPageGenerator = (alt: string, url: PostSlug): string => {
   return pageLinkGenerator(alt, url);
@@ -99,7 +101,6 @@ export class ConvertingMarkdown {
 
   executeAll(): string {
     return this.convertTabToSpaces()
-      .convertCardlinkBlocks()
       .escapeCodeBlocks()
       .escapeInlineCodeBlocks()
       .convertEmbedLinks()
@@ -136,7 +137,8 @@ export class ConvertingMarkdown {
       })
       .use(markdownItCallout)
       .use(markdownItHighlight)
-      .use(markdownItCopyButton);
+      .use(markdownItCopyButton)
+      .use(markdownItCardlink); // NOTE: 優先度高
     this.content = md.render(this.toString());
     return this;
   }
@@ -200,46 +202,6 @@ export class ConvertingMarkdown {
         return alt || filename;
       }
     });
-    return this;
-  }
-
-  convertCardlinkBlocks(): ConvertingMarkdown {
-    this.content = this.content.replace(
-      /```cardlink\s+([\s\S]*?)```/g,
-      (_, content) => {
-        const data: Record<string, string> = {};
-        content.split("\n").forEach((line: string) => {
-          const match = line.match(/^(\w+):\s*(.+)$/);
-          if (match) {
-            const [, key, value] = match;
-            data[key] = value.replace(/^"|"$/g, "");
-          }
-        });
-
-        return `
-<a href="${data.url}" class="cardlink">
-  <div class="cardlink-content">
-    ${
-      data.image
-        ? `<img src="${data.image}" alt="サムネイル" class="cardlink-image" />`
-        : ""
-    }
-    <div class="cardlink-text">
-      <h3 class="cardlink-title">${escapeHtml(data.title) || ""}</h3>
-      <p class="cardlink-description">${escapeHtml(data.description) || ""}</p>
-      <div class="cardlink-meta">
-        ${
-          data.favicon
-            ? `<img src="${data.favicon}" alt="" class="cardlink-favicon" />`
-            : ""
-        }
-        <span class="cardlink-host">${data.host || ""}</span>
-      </div>
-    </div>
-  </div>
-</a>`;
-      }
-    );
     return this;
   }
 
