@@ -3,9 +3,11 @@
     "callout-sample",
     "converted-markdown-sample",
     "embed-youtube-sample",
-    "card-link-sample"
+    "card-link-sample",
+    "syntax-highlight"
   ],
   "introduce": [
+    "intro-ogp-image",
     "introduce",
     "remark-file-path",
     "how-to-post",
@@ -15,21 +17,26 @@
     "post-frontmatter",
     "introduce-detail",
     "deploy-to-vercel",
-    "next-develop"
-  ],
-  "remark": [
-    "remark-file-path",
-    "explani-directories",
+    "intro-search",
+    "syntax-highlight",
     "next-develop"
   ],
   "usage": [
+    "intro-ogp-image",
     "remark-file-path",
     "how-to-post",
     "how-to-customize",
     "explani-directories",
     "how-to-setup",
     "post-frontmatter",
-    "deploy-to-vercel"
+    "deploy-to-vercel",
+    "intro-search",
+    "syntax-highlight"
+  ],
+  "remark": [
+    "remark-file-path",
+    "explani-directories",
+    "next-develop"
   ],
   "setup": [
     "how-to-setup",

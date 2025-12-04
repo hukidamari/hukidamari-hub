@@ -27,7 +27,10 @@
     "slug": "intro-ogp-image",
     "title": "OGP画像の自動生成について",
     "filename": "OGP画像の自動生成について.md",
-    "tags": [],
+    "tags": [
+      "introduce",
+      "usage"
+    ],
     "description": "OGP画像の自動生成については、[Functions: ImageResponse \\| Next.js](https://nextjs.org/docs/app/api-reference/func...",
     "thumbnail": null,
     "createdAt": "2025-12-03T11:30:59.000Z",
@@ -180,7 +183,10 @@
     "slug": "intro-search",
     "title": "サイト内検索について",
     "filename": "サイト内検索について.md",
-    "tags": [],
+    "tags": [
+      "usage",
+      "introduce"
+    ],
     "description": "検索については、 [Fuse.js](https://www.fusejs.io/) を用いて実装しています。 > [!Note] > [[今後の開発予定]]からの実装です。 ## 検索周りの実装概要...",
     "thumbnail": null,
     "createdAt": "2025-12-03T11:18:05.000Z",
@@ -190,7 +196,11 @@
     "slug": "syntax-highlight",
     "title": "シンタックスハイライトについて",
     "filename": "シンタックスハイライトについて.md",
-    "tags": [],
+    "tags": [
+      "usage",
+      "introduce",
+      "sample"
+    ],
     "description": "シンタックスハイライトについては、[Prism](https://prismjs.com/) を用いて実装しています。 > [!Note] > [[今後の開発予定]]からの実装です。 ## 概要 [P...",
     "thumbnail": null,
     "createdAt": "2025-12-03T07:49:43.000Z",

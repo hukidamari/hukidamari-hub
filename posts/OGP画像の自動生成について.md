@@ -2,7 +2,9 @@
 slug: intro-ogp-image
 title:
 published: true
-tags: []
+tags:
+  - introduce
+  - usage
 description:
 thumbnail:
 createdAt: 2025-12-03T20:30:59+09:00
@@ -48,10 +50,10 @@ export async function GET(
 
 ```
 
-
-`./src/config/api-route.ts` にAPIパスを生成する関数を置いています。
-
-```ts
-export const ogApiUrl = (title: string) => `/api/og/${title}`;
-```
+> [!Note]
+> `./src/config/api-route.ts` にAPIパスを生成する関数を置いています。
+> 
+> ```ts
+> export const ogApiUrl = (title: string) => `/api/og/${title}`;
+> ```
 

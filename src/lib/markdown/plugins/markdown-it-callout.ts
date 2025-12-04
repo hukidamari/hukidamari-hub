@@ -1,6 +1,6 @@
 import type MarkdownIt from "markdown-it";
 
-const calloutRegex = /^\[!(\w+)\](?:\s+(.*))?$/;
+const calloutRegex = /^\[!(.+)\](?:\s+(.*))?$/;
 
 export function markdownItCallout(md: MarkdownIt) {
   md.core.ruler.push("obsidian-callout", (state) => {
