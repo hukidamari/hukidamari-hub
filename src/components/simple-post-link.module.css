@@ -14,7 +14,7 @@
     background-color: #35373c;
     /* Discord hover */
     transform: translateY(-2px);
-    border-color: var(--color-brand-primary);
+    border-color: var(--color-brand-secondary);
     text-decoration: none;
 }
 
