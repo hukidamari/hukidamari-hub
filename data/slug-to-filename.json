@@ -1,19 +1,7 @@
 {
-  "callout-sample": "Callout の変換例.md",
-  "converted-markdown-sample": "Markdown の変換例.md",
-  "intro-ogp-image": "OGP画像の自動生成について.md",
-  "introduce": "Vault Blog Core とは？.md",
-  "remark-file-path": "Vault Blog Core におけるファイルパスの扱いについて.md",
-  "how-to-post": "Vault Blog Core による記事投稿までの手順.md",
-  "how-to-customize": "Vault Blog Core のカスタマイズ.md",
-  "explani-directories": "Vault Blog Core の各ディレクトリの説明.md",
-  "how-to-setup": "Vault Blog Core の導入手順.md",
-  "post-frontmatter": "Vault Blog Core の投稿記事用フロントマターについて.md",
-  "introduce-detail": "Vault Blog Core は何ができる？.md",
-  "deploy-to-vercel": "Vercelにデプロイするまでの手順.md",
-  "embed-youtube-sample": "Youtube動画の埋め込み.md",
-  "card-link-sample": "カードリンクの埋め込み.md",
-  "intro-search": "サイト内検索について.md",
-  "syntax-highlight": "シンタックスハイライトについて.md",
-  "next-develop": "今後の開発予定.md"
+  "about": "ふきだまりとは？.md",
+  "about-cahnnels": "チャンネルガイド.md",
+  "about-deadline-friends": "デッドライン友の会とは？.md",
+  "about-bot": "自作Bot「えびふらい」.md",
+  "link-map": "頻出リンクまとめ.md"
 }

@@ -1,11 +1,14 @@
 import Link from "next/link";
 import styles from "./page.module.css";
-import { getRecentPosts } from "@/lib/blog-utils";
+import { getPostsByTag, getRecentPosts } from "@/lib/blog-utils";
 import PostList from "@/components/post-list";
-import { getAboutUrl, getPostsUrl } from "@/lib/routes";
+import { getPostsUrl, getTagUrl } from "@/lib/routes";
+
+const DOCS_TAG = "docs";
 
 export default async function Home() {
   const samplePosts = await getRecentPosts(3);
+  const docPosts = await getPostsByTag(DOCS_TAG);
 
   return (
     <main className={styles.container}>
@@ -40,27 +43,22 @@ export default async function Home() {
       </section>
 
       <section className={styles.section}>
+        <h2>Documents</h2>
+        <PostList posts={docPosts} />
+        <div style={{ textAlign: "right", marginTop: "1rem" }}>
+          <Link href={getTagUrl(DOCS_TAG)} className={styles.right}>
+            View All Docs
+          </Link>
+        </div>
+      </section>
+
+      <section className={styles.section}>
         <h2>Recent Updates</h2>
         <PostList posts={samplePosts} />
         <div style={{ textAlign: "right", marginTop: "1rem" }}>
           <Link href={getPostsUrl()} className={styles.right}>
             Browse All Posts
           </Link>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <h2>About This Hub</h2>
-        <div className={styles.featureItem}>
-          <p>
-             This site serves as a centralized hub for all discord server related data, documents, and creative works.
-             Managed via Markdown, accessible to everyone.
-          </p>
-          <div style={{ textAlign: "right" }}>
-            <Link href={getAboutUrl()} className={styles.right}>
-              Learn More
-            </Link>
-          </div>
         </div>
       </section>
     </main>
