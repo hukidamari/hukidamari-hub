@@ -26,55 +26,69 @@ export async function GET(
       (
         <div
           style={{
-            height: "630px",
-            width: "1200px",
+            height: "100%",
+            width: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "white",
-            padding: "0",
+            backgroundColor: "#313338", // --color-bg-primary
+            padding: "40px",
+            position: "relative",
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={`${SITE_URL}/images/ogp-background.jpg`}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              zIndex: -99,
-            }}
-            alt="ogp-image"
-          />
+          {/* Decorative Border Left (Brand Primary) */}
           <div
             style={{
-              position: "relative",
-              top: 10,
-              fontSize: 80,
+              position: "absolute",
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: "20px",
+              backgroundColor: "#5CCAD3", // --color-brand-primary
+            }}
+          />
+          {/* Decorative Border Bottom (Brand Secondary) */}
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: "20px",
+              backgroundColor: "#E6C229", // --color-brand-secondary
+            }}
+          />
+
+          <div
+            style={{
+              display: "flex",
+              fontSize: 70,
               maxWidth: "90%",
               fontWeight: "bold",
-              color: titleColor(),
+              color: "#f2f3f5", // --color-text-header
               textAlign: "center",
+              lineHeight: 1.2,
+              marginBottom: "40px",
             }}
           >
             {title}
           </div>
+
           <div
             style={{
               display: "flex",
-              position: "absolute",
               alignItems: "center",
-              bottom: 0,
-              right: 0,
-              margin: "20px 40px",
-              color: "#0070f3",
-              fontSize: 40,
+              position: "absolute",
+              bottom: 40,
+              right: 40,
+              color: "#5CCAD3", // --color-brand-primary
+              fontSize: 32,
               fontWeight: "bold",
-              gap: 10,
+              gap: 15,
+              backgroundColor: "rgba(49, 51, 56, 0.9)",
+              padding: "10px 20px",
+              borderRadius: "8px",
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -84,9 +98,8 @@ export async function GET(
                 width: 40,
                 height: 40,
                 objectFit: "cover",
-                zIndex: -90,
               }}
-              alt="logo-image"
+              alt="logo"
             />
             Vault Blog Core
           </div>
