@@ -11,6 +11,7 @@ import Tag from "@/components/tag";
 import { Metadata } from "next";
 import { DEFAULT_METADATA, gnerateMetadataTitle } from "@/config/metadata";
 import PostCard from "@/components/post-card";
+import SimplePostLink from "@/components/simple-post-link";
 import { getPostUrl, getTagUrl } from "@/lib/routes";
 import TableOfContents from "@/components/table-of-content";
 
@@ -85,41 +86,31 @@ export default async function BlogPost({
           className={`markdown-body`}
           dangerouslySetInnerHTML={{ __html: post.contentHtml }}
         />
+
         <div className={styles.adjacentPosts}>
-          {adjacentPosts.next && (
-            <div>
-              <h2>次の記事</h2>
-              <PostCard post={adjacentPosts.next} />
-            </div>
-          )}
-          {adjacentPosts.prev && (
-            <div>
-              <h2>前の記事</h2>
-              <PostCard post={adjacentPosts.prev} />
-            </div>
-          )}
+          <div className={styles.adjacentPostNext}>
+            {adjacentPosts.next && (
+              <SimplePostLink post={adjacentPosts.next} label="次の記事" />
+            )}
+          </div>
+          <div className={styles.adjacentPostPrev}>
+            {adjacentPosts.prev && (
+              <SimplePostLink post={adjacentPosts.prev} label="前の記事" />
+            )}
+          </div>
         </div>
 
         <div className={styles.relatedPosts}>
           <h2>関連記事</h2>
-          <ul>
-            {relatedPosts.map((post) => (
-              <li key={post.slug}>
-                <span>
-                  <Link href={getPostUrl(post.slug)}>{post.title}</Link>
-                  <ul className={styles.tagContainer}>
-                    {post.tags.map((tag) => (
-                      <li key={tag}>
-                        <Link href={getTagUrl(tag)}>
-                          <Tag>{`#${tag}`}</Tag>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </span>
-              </li>
-            ))}
-          </ul>
+          {relatedPosts.length > 0 ? (
+            <div className={styles.relatedPostsGrid}>
+              {relatedPosts.map((post) => (
+                <PostCard key={post.slug} post={post} />
+              ))}
+            </div>
+          ) : (
+            <p>関連する記事はありません。</p>
+          )}
         </div>
       </main>
       <aside className={styles.tocContainer}>

@@ -1,0 +1,41 @@
+.link {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    height: 100%;
+}
+
+.link:hover {
+    background-color: #35373c;
+    /* Discord hover */
+    transform: translateY(-2px);
+    border-color: var(--color-brand-primary);
+}
+
+.label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-link);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.4;
+}
+
+/* Arrow/Icon indication could be added here */
+.date {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: auto;
+    /* Push to bottom */
+}

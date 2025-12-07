@@ -45,55 +45,60 @@
 }
 
 /* Adjacent Posts */
+/* Adjacent Posts */
 .adjacentPosts {
-  /* display: flex; */
-  /* justify-content: space-between; */
   margin-top: 3rem;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--color-border);
   padding-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
 }
 
-.adjacentPosts a {
-  padding-left: 1rem;
+@media (min-width: 768px) {
+  .adjacentPosts {
+    grid-template-columns: 1fr 1fr;
+    /* Two columns on desktop */
+  }
 }
 
+.adjacentPostNext,
+.adjacentPostPrev {
+  flex: 1;
+}
+
+.adjacentPosts h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-muted);
+  border-bottom: none;
+  /* Override default h2 */
+}
 
 /* --- Related Posts --- */
 .relatedPosts {
   margin-top: 3rem;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--color-border);
   padding-top: 1.5rem;
 }
 
 .relatedPosts h2 {
   font-size: 1.3rem;
   margin-bottom: 1rem;
+  color: var(--color-text-header);
+  border-bottom: 2px solid var(--color-bg-secondary);
+  padding-bottom: 0.5rem;
 }
 
+.relatedPostsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Remove old list styles */
 .relatedPosts ul {
   padding: 0;
   margin: 0;
-}
-
-.relatedPosts>ul {
-  padding-left: 2rem;
-}
-
-.relatedPosts li {
-  margin: 0.2rem 0;
-}
-
-.relatedPosts li span {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.relatedPosts a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-.relatedPosts a:hover {
-  text-decoration: underline;
+  list-style: none;
 }
