@@ -184,7 +184,7 @@ export class ConvertingMarkdown {
         const filename = `${basename}.md`;
         if (existsFilename(filename)) {
           const slug = filenameToSlug(filename);
-          return pageLinkGenerator(basename, getPostUrl(slug));
+          return pageLinkGenerator(alt || basename, getPostUrl(slug));
         }
         return alt || basename;
       }
