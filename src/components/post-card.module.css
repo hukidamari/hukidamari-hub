@@ -23,6 +23,8 @@
 
 .link:hover {
   background-color: #35373c;
+  text-decoration: none;
+  /* Explicitly prevent underline */
 }
 
 .thumbnailWrapper {

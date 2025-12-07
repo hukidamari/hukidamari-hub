@@ -98,7 +98,8 @@ a:hover {
 }
 
 p a {
-  color: var(--color-text-link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }
 
 h1,

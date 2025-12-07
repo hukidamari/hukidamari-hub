@@ -15,6 +15,7 @@
     /* Discord hover */
     transform: translateY(-2px);
     border-color: var(--color-brand-primary);
+    text-decoration: none;
 }
 
 .label {

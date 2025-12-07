@@ -45,6 +45,7 @@
   margin-bottom: 1.2em;
 }
 
+/* Markdown links inherit global styles but ensure brand color */
 .markdown-body a {
   color: var(--color-text-link);
   /* Brand Primary */
@@ -70,15 +71,12 @@
 
 /* コードブロック */
 pre {
-  background-color: var(--color-bg-secondary);
-  /* Discord secondary bg */
   color: var(--color-text-normal);
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   font-size: 14px;
   line-height: 1.5;
   padding: 1rem;
   border-radius: 6px;
-  border: 1px solid var(--color-border);
   overflow-x: auto;
   margin: 1em 0;
   white-space: pre;
