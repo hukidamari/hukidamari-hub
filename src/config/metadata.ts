@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 
 export const DEFAULT_METADATA: Metadata = {
-  title: "Vault Blog Core",
-  description: "Markdownファイル群をブログとして公開するためのテンプレート",
+  title: "hukidamariHUB",
+  description: "Discordサーバー「ふきだまり」の公式サイト",
   openGraph: {
-    title: "Vault Blog Core",
-    description: "Markdownファイル群をブログとして公開するためのテンプレート",
+    title: "hukidamariHUB",
+    description: "Discordサーバー「ふきだまり」の公式サイト",
     images: [
       {
         url: "/images/ogp-main.jpg", // 🌟 静的画像の指定
@@ -17,5 +17,5 @@ export const DEFAULT_METADATA: Metadata = {
 };
 
 export const gnerateMetadataTitle = (title: string): string => {
-  return title ? `${title} | Vault Blog Core` : "Vault Blog Core";
+  return title ? `${title} | hukidamariHUB` : "hukidamariHUB";
 };
