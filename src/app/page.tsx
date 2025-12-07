@@ -2,55 +2,66 @@ import Link from "next/link";
 import styles from "./page.module.css";
 import { getRecentPosts } from "@/lib/blog-utils";
 import PostList from "@/components/post-list";
-import PageThumbnail from "@/components/page-thumbnail";
 import { getAboutUrl, getPostsUrl } from "@/lib/routes";
 
 export default async function Home() {
-  const features = [
-    "Markdownで記事管理",
-    "見た目をカスタマイズしやすい構造",
-    "ページネーション対応",
-    "SSG 対応で高速表示",
-    "RSS自動生成",
-  ];
   const samplePosts = await getRecentPosts(3);
 
   return (
     <main className={styles.container}>
-      <PageThumbnail alt="Vault Blog Thumbnail" src="/images/ogp-main.jpg" />
-      <h1>Vault Blog Core</h1>
-      <p className={styles.catchcopy}>
-        Markdownで運用できる静的ブログテンプレート
-      </p>
+      {/* Hero / Server Info */}
+      <div className={styles.titleWrapper}>
+        <h1>ふきだまり</h1>
+        <p className={styles.catchcopy}>
+          Community Knowledge Base & Asset Hub
+        </p>
+      </div>
 
-      <section className={styles.features}>
-        <h2>主な特徴</h2>
-        <ul>
-          {features.map((f) => (
-            <li key={f}>{f}</li>
-          ))}
+      <section className={styles.section}>
+        <h2>Hub Features</h2>
+        <ul className={styles.featureList}>
+          <li className={styles.featureItem}>
+            <h3>📚 Server Docs</h3>
+            <p>Rules, roles, and channel guides for the community.</p>
+          </li>
+          <li className={styles.featureItem}>
+            <h3>🤖 Bot Specs</h3>
+            <p>Documentation for custom bots and command lists.</p>
+          </li>
+          <li className={styles.featureItem}>
+            <h3>🎨 Member Gallery</h3>
+            <p>Share, showcase, and archive member creations.</p>
+          </li>
+          <li className={styles.featureItem}>
+            <h3>📢 Announcements</h3>
+            <p>Archive of important server updates and events.</p>
+          </li>
         </ul>
       </section>
 
-      <section className={styles.posts}>
-        <h2>サンプル記事</h2>
+      <section className={styles.section}>
+        <h2>Recent Updates</h2>
         <PostList posts={samplePosts} />
-        <p>
+        <div style={{ textAlign: "right", marginTop: "1rem" }}>
           <Link href={getPostsUrl()} className={styles.right}>
-            もっと見る
+            Browse All Posts
           </Link>
-        </p>
+        </div>
       </section>
 
-      <section className={styles.about}>
-        <h2>このサイトについて</h2>
-        このサイトは <strong>Vault Blog Core</strong> の説明 &
-        サンプルサイトです。
-        <p>
-          <Link href={getAboutUrl()} className={styles.right}>
-            詳細はこちら
-          </Link>
-        </p>
+      <section className={styles.section}>
+        <h2>About This Hub</h2>
+        <div className={styles.featureItem}>
+          <p>
+             This site serves as a centralized hub for all discord server related data, documents, and creative works.
+             Managed via Markdown, accessible to everyone.
+          </p>
+          <div style={{ textAlign: "right" }}>
+            <Link href={getAboutUrl()} className={styles.right}>
+              Learn More
+            </Link>
+          </div>
+        </div>
       </section>
     </main>
   );

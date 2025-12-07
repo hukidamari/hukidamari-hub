@@ -42,34 +42,37 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <CopyButtonHandler />
         <header>
-          <Link href={getHomeUrl()} className="title-link">
-            <Image
-              src="/images/logo-small.png"
-              alt="Vault Blog Logo"
-              width={40}
-              height={40}
-              className="logo"
-            />
-            <h1 className={`title ${fredoka.variable}`}>Vault Blog Core</h1>
-          </Link>
-          <nav>
-            <ul className="nav-ul">
-              <li className="nav-li">
-                <Link href={getHomeUrl()}>Home</Link>
-              </li>
-              <li className="nav-li">
-                <Link href={getAboutUrl()}>About</Link>
-              </li>
-              <li className="nav-li">
-                <Link href={getPostsUrl()}>Posts</Link>
-              </li>
-              <li className="nav-li">
-                <Link href={getTagsUrl()}>Tags</Link>
-              </li>
-              <li className="nav-li">
-                <Link href={getSearchUrl()}>Search</Link>
-              </li>
-            </ul>
+          <div className="nav-container">
+            <Link href={getHomeUrl()} className="title-link">
+              <Image
+                src="/images/server-icon.jpg"
+                alt="Hukidamari Logo"
+                width={32}
+                height={32}
+                className="logo"
+                style={{ borderRadius: "50%" }}
+              />
+              <h1 className={`title ${fredoka.variable}`}>ふきだまり</h1>
+            </Link>
+            <nav>
+              <ul className="nav-ul">
+                <li className="nav-li">
+                  <Link href={getHomeUrl()}>Home</Link>
+                </li>
+                <li className="nav-li">
+                  <Link href={getAboutUrl()}>About</Link>
+                </li>
+                <li className="nav-li">
+                  <Link href={getPostsUrl()}>Posts</Link>
+                </li>
+                <li className="nav-li">
+                  <Link href={getTagsUrl()}>Tags</Link>
+                </li>
+                <li className="nav-li">
+                  <Link href={getSearchUrl()}>Search</Link>
+                </li>
+              </ul>
+            </nav>
             <Link
               href={getRssUrl()}
               target="_blank"
@@ -78,9 +81,11 @@ export default function RootLayout({
             >
               RSS
             </Link>
-          </nav>
+          </div>
         </header>
-        {children}
+        <div className="main-container">
+          {children}
+        </div>
       </body>
     </html>
   );

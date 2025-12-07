@@ -5,6 +5,7 @@
   gap: 2rem;
   padding: 3rem;
 }
+
 .postContainer {
   max-width: 720px;
   margin: 0;
@@ -12,6 +13,7 @@
   line-height: 1.8;
   color: #222;
 }
+
 .tocContainer {
   position: sticky;
   top: 10rem;
@@ -42,19 +44,6 @@
   padding: 0;
 }
 
-
-.tag a{
-  text-decoration: none;
-  color: inherit;
-}
-
-.metadataContainer h1 {
-  margin-top: 1rem;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #111;
-}
-
 /* Adjacent Posts */
 .adjacentPosts {
   /* display: flex; */
@@ -65,7 +54,7 @@
 }
 
 .adjacentPosts a {
-  padding-left:1rem;
+  padding-left: 1rem;
 }
 
 
@@ -86,7 +75,7 @@
   margin: 0;
 }
 
-.relatedPosts > ul {
+.relatedPosts>ul {
   padding-left: 2rem;
 }
 
@@ -95,7 +84,7 @@
 }
 
 .relatedPosts li span {
-  display:  flex;
+  display: flex;
   align-items: center;
   gap: 0.5rem;
 }

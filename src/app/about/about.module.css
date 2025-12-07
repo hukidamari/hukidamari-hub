@@ -2,17 +2,18 @@
   max-width: 720px;
   font-family: "Segoe UI", Roboto, sans-serif;
   line-height: 1.6;
-  color: #222;
 }
 
-.author, .project, .tech {
+.author,
+.project,
+.tech {
   margin-bottom: 2rem;
 }
 
 
 .homeLink {
-  color: #0070f3;
-  text-decoration: underline;
+  color: var(--color-text-link);
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -21,6 +22,5 @@
 }
 
 .snsLink {
-  border-bottom: 1px solid var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-brand-primary);
 }
