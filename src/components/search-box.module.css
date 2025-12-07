@@ -1,7 +1,41 @@
 .searchContainer {
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  background-color: var(--color-bg-tertiary);
+  /* Darkest bg */
+  border-radius: 4px;
+  padding: 0 0.5rem;
+  transition: width 0.2s ease;
 }
+
 .queryInput {
   flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--color-text-normal);
+  padding: 0.4rem;
+  font-size: 0.9rem;
+  outline: none;
+  width: 150px;
+  /* Initial width */
+}
+
+.queryInput::placeholder {
+  color: var(--color-text-muted);
+}
+
+.queryInput:focus {
+  width: 200px;
+  /* Expand on focus */
+}
+
+.submitInput {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  display: none;
+  /* Hide submit button, rely on Enter */
 }
