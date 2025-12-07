@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Fredoka } from "next/font/google";
+import { Geist, Geist_Mono, Wendy_One } from "next/font/google";
 import "./globals.css";
 import "./markdown.css";
 import "./prism.css";
@@ -16,8 +16,9 @@ import {
 import CopyButtonHandler from "@/components/copy-button-handler";
 import SearchBox from "@/components/search-box";
 
-const fredoka = Fredoka({
-  variable: "--font-fredoka",
+const wendyOne = Wendy_One({
+  weight: ["400"], 
+  variable: "--font-wendy-one",
   subsets: ["latin"],
 });
 
@@ -52,7 +53,7 @@ export default function RootLayout({
                 className="logo"
                 style={{ borderRadius: "50%" }}
               />
-              <h1 className={`title ${fredoka.variable}`}>ふきだまり</h1>
+              <h1 className={`title ${wendyOne.variable}`}>hukidamariHUB</h1>
             </Link>
             <nav>
               <ul className="nav-ul">
