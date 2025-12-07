@@ -1,14 +1,24 @@
 .list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /* Responsive columns */
+  gap: 1.5rem;
+  /* Space between cards */
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 .item {
-  margin-bottom: 2rem;
-  padding: 1rem 1rem 1.5rem 1rem; /* 上右下左の余白 */
-  border-bottom: 2px solid #8991b2;  /* 境界線を少し濃く */
+  /* Reset previous list item styles */
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: flex;
+  /* Ensure height stretches if needed */
+  flex-direction: column;
 }
 
 .item:last-child {
-  border-bottom: none;             /* 最後の投稿は線なし */
+  border: none;
 }

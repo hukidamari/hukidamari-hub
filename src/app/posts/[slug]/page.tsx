@@ -14,6 +14,7 @@ import PostCard from "@/components/post-card";
 import SimplePostLink from "@/components/simple-post-link";
 import { getPostUrl, getTagUrl } from "@/lib/routes";
 import TableOfContents from "@/components/table-of-content";
+import PostList from "@/components/post-list";
 
 export const generateStaticParams = (): { slug: PostSlug }[] => {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -103,11 +104,7 @@ export default async function BlogPost({
         <div className={styles.relatedPosts}>
           <h2>関連記事</h2>
           {relatedPosts.length > 0 ? (
-            <div className={styles.relatedPostsGrid}>
-              {relatedPosts.map((post) => (
-                <PostCard key={post.slug} post={post} />
-              ))}
-            </div>
+            <PostList posts={relatedPosts} />
           ) : (
             <p>関連する記事はありません。</p>
           )}

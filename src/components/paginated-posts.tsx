@@ -3,6 +3,8 @@ import { PostHtml } from "../../types/post";
 import PostList from "./post-list";
 import Link from "next/link";
 
+import styles from "./paginated-posts.module.css";
+
 const PaginatedPosts = ({
   posts,
   page,
@@ -13,46 +15,45 @@ const PaginatedPosts = ({
   totalPages: number;
 }) => {
   return (
-    <div
-      style={{
-        padding: "2rem 1rem",
-        maxWidth: "720px",
-        margin: "0 auto",
-      }}
-    >
-      <h1
-        style={{
-          fontSize: "1.75rem",
-          marginBottom: "1.5rem",
-          textAlign: "center",
-        }}
-      >
+    <div className={styles.container}>
+      <h1 className={styles.title}>
         投稿一覧 ({page} / {totalPages})
       </h1>
       <PostList posts={posts} />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "1rem",
-        }}
-      >
+      <div className={styles.pageInfo}>
         ({page} / {totalPages})
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "3rem",
-        }}
-      >
-        <Link href={getPostsUrl()}>先頭へ</Link>
-        {page - 1 > 1 && <Link href={getPostsPageUrl(page - 1)}>前へ</Link>}
-        {page - 1 === 1 && <Link href={getPostsUrl()}>前へ</Link>}
-        {page + 1 <= totalPages && (
-          <Link href={getPostsPageUrl(page + 1)}>次へ</Link>
+      <div className={styles.pagination}>
+        <Link href={getPostsUrl()} className={styles.paginationLink}>
+          先頭へ
+        </Link>
+        {page - 1 > 1 && (
+          <Link
+            href={getPostsPageUrl(page - 1)}
+            className={styles.paginationLink}
+          >
+            前へ
+          </Link>
         )}
-        <Link href={getPostsPageUrl(totalPages)}>最後へ</Link>
+        {page - 1 === 1 && (
+          <Link href={getPostsUrl()} className={styles.paginationLink}>
+            前へ
+          </Link>
+        )}
+        {page + 1 <= totalPages && (
+          <Link
+            href={getPostsPageUrl(page + 1)}
+            className={styles.paginationLink}
+          >
+            次へ
+          </Link>
+        )}
+        <Link
+          href={getPostsPageUrl(totalPages)}
+          className={styles.paginationLink}
+        >
+          最後へ
+        </Link>
       </div>
     </div>
   );

@@ -37,17 +37,6 @@ export async function GET(
             position: "relative",
           }}
         >
-          {/* Decorative Border Left (Brand Primary) */}
-          <div
-            style={{
-              position: "absolute",
-              left: 0,
-              top: 0,
-              bottom: 0,
-              width: "20px",
-              backgroundColor: "#5CCAD3", // --color-brand-primary
-            }}
-          />
           {/* Decorative Border Bottom (Brand Secondary) */}
           <div
             style={{
@@ -60,16 +49,32 @@ export async function GET(
             }}
           />
 
+          {/* Server Icon */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`${SITE_URL}/images/server-icon.jpg`}
+            style={{
+              width: "120px",
+              height: "120px",
+              borderRadius: "50%",
+              marginBottom: "30px",
+              border: "4px solid #313338", // Optional: small border to separate from background if needed, or remove
+              boxShadow: "0 8px 16px rgba(0,0,0,0.3)",
+              objectFit: "cover",
+            }}
+            alt="Server Icon"
+          />
+
           <div
             style={{
               display: "flex",
-              fontSize: 70,
+              fontSize: 60, // Slightly reduced to fit icon
               maxWidth: "90%",
               fontWeight: "bold",
               color: "#f2f3f5", // --color-text-header
               textAlign: "center",
               lineHeight: 1.2,
-              marginBottom: "40px",
+              marginBottom: "80px", // More space for bottom border
             }}
           >
             {title}
