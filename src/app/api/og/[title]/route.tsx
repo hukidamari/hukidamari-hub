@@ -86,7 +86,7 @@ export async function GET(
               alignItems: "center",
               position: "absolute",
               bottom: 40,
-              right: 40,
+              right: 16,
               color: "#5CCAD3", // --color-brand-primary
               fontSize: 32,
               fontWeight: "bold",
@@ -98,15 +98,16 @@ export async function GET(
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`${SITE_URL}/images/logo-small.png`}
+              src={`${SITE_URL}/images/server-icon.jpg`}
               style={{
                 width: 40,
                 height: 40,
+                borderRadius: "10%",
                 objectFit: "cover",
               }}
               alt="logo"
             />
-            Vault Blog Core
+            hukidamariHUB
           </div>
         </div>
       ),
