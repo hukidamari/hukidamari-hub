@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { ogApiUrl } from "./api-route";
 
 export const DEFAULT_METADATA: Metadata = {
   title: "hukidamariHUB",
@@ -8,7 +9,7 @@ export const DEFAULT_METADATA: Metadata = {
     description: "Discordサーバー「ふきだまり」の公式サイト",
     images: [
       {
-        url: "/images/ogp-main.jpg", // 🌟 静的画像の指定
+        url: ogApiUrl("hukidamariHUB"),
         width: 1200,
         height: 630,
       },
