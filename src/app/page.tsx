@@ -22,19 +22,19 @@ export default async function Home() {
         <ul className={styles.featureList}>
           <li className={styles.featureItem}>
             <h3>📚 Server Docs</h3>
-            <p>Rules, roles, and channel guides for the community.</p>
+            <p>サーバーの概要、ルール、チャンネルガイド、企画説明などを掲載します。</p>
           </li>
           <li className={styles.featureItem}>
             <h3>🤖 Bot Specs</h3>
-            <p>Documentation for custom bots and command lists.</p>
+            <p>自作ボットの仕様とコマンド一覧を掲載します。</p>
           </li>
           <li className={styles.featureItem}>
             <h3>🎨 Member Gallery</h3>
-            <p>Share, showcase, and archive member creations.</p>
+            <p>メンバーの制作物を展示するかもしれません。</p>
           </li>
           <li className={styles.featureItem}>
             <h3>📢 Announcements</h3>
-            <p>Archive of important server updates and events.</p>
+            <p>重要なサーバーの更新やイベントを掲載するかもしれません。</p>
           </li>
         </ul>
       </section>
