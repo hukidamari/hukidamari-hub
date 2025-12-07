@@ -11,7 +11,12 @@ export default async function Posts() {
 
   return (
     <main>
-      <PaginatedPosts posts={posts} page={page} totalPages={tottalPages} />
+      <PaginatedPosts
+        posts={posts}
+        page={page}
+        totalPages={tottalPages}
+        totalPostsCount={getAllSlugs().length}
+      />
     </main>
   );
 }

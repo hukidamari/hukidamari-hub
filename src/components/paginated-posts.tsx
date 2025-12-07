@@ -1,60 +1,41 @@
 import { getPostsPageUrl, getPostsUrl } from "@/lib/routes";
 import { PostHtml } from "../../types/post";
-import PostList from "./post-list";
 import Link from "next/link";
-
-import styles from "./paginated-posts.module.css";
+import Paginate from "./paginate";
 
 const PaginatedPosts = ({
   posts,
   page,
   totalPages,
+  totalPostsCount,
 }: {
   posts: PostHtml[];
   page: number;
   totalPages: number;
+  totalPostsCount: number;
 }) => {
+  const adjacentPageLinks = [...Array(totalPages)].map((_, i) => {
+    const pageNum = i + 1;
+    return (
+      <Link
+        key={pageNum}
+        href={pageNum === 1 ? getPostsUrl() : getPostsPageUrl(pageNum)}
+      >
+        {pageNum}
+      </Link>
+    );
+  });
+
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>
-        投稿一覧 ({page} / {totalPages})
-      </h1>
-      <PostList posts={posts} />
-      <div className={styles.pageInfo}>
-        ({page} / {totalPages})
-      </div>
-      <div className={styles.pagination}>
-        <Link href={getPostsUrl()} className={styles.paginationLink}>
-          先頭へ
-        </Link>
-        {page - 1 > 1 && (
-          <Link
-            href={getPostsPageUrl(page - 1)}
-            className={styles.paginationLink}
-          >
-            前へ
-          </Link>
-        )}
-        {page - 1 === 1 && (
-          <Link href={getPostsUrl()} className={styles.paginationLink}>
-            前へ
-          </Link>
-        )}
-        {page + 1 <= totalPages && (
-          <Link
-            href={getPostsPageUrl(page + 1)}
-            className={styles.paginationLink}
-          >
-            次へ
-          </Link>
-        )}
-        <Link
-          href={getPostsPageUrl(totalPages)}
-          className={styles.paginationLink}
-        >
-          最後へ
-        </Link>
-      </div>
+    <div>
+      <Paginate
+        title="投稿一覧"
+        posts={posts}
+        page={page}
+        totalPages={totalPages}
+        totalPostsCount={totalPostsCount}
+        adjacentPageLinks={adjacentPageLinks}
+      />
     </div>
   );
 };

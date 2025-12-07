@@ -32,7 +32,12 @@ export default async function BlogPosts({
 
   return (
     <main>
-      <PaginatedPosts posts={posts} page={page} totalPages={totalPages} />
+      <PaginatedPosts
+        posts={posts}
+        page={page}
+        totalPages={totalPages}
+        totalPostsCount={getAllSlugs().length}
+      />
     </main>
   );
 }
