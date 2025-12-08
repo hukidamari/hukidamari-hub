@@ -54,60 +54,10 @@ body {
   background-color: var(--color-bg-secondary);
 }
 
+
 header {
-  background-color: var(--color-bg-secondary);
-  border-bottom: 1px solid var(--color-border);
-  padding: 0.8rem 3rem;
-  margin: 0 auto;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05);
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.search-box-container {
-  width: 16rem;
-}
-
-audio,
-video {
-  display: block;
-  margin: 1em 0;
-  max-width: 100%;
-  border-radius: 8px;
-}
-
-.title-link {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  text-decoration: none;
-}
-
-.title {
-  margin: 0;
-  color: #fff;
-  font-size: 1.5rem;
-}
-
-@media (max-width: 900px) {
-  .title-link {
-    gap: 0.3rem;
-  }
-
-  .title {
-    font-size: 0.8rem;
-  }
-
-  .logo {
-    width: 16px;
-    height: 16px;
-  }
+  /* Styles moved to layout.module.css */
+  display: none;
 }
 
 a {
@@ -142,60 +92,7 @@ h4 {
   }
 }
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-@media (max-width: 900px) {
-  nav {
-    flex: 1;
-    justify-content: center;
-  }
-
-  header {
-    position: static;
-    padding: 0.8rem 1rem;
-  }
-
-  .search-box-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-  }
-}
-
-.nav-ul {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-  margin: 0;
-  padding: 0;
-}
-
-@media (max-width: 900px) {
-  .nav-ul {
-    gap: 0.5rem;
-  }
-}
-
-.nav-li a {
-  text-decoration: none;
-  color: var(--color-text-muted);
-  font-weight: 500;
-  font-size: 0.95rem;
-  padding: 0.5rem 0.8rem;
-  border-radius: 4px;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.nav-li a:hover {
-  background-color: rgba(79, 84, 92, 0.32);
-  /* Discord hover effect */
-  color: var(--color-text-normal);
-  text-decoration: none;
-}
+/* Removed Nav styles */
 
 .rss-link {
   color: var(--color-text-muted);
@@ -207,24 +104,6 @@ nav {
 .rss-link:hover {
   color: #fff;
   text-decoration: none;
-}
-
-/* Layout Container */
-.main-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  min-height: calc(100vh - 80px);
-  /* Adjust based on header height */
-}
-
-@media(max-width: 900px) {
-  .main-container {
-    padding: 1.5rem 1rem;
-  }
 }
 
 /* Main Content Area */

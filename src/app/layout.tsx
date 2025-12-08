@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Wendy_One } from "next/font/google";
+import styles from "./layout.module.css";
 import "./globals.css";
 import "./markdown.css";
 import "./prism.css";
@@ -7,10 +8,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { DEFAULT_METADATA } from "@/config/metadata";
 import {
-  getAboutUrl,
   getHomeUrl,
   getPostsUrl,
-  getRssUrl,
   getTagsUrl,
 } from "@/lib/routes";
 import CopyButtonHandler from "@/components/copy-button-handler";
@@ -42,36 +41,35 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <CopyButtonHandler />
-        <header>
-            <Link href={getHomeUrl()} className="title-link">
+        <header className={styles.header}>
+            <Link href={getHomeUrl()} className={styles.titleLink}>
               <Image
                 src="/images/server-icon.jpg"
                 alt="Hukidamari Logo"
                 width={32}
                 height={32}
-                className="logo"
-                style={{ borderRadius: "50%" }}
+                className={styles.logo}
               />
-              <h1 className={`title ${wendyOne.variable}`}>hukidamariHUB</h1>
+              <h1 className={`${styles.title} ${wendyOne.variable}`}>hukidamariHUB</h1>
             </Link>
-            <nav>
-              <ul className="nav-ul">
-                <li className="nav-li">
+            <nav className={styles.nav}>
+              <ul className={styles.navUl}>
+                <li className={styles.navLi}>
                   <Link href={getHomeUrl()}>Home</Link>
                 </li>
-                <li className="nav-li">
+                <li className={styles.navLi}>
                   <Link href={getPostsUrl()}>Posts</Link>
                 </li>
-                <li className="nav-li">
+                <li className={styles.navLi}>
                   <Link href={getTagsUrl()}>Tags</Link>
                 </li>
               </ul>
             </nav>
-            <div className="search-box-container">
+            <div className={styles.searchBoxContainer}>
               <SearchBox />
             </div>
         </header>
-        <div className="main-container">
+        <div className={styles.mainContainer}>
           {children}
         </div>
       </body>

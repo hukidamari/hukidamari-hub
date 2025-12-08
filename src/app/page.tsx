@@ -46,7 +46,7 @@ export default async function Home() {
       <section className={styles.section}>
         <h2>About</h2>
         <PostList posts={aboutPosts} />
-        <div style={{ textAlign: "right", marginTop: "1rem" }}>
+        <div className={styles.rightAlignContainer}>
           <Link href={getTagUrl(ABOUT_TAG)} className={styles.right}>
             View All About
           </Link>
