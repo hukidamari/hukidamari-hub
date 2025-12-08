@@ -141,7 +141,6 @@ export default function SearchedPosts() {
   return (
     <>
       <main>
-        <SearchBox />
         {/* useSearchParamsを使用するコンポーネントをSuspenseでラップ */}
         <Suspense fallback={<div>Loading...</div>}>
           <SearchContent />

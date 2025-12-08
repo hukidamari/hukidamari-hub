@@ -43,7 +43,6 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <CopyButtonHandler />
         <header>
-          <div className="nav-container">
             <Link href={getHomeUrl()} className="title-link">
               <Image
                 src="/images/server-icon.jpg"
@@ -61,28 +60,16 @@ export default function RootLayout({
                   <Link href={getHomeUrl()}>Home</Link>
                 </li>
                 <li className="nav-li">
-                  <Link href={getAboutUrl()}>About</Link>
-                </li>
-                <li className="nav-li">
                   <Link href={getPostsUrl()}>Posts</Link>
                 </li>
                 <li className="nav-li">
                   <Link href={getTagsUrl()}>Tags</Link>
                 </li>
               </ul>
-              <div style={{ marginLeft: "1rem" }}>
-                <SearchBox />
-              </div>
             </nav>
-            <Link
-              href={getRssUrl()}
-              target="_blank"
-              title="RSS Feed"
-              className="rss-link"
-            >
-              RSS
-            </Link>
-          </div>
+            <div className="search-box-container">
+              <SearchBox />
+            </div>
         </header>
         <div className="main-container">
           {children}
