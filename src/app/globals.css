@@ -117,6 +117,16 @@ h4 {
   scroll-margin-top: 5rem;
 }
 
+@media(max-width: 900px) {
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    scroll-margin-top: 11rem;
+  }
+}
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -169,6 +179,12 @@ nav {
   padding: 1.5rem;
   min-height: calc(100vh - 80px);
   /* Adjust based on header height */
+}
+
+@media(max-width: 900px) {
+  .main-container {
+    padding: 1.5rem 1rem;
+  }
 }
 
 /* Main Content Area */
