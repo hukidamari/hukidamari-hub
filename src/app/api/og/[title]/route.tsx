@@ -8,19 +8,12 @@ const SITE_URL = process.env.SITE_URL;
 // Node.js ランタイムにする
 export const runtime = "nodejs";
 
-const titleColor = (): string => {
-  return "#0077ff";
-};
-
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ title: string }> }
 ) {
   const { title } = await params;
   // Font loading, process.cwd() is Next.js project directory
-  const zenKakuGothicNewBold = await readFile(
-    join(process.cwd(), "assets/Fredoka-Medium.ttf")
-  );
   try {
     return new ImageResponse(
       (
@@ -114,14 +107,6 @@ export async function GET(
       {
         width: 1200,
         height: 630,
-        fonts: [
-          {
-            name: "Zen-Kaku",
-            data: zenKakuGothicNewBold,
-            style: "normal",
-            weight: 700,
-          },
-        ],
       }
     );
   } catch (e) {
