@@ -7,12 +7,12 @@ import { getTagUrl } from "@/lib/routes";
 export default function Tags() {
   const tags = getAllTags();
   return (
-    <main>
-      <h1>タグ一覧</h1>
+    <main className={styles.container}>
+      <h1 className={styles.title}>タグ一覧</h1>
       <div>
         <ul className={styles.tagList}>
           {tags.map((tag) => (
-            <li key={tag}>
+            <li key={tag} className={styles.item}>
               <Link href={getTagUrl(tag)} className={styles.tagLink}>
                 <Tag>{`#${tag} (${getPostCountByTag(tag)}件)`}</Tag>
               </Link>
