@@ -46,7 +46,7 @@ const collectSourceFiles = (
     const srcPath = path.join(sourceDir, fileName);
     const destPath = path.join(
       POST_ASSET_DEST_DIR,
-      encodeURIComponent(fileName)
+      fileName // NOTE: encodeURIComponent is not used because it is not needed
     );
 
     collectSourceFile(srcPath, destPath);
@@ -57,7 +57,7 @@ export const collectThumbnailFile = (filename: string) => {
     return;
   }
   const srcPath = path.join(THUMBNAIL_SOURCE_DIR, filename);
-  const destPath = path.join(POST_ASSET_DEST_DIR, encodeURIComponent(filename));
+  const destPath = path.join(POST_ASSET_DEST_DIR, filename); // NOTE: encodeURIComponent is not used because it is not needed
 
   collectSourceFile(srcPath, destPath);
 };
