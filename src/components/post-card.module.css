@@ -19,10 +19,6 @@
     padding: 1rem;
     gap: 0.6rem;
   }
-
-  .postTitle {
-    font-size: 1.25rem;
-  }
 }
 
 .link:hover {
@@ -37,6 +33,12 @@
   color: var(--color-info);
   font-weight: 700;
   line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .postTitle {
+    font-size: 1.25rem;
+  }
 }
 
 .postTitle:hover {

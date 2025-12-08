@@ -90,6 +90,22 @@ h4 {
   h4 {
     scroll-margin-top: 1rem;
   }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  h4 {
+    font-size: 0.9rem;
+  }
 }
 
 /* Removed Nav styles */
