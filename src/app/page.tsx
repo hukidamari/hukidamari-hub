@@ -5,10 +5,12 @@ import PostList from "@/components/post-list";
 import { getPostsUrl, getTagUrl } from "@/lib/routes";
 
 const DOCS_TAG = "docs";
+const ABOUT_TAG = "about";
 
 export default async function Home() {
   const samplePosts = await getRecentPosts(3);
-  const docPosts = await getPostsByTag(DOCS_TAG);
+  const aboutPosts = (await getPostsByTag(ABOUT_TAG, {oldToNew: true})).slice(0, 3);
+  const docPosts = (await getPostsByTag(DOCS_TAG, {oldToNew: true})).filter((post) => !aboutPosts.map((p) => p.slug).includes(post.slug)).slice(0, 3);
 
   return (
     <main className={styles.container}>
@@ -40,6 +42,15 @@ export default async function Home() {
             <p>重要なサーバーの更新やイベントを掲載するかもしれません。</p>
           </li>
         </ul>
+      </section>
+      <section className={styles.section}>
+        <h2>About</h2>
+        <PostList posts={aboutPosts} />
+        <div style={{ textAlign: "right", marginTop: "1rem" }}>
+          <Link href={getTagUrl(ABOUT_TAG)} className={styles.right}>
+            View All About
+          </Link>
+        </div>
       </section>
 
       <section className={styles.section}>

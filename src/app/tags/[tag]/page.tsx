@@ -10,7 +10,7 @@ export const generateStaticParams = (): { tag: PostTag }[] => {
 export default async function TagPage({ params }: { params: { tag: string } }) {
   const tagEncoded = (await params).tag;
   const tag = decodeURIComponent(tagEncoded);
-  const posts = await getPostsByTag(tag, { oldToNew: true });
+  const posts = await getPostsByTag(tag);
   return (
     <main>
       <h1>

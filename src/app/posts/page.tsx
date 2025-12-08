@@ -6,9 +6,7 @@ import styles from "./posts.module.css";
 
 export default async function Posts() {
   const page = 1;
-  const posts = await getPaginatedPosts(page, POST_PER_PAGE, {
-    oldToNew: true,
-  });
+  const posts = await getPaginatedPosts(page, POST_PER_PAGE);
   const tottalPages = Math.ceil(getAllSlugs().length / POST_PER_PAGE);
 
   return (

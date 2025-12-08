@@ -1,17 +1,16 @@
 {
-  "docs": [
-    "about",
-    "about-cahnnels",
-    "about-deadline-friends",
-    "about-bot",
-    "link-map"
-  ],
   "about": [
     "about",
     "about-cahnnels",
     "about-bot"
   ],
-  "event": [
+  "docs": [
+    "about-cahnnels",
+    "about-deadline-friends",
+    "about-bot",
+    "link-map"
+  ],
+  "activity": [
     "about-deadline-friends"
   ]
 }
