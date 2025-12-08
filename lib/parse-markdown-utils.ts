@@ -34,8 +34,7 @@ export const generateDescription = (
     return pre;
   }
 
-  const textContent = content.replace(/<[^>]+>/g, "");
-  const cleanText = textContent.replace(/\s+/g, " ").trim();
+  const cleanText = content.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").replace(/\[\[(.*?)\]\]/g, (match, p1) => p1 || match).trim();
 
   if (cleanText.length > POST_DESCRIPTION_LIMIT) {
     return cleanText.slice(0, POST_DESCRIPTION_LIMIT) + "...";
