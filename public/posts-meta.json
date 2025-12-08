@@ -14,7 +14,7 @@
   "about-cahnnels": {
     "slug": "about-cahnnels",
     "title": "チャンネルガイド",
-    "filename": "チャンネルガイド.md",
+    "filename": "ふきだまりチャンネルガイド.md",
     "tags": [
       "docs",
       "about"
@@ -23,6 +23,18 @@
     "thumbnail": null,
     "createdAt": "2025-12-07T00:30:00.000Z",
     "updatedAt": "2025-12-07T00:30:00.000Z"
+  },
+  "link-map": {
+    "slug": "link-map",
+    "title": "頻出リンクまとめ",
+    "filename": "ふきだまり頻出リンクまとめ.md",
+    "tags": [
+      "docs"
+    ],
+    "description": "[[ふきだまり]]でよく使われる[[URL]]をまとめておきます。 - [GitHub Organization](https://github.com/hukidamari) - [Google ド...",
+    "thumbnail": null,
+    "createdAt": "2025-12-07T19:35:36.000Z",
+    "updatedAt": "2025-12-07T19:35:36.000Z"
   },
   "about-deadline-friends": {
     "slug": "about-deadline-friends",
@@ -49,17 +61,5 @@
     "thumbnail": null,
     "createdAt": "2025-12-07T19:26:27.000Z",
     "updatedAt": "2025-12-07T19:26:27.000Z"
-  },
-  "link-map": {
-    "slug": "link-map",
-    "title": "頻出リンクまとめ",
-    "filename": "頻出リンクまとめ.md",
-    "tags": [
-      "docs"
-    ],
-    "description": "[[ふきだまり]]でよく使われる[[URL]]をまとめておきます。",
-    "thumbnail": null,
-    "createdAt": "2025-12-07T19:35:36.000Z",
-    "updatedAt": "2025-12-07T19:35:36.000Z"
   }
 }

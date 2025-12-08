@@ -110,9 +110,13 @@ export default async function BlogPost({
           )}
         </div>
       </main>
-      <aside className={styles.tocContainer}>
-        <TableOfContents headings={post.headings} />
-      </aside>
+      {
+        post.headings.length > 0 && (
+          <aside className={styles.tocContainer}>
+            <TableOfContents headings={post.headings} />
+          </aside>
+        )
+      }
     </div>
   );
 }
