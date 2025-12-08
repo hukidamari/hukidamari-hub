@@ -5,17 +5,18 @@ published: true
 tags:
   - docs
   - about
+  - えびふらい
 description:
 thumbnail:
 createdAt: 2025-12-08T04:26:27+09:00
 updatedAt: 2025-12-08T04:26:27+09:00
 alterEgo:
 ---
-[[ふきだまり]]には、自作Bot **[[えびふらい]]** が住んでいます。
+[[ふきだまり]]には **[[えびふらい]]** が住んでいます。
 
 ## 概要
 
-[[ふきだまり]]専用のBotで、サーバーのメンバーであれば好きに機能追加をしてOKです。
+**[[えびふらい]]** は[[ふきだまり]]専用のBotです。[[ふきだまり]]のメンバーであれば好きに機能追加の実装ができます。
 
 [GitHubリポジトリ (Private)](https://github.com/hukidamari/ebifry)
 
@@ -36,7 +37,7 @@ alterEgo:
 - `/role_create`
 	- 指定した名前のロールを新規作成し、付与する
 - `/role_grant`
-	- 指定した既存ロールを付与する
+	- 既存ロールを付与する
 - `/role_remove`
 	- 指定したロールを外す
 
