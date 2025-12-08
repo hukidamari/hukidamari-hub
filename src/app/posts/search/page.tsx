@@ -97,13 +97,13 @@ function SearchContent() {
   );
 
   // queryがない場合
-  if (!query) return <h1>検索ワードを入力してください</h1>;
+  if (!query) return <h1 className={styles.title}>検索ワードを入力してください</h1>;
 
   // データフェッチ中のローディング
   if (isLoading)
     return (
       <>
-        <h1>{`"${query}" を検索中...`}</h1>
+        <h1 className={styles.title}>{`"${query}" を検索中...`}</h1>
         <div>Loading...</div>
       </>
     );
@@ -113,7 +113,7 @@ function SearchContent() {
 
   // 結果なし
   if (paginatedPosts.length === 0)
-    return <h1>{`"${query}" は見つかりませんでした...`}</h1>;
+    return <h1 className={styles.title}>{`"${query}" は見つかりませんでした...`}</h1>;
 
   // 結果表示
   return (
@@ -139,13 +139,11 @@ function SearchContent() {
 // エクスポートする親コンポーネント
 export default function SearchedPosts() {
   return (
-    <>
-      <main>
-        {/* useSearchParamsを使用するコンポーネントをSuspenseでラップ */}
-        <Suspense fallback={<div>Loading...</div>}>
-          <SearchContent />
-        </Suspense>
-      </main>
-    </>
+    <main className={styles.container}>
+      {/* useSearchParamsを使用するコンポーネントをSuspenseでラップ */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <SearchContent />
+      </Suspense>
+    </main>
   );
 }

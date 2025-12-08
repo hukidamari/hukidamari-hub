@@ -1,12 +1,21 @@
 .title {
-    font-size: 1.75rem;
-    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--color-text-header);
+    border-bottom: 2px solid var(--color-bg-secondary);
+    padding-bottom: 0.5rem;
+    text-align: left;
 }
 
 .pageDescription {
     display: flex;
-    justify-content: center;
-    margin-bottom: 3rem;
+    justify-content: flex-end;
+    /* Align right to match design usually, or left? */
+    /* original was center. Let's keep it consistent with title? Maybe just normal flow. */
+    /* If title is left, description usually is below or right. */
+    /* Let's try right aligned for "showing X-Y of Z" */
+    margin-bottom: 1rem;
+    color: var(--color-text-muted);
 }
 
 .pageNum {
