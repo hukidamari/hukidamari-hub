@@ -15,6 +15,9 @@ export const DEFAULT_METADATA: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export const gnerateMetadataTitle = (title: string): string => {
