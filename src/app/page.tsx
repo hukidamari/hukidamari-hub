@@ -23,7 +23,7 @@ export default async function Home() {
       </div>
 
       <section className={styles.section}>
-        <h2>Hub Features</h2>
+        <h2>このサイトの役割</h2>
         <ul className={styles.featureList}>
           <li className={styles.featureItem}>
             <h3>📚 Server Docs</h3>
@@ -44,7 +44,7 @@ export default async function Home() {
         </ul>
       </section>
       <section className={styles.section}>
-        <h2>About</h2>
+        <h2>サーバー紹介</h2>
         <PostList posts={aboutPosts} />
         <div style={{ textAlign: "right", marginTop: "1rem" }}>
           <Link href={getTagUrl(ABOUT_TAG)} className={styles.right}>
@@ -54,7 +54,7 @@ export default async function Home() {
       </section>
 
       <section className={styles.section}>
-        <h2>Documents</h2>
+        <h2>ドキュメント</h2>
         <PostList posts={docPosts} />
         <div style={{ textAlign: "right", marginTop: "1rem" }}>
           <Link href={getTagUrl(DOCS_TAG)} className={styles.right}>
@@ -64,11 +64,11 @@ export default async function Home() {
       </section>
 
       <section className={styles.section}>
-        <h2>Recent Updates</h2>
+        <h2>最新の更新</h2>
         <PostList posts={samplePosts} />
         <div style={{ textAlign: "right", marginTop: "1rem" }}>
           <Link href={getPostsUrl()} className={styles.right}>
-            Browse All Posts
+            View All Articles
           </Link>
         </div>
       </section>

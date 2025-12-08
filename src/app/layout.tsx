@@ -58,7 +58,7 @@ export default function RootLayout({
                   <Link href={getHomeUrl()}>Home</Link>
                 </li>
                 <li className={styles.navLi}>
-                  <Link href={getPostsUrl()}>Posts</Link>
+                  <Link href={getPostsUrl()}>Articles</Link>
                 </li>
                 <li className={styles.navLi}>
                   <Link href={getTagsUrl()}>Tags</Link>

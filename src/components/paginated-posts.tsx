@@ -29,7 +29,7 @@ const PaginatedPosts = ({
   return (
     <div>
       <Paginate
-        title="投稿一覧"
+        title="記事一覧"
         posts={posts}
         page={page}
         totalPages={totalPages}

@@ -1,1 +1,1 @@
-export const POST_DESCRIPTION_LIMIT = 100;
+export const POST_DESCRIPTION_LIMIT = 130;
