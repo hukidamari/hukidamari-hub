@@ -57,7 +57,7 @@
 }
 
 .adjacentPagesContainer>li>*:hover {
-    background-color: var(--color-brand-secondary);
+    background-color: #35373c;
     border-radius: 0.15rem;
 }
 
