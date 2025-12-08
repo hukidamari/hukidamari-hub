@@ -14,6 +14,17 @@
   /* Max width for readability if card is very wide, or let container handle it */
 }
 
+@media (max-width: 768px) {
+  .link {
+    padding: 1rem;
+    gap: 0.6rem;
+  }
+
+  .postTitle {
+    font-size: 1.25rem;
+  }
+}
+
 .link:hover {
   background-color: #35373c;
   text-decoration: none;
