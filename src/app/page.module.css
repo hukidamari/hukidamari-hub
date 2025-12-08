@@ -17,6 +17,22 @@
   color: var(--color-text-header);
 }
 
+.titleWrapper img {
+  margin-bottom: 1rem;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .titleWrapper h1 {
+    font-size: 2rem;
+  }
+
+  .titleWrapper img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
 .catchcopy {
   font-size: 1.1rem;
   margin-top: 1rem;

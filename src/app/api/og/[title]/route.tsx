@@ -95,7 +95,7 @@ export async function GET(
               style={{
                 width: 40,
                 height: 40,
-                borderRadius: "10%",
+                borderRadius: "25%",
                 objectFit: "cover",
               }}
               alt="logo"

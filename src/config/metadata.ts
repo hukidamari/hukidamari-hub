@@ -1,15 +1,18 @@
 import { Metadata } from "next";
 import { ogApiUrl } from "./api-route";
 
+const SITE_TITLE = "ふきだまり HUB";
+const SITE_DESCRIPTION = "Discordサーバー「ふきだまり」の公式サイト";
+
 export const DEFAULT_METADATA: Metadata = {
-  title: "hukidamariHUB",
-  description: "Discordサーバー「ふきだまり」の公式サイト",
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
   openGraph: {
-    title: "hukidamariHUB",
-    description: "Discordサーバー「ふきだまり」の公式サイト",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     images: [
       {
-        url: ogApiUrl("hukidamariHUB"),
+        url: ogApiUrl(SITE_TITLE),
         width: 1200,
         height: 630,
       },
@@ -21,5 +24,5 @@ export const DEFAULT_METADATA: Metadata = {
 };
 
 export const gnerateMetadataTitle = (title: string): string => {
-  return title ? `${title} | hukidamariHUB` : "hukidamariHUB";
+  return title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 };

@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import { getPostsByTag, getRecentPosts } from "@/lib/blog-utils";
 import PostList from "@/components/post-list";
 import { getPostsUrl, getTagUrl } from "@/lib/routes";
+import Image from "next/image";
 
 const DOCS_TAG = "docs";
 const ABOUT_TAG = "about";
@@ -16,7 +17,13 @@ export default async function Home() {
     <main className={styles.container}>
       {/* Hero / Server Info */}
       <div className={styles.titleWrapper}>
-        <h1>ふきだまり</h1>
+        <Image
+          src="/images/server-icon.jpg"
+          alt="ふきだまり HUB"
+          width={100}
+          height={100}
+        />
+        <h1>ふきだまり HUB</h1>
         <p className={styles.catchcopy}>
           Community Knowledge Base & Asset Hub
         </p>
