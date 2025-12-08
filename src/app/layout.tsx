@@ -11,6 +11,7 @@ import {
   getHomeUrl,
   getPostsUrl,
   getTagsUrl,
+  getRssUrl,
 } from "@/lib/routes";
 import CopyButtonHandler from "@/components/copy-button-handler";
 import SearchBox from "@/components/search-box";
@@ -39,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${styles.body}`}>
         <CopyButtonHandler />
         <header className={styles.header}>
             <Link href={getHomeUrl()} className={styles.titleLink}>
@@ -72,6 +73,33 @@ export default function RootLayout({
         <div className={styles.mainContainer}>
           {children}
         </div>
+        <footer className={styles.footer}>
+          <nav>
+            <ul className={styles.footerNav}>
+              <li>
+                <Link href={getHomeUrl()} className={styles.footerNavLink}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href={getPostsUrl()} className={styles.footerNavLink}>
+                  Articles
+                </Link>
+              </li>
+              <li>
+                <Link href={getTagsUrl()} className={styles.footerNavLink}>
+                  Tags
+                </Link>
+              </li>
+              <li>
+                <Link href={getRssUrl()} className={styles.footerNavLink}>
+                  RSS
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <div className={styles.copyright}>&copy; hukidamari {new Date().getFullYear()}</div>
+        </footer>
       </body>
     </html>
   );
