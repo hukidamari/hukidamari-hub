@@ -133,6 +133,23 @@ nav {
   align-items: center;
 }
 
+@media (max-width: 900px) {
+  nav {
+    flex: 1;
+    justify-content: center;
+  }
+
+  header {
+    padding: 0.8rem 1rem;
+  }
+
+  .search-box-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+}
+
 .nav-ul {
   list-style: none;
   display: flex;

@@ -6,6 +6,7 @@
   border-radius: 4px;
   padding: 0 0.5rem;
   transition: width 0.2s ease;
+  max-width: max(12rem, 20vw);
 }
 
 .queryInput {
