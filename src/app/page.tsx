@@ -46,7 +46,7 @@ export default async function Home() {
           </li>
           <li className={styles.featureItem}>
             <h3>📢 Announcements</h3>
-            <p>重要なサーバーの更新やイベントを掲載するかもしれません。</p>
+            <p>重要なサーバーの更新やイベント告知を掲載するかもしれません。</p>
           </li>
         </ul>
       </section>
