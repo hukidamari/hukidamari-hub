@@ -9,8 +9,8 @@ export async function generateRssFeed() {
   const posts = await getAllPostsSortedByCreatedAt();
 
   const feed = new RSS({
-    title: "Vault Blog Core",
-    description: "Latest posts from Vault Blog Core",
+    title: "hukidamariHUB",
+    description: "Latest posts from hukidamariHUB",
     site_url: SITE_URL,
     feed_url: `${SITE_URL}/feed.xml`,
     language: "ja",

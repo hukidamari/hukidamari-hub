@@ -1,1 +1,0 @@
-プロジェクトの説明などは https://vault-blog-core.vercel.app/ を参照してください。
