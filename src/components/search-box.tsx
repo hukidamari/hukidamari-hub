@@ -18,7 +18,7 @@ const SearchBox = () => {
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}
-        placeholder="サイト内検索"
+        placeholder="検索"
         className={styles.queryInput}
       />
       <input type="submit" value="検索" className={styles.submitInput} />
