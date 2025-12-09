@@ -42,7 +42,6 @@ body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-normal);
   line-height: 1.6;
-  overflow-x: hidden;
   width: 100%;
 }
 
