@@ -29,7 +29,6 @@ const PaginatedPosts = ({
   });
 
   return (
-    <div>
       <Paginate
         title={<PageTitle title="Articles" icon={<BookOpen size={26} color="var(--color-brand-primary)" />} />}
         posts={posts}
@@ -38,7 +37,6 @@ const PaginatedPosts = ({
         totalPostsCount={totalPostsCount}
         adjacentPageLinks={adjacentPageLinks}
       />
-    </div>
   );
 };
 

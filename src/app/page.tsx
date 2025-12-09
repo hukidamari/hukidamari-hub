@@ -95,7 +95,7 @@ export default async function Home() {
       <section className={styles.section}>
         <h2>
           <Sparkles color="var(--color-brand-primary)" />
-          最新の更新
+          最新記事
         </h2>
         <PostList posts={samplePosts} />
         <div style={{ textAlign: "right", marginTop: "1rem" }}>

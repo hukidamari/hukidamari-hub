@@ -23,7 +23,7 @@ const Paginate = ({
   const lastPostNum = firstPostNum + posts.length - 1;
 
   return (
-    <div>
+    <>
       <h1 className={styles.title}>{title} </h1>
       <div className={styles.pageDescription}>
         {totalPostsCount}件中 {firstPostNum}～{lastPostNum}
@@ -43,7 +43,7 @@ const Paginate = ({
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 };
 

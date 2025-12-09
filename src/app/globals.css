@@ -28,6 +28,12 @@
   --color-border: #1e1f22;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
@@ -36,6 +42,8 @@ body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-normal);
   line-height: 1.6;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Scrollbar */

@@ -1,5 +1,7 @@
 .container {
   width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
 .titleWrapper {
@@ -23,6 +25,10 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+
   .titleWrapper h1 {
     font-size: 2rem;
   }
@@ -56,7 +62,7 @@
 
 .featureList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 1.5rem;
   padding: 0;
   list-style: none;
