@@ -8,7 +8,8 @@ import Paginate from "@/components/paginate";
 import styles from "./search.module.css";
 import { POSTS_META_JSON_URL } from "@/lib/routes";
 import searchPosts from "@/lib/search";
-import SearchBox from "@/components/search-box";
+import PageTitle from "@/components/page-title";
+import { SearchIcon } from "lucide-react";
 
 // 検索ロジックと結果表示を行う内部コンポーネント
 function SearchContent() {
@@ -118,7 +119,7 @@ function SearchContent() {
   // 結果表示
   return (
     <Paginate
-      title={`"${query}" の検索結果`}
+      title={<PageTitle title={`"${query}" の検索結果`} icon={<SearchIcon size={26} color="var(--color-brand-primary)" />} />}
       posts={paginatedPosts}
       page={page}
       totalPages={totalPages}

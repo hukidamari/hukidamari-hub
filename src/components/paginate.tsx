@@ -1,7 +1,7 @@
 import { PostMeta } from "../../types/post";
 import PostList from "./post-list";
 import styles from "./paginate.module.css";
-import { JSX } from "react";
+import { JSX, ReactNode } from "react";
 import { POST_PER_PAGE } from "@/config/pagination";
 
 const Paginate = ({
@@ -12,7 +12,7 @@ const Paginate = ({
   totalPostsCount,
   adjacentPageLinks,
 }: {
-  title: string;
+  title: string|ReactNode;
   posts: PostMeta[];
   page: number;
   totalPages: number;

@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import { getPostsByTag, getRecentPosts } from "@/lib/blog-utils";
 import PostList from "@/components/post-list";
 import { getPostsUrl, getTagUrl } from "@/lib/routes";
+import { Info, Users, FileText, Sparkles, Book, Bot, Palette, Megaphone } from "lucide-react";
 import Image from "next/image";
 
 const DOCS_TAG = "docs";
@@ -30,28 +31,46 @@ export default async function Home() {
       </div>
 
       <section className={styles.section}>
-        <h2>このサイトの役割</h2>
+        <h2>
+          <Info color="var(--color-brand-primary)" />
+          このサイトの役割
+        </h2>
         <ul className={styles.featureList}>
           <li className={styles.featureItem}>
-            <h3>📚 Server Docs</h3>
+            <h3>
+              <Book color="var(--color-brand-primary)" />
+              Server Docs
+            </h3>
             <p>サーバーの概要、ルール、チャンネルガイド、企画説明などを掲載します。</p>
           </li>
           <li className={styles.featureItem}>
-            <h3>🤖 Bot Specs</h3>
+            <h3>
+              <Bot color="var(--color-brand-primary)" />
+              Bot Specs
+            </h3>
             <p>自作ボットの仕様とコマンド一覧を掲載します。</p>
           </li>
           <li className={styles.featureItem}>
-            <h3>🎨 Member Gallery</h3>
+            <h3>
+              <Palette color="var(--color-brand-primary)" />
+              Member Gallery
+            </h3>
             <p>メンバーの制作物を展示するかもしれません。</p>
           </li>
           <li className={styles.featureItem}>
-            <h3>📢 Announcements</h3>
+            <h3>
+              <Megaphone color="var(--color-brand-primary)" />
+              Announcements
+            </h3>
             <p>重要なサーバーの更新やイベント告知を掲載するかもしれません。</p>
           </li>
         </ul>
       </section>
       <section className={styles.section}>
-        <h2>サーバー紹介</h2>
+        <h2>
+          <Users color="var(--color-brand-primary)" />
+          サーバー紹介
+        </h2>
         <PostList posts={aboutPosts} />
         <div style={{ textAlign: "right", marginTop: "1rem" }}>
           <Link href={getTagUrl(ABOUT_TAG)} className={styles.right}>
@@ -61,7 +80,10 @@ export default async function Home() {
       </section>
 
       <section className={styles.section}>
-        <h2>ドキュメント</h2>
+        <h2>
+          <FileText color="var(--color-brand-primary)" />
+          ドキュメント
+        </h2>
         <PostList posts={docPosts} />
         <div style={{ textAlign: "right", marginTop: "1rem" }}>
           <Link href={getTagUrl(DOCS_TAG)} className={styles.right}>
@@ -71,7 +93,10 @@ export default async function Home() {
       </section>
 
       <section className={styles.section}>
-        <h2>最新の更新</h2>
+        <h2>
+          <Sparkles color="var(--color-brand-primary)" />
+          最新の更新
+        </h2>
         <PostList posts={samplePosts} />
         <div style={{ textAlign: "right", marginTop: "1rem" }}>
           <Link href={getPostsUrl()} className={styles.right}>

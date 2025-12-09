@@ -2,6 +2,8 @@ import { getPostsPageUrl, getPostsUrl } from "@/lib/routes";
 import { PostHtml } from "../../types/post";
 import Link from "next/link";
 import Paginate from "./paginate";
+import { BookOpen } from "lucide-react";
+import PageTitle from "./page-title";
 
 const PaginatedPosts = ({
   posts,
@@ -29,7 +31,7 @@ const PaginatedPosts = ({
   return (
     <div>
       <Paginate
-        title="記事一覧"
+        title={<PageTitle title="Articles" icon={<BookOpen size={26} color="var(--color-brand-primary)" />} />}
         posts={posts}
         page={page}
         totalPages={totalPages}

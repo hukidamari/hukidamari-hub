@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Wendy_One } from "next/font/google";
+import { Home, BookOpen, Tags, Rss } from "lucide-react";
 import styles from "./layout.module.css";
 import "./globals.css";
 import "./markdown.css";
@@ -56,13 +57,22 @@ export default function RootLayout({
             <nav className={styles.nav}>
               <ul className={styles.navUl}>
                 <li className={styles.navLi}>
-                  <Link href={getHomeUrl()}>Home</Link>
+                  <Link href={getHomeUrl()}>
+                    <Home size={18} />
+                    <span>Home</span>
+                  </Link>
                 </li>
                 <li className={styles.navLi}>
-                  <Link href={getPostsUrl()}>Articles</Link>
+                  <Link href={getPostsUrl()}>
+                    <BookOpen size={18} />
+                    <span>Articles</span>
+                  </Link>
                 </li>
                 <li className={styles.navLi}>
-                  <Link href={getTagsUrl()}>Tags</Link>
+                  <Link href={getTagsUrl()}>
+                    <Tags size={18} />
+                    <span>Tags</span>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -78,22 +88,26 @@ export default function RootLayout({
             <ul className={styles.footerNav}>
               <li>
                 <Link href={getHomeUrl()} className={styles.footerNavLink}>
-                  Home
+                  <Home size={16} />
+                  <span>Home</span>
                 </Link>
               </li>
               <li>
                 <Link href={getPostsUrl()} className={styles.footerNavLink}>
-                  Articles
+                  <BookOpen size={16} />
+                  <span>Articles</span>
                 </Link>
               </li>
               <li>
                 <Link href={getTagsUrl()} className={styles.footerNavLink}>
-                  Tags
+                  <Tags size={16} />
+                  <span>Tags</span>
                 </Link>
               </li>
               <li>
                 <Link href={getRssUrl()} className={styles.footerNavLink}>
-                  RSS
+                  <Rss size={16} />
+                  <span>RSS</span>
                 </Link>
               </li>
             </ul>
