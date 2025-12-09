@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { ogApiUrl } from "./api-route";
+import { SITE_TITLE } from "../../config/site-settings";
 
-const SITE_TITLE = "ふきだまり HUB";
 const SITE_DESCRIPTION = "Discordサーバー「ふきだまり」の公式サイト";
 
 export const DEFAULT_METADATA: Metadata = {
@@ -12,7 +12,7 @@ export const DEFAULT_METADATA: Metadata = {
     description: SITE_DESCRIPTION,
     images: [
       {
-        url: ogApiUrl(SITE_TITLE),
+        url: "/images/main-ogp.png",
         width: 1200,
         height: 630,
       },

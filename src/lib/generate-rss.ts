@@ -4,13 +4,14 @@ import path from "path";
 import RSS from "rss";
 import { SITE_URL } from "../../config/path";
 import { getPostUrl } from "@/lib/routes";
+import { SITE_TITLE, SITE_TITLE_EN } from "../../config/site-settings";
 
 export async function generateRssFeed() {
   const posts = await getAllPostsSortedByCreatedAt();
 
   const feed = new RSS({
-    title: "hukidamariHUB",
-    description: "Latest posts from hukidamariHUB",
+    title: SITE_TITLE,
+    description: `Latest posts from ${SITE_TITLE_EN}`,
     site_url: SITE_URL,
     feed_url: `${SITE_URL}/feed.xml`,
     language: "ja",

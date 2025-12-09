@@ -2,6 +2,7 @@ import "dotenv/config";
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { SITE_TITLE_EN } from "../../../../../config/site-settings";
 
 const SITE_URL = process.env.SITE_URL;
 
@@ -100,7 +101,7 @@ export async function GET(
               }}
               alt="logo"
             />
-            hukidamariHUB
+            {SITE_TITLE_EN}
           </div>
         </div>
       ),

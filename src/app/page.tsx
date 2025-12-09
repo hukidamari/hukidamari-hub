@@ -3,16 +3,31 @@ import styles from "./page.module.css";
 import { getPostsByTag, getRecentPosts } from "@/lib/blog-utils";
 import PostList from "@/components/post-list";
 import { getPostsUrl, getTagUrl } from "@/lib/routes";
-import { Info, Users, FileText, Sparkles, Book, Bot, Palette, Megaphone } from "lucide-react";
+import {
+  Info,
+  Users,
+  FileText,
+  Sparkles,
+  Book,
+  Bot,
+  Palette,
+  Megaphone,
+} from "lucide-react";
 import Image from "next/image";
+import { SITE_TITLE } from "../../config/site-settings";
 
 const DOCS_TAG = "docs";
 const ABOUT_TAG = "about";
 
 export default async function Home() {
   const samplePosts = await getRecentPosts(3);
-  const aboutPosts = (await getPostsByTag(ABOUT_TAG, {oldToNew: true})).slice(0, 3);
-  const docPosts = (await getPostsByTag(DOCS_TAG, {oldToNew: true})).filter((post) => !aboutPosts.map((p) => p.slug).includes(post.slug)).slice(0, 3);
+  const aboutPosts = (await getPostsByTag(ABOUT_TAG, { oldToNew: true })).slice(
+    0,
+    3
+  );
+  const docPosts = (await getPostsByTag(DOCS_TAG, { oldToNew: true }))
+    .filter((post) => !aboutPosts.map((p) => p.slug).includes(post.slug))
+    .slice(0, 3);
 
   return (
     <main className={styles.container}>
@@ -20,14 +35,12 @@ export default async function Home() {
       <div className={styles.titleWrapper}>
         <Image
           src="/images/server-icon.jpg"
-          alt="ふきだまり HUB"
+          alt="site-icon"
           width={100}
           height={100}
         />
-        <h1>ふきだまり HUB</h1>
-        <p className={styles.catchcopy}>
-          Community Knowledge Base & Asset Hub
-        </p>
+        <h1>{SITE_TITLE}</h1>
+        <p className={styles.catchcopy}>Community Knowledge Base & Asset Hub</p>
       </div>
 
       <section className={styles.section}>
@@ -41,7 +54,9 @@ export default async function Home() {
               <Book color="var(--color-brand-primary)" />
               Server Docs
             </h3>
-            <p>サーバーの概要、ルール、チャンネルガイド、企画説明などを掲載します。</p>
+            <p>
+              サーバーの概要、ルール、チャンネルガイド、企画説明などを掲載します。
+            </p>
           </li>
           <li className={styles.featureItem}>
             <h3>

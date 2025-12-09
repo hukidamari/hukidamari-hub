@@ -8,17 +8,13 @@ import "./prism.css";
 import Link from "next/link";
 import Image from "next/image";
 import { DEFAULT_METADATA } from "@/config/metadata";
-import {
-  getHomeUrl,
-  getPostsUrl,
-  getTagsUrl,
-  getRssUrl,
-} from "@/lib/routes";
+import { getHomeUrl, getPostsUrl, getTagsUrl, getRssUrl } from "@/lib/routes";
 import CopyButtonHandler from "@/components/copy-button-handler";
 import SearchBox from "@/components/search-box";
+import { SITE_TITLE_EN } from "../../config/site-settings";
 
 const wendyOne = Wendy_One({
-  weight: ["400"], 
+  weight: ["400"],
   variable: "--font-wendy-one",
   subsets: ["latin"],
 });
@@ -41,48 +37,50 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${styles.body}`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${styles.body}`}
+      >
         <CopyButtonHandler />
         <header className={styles.header}>
-            <Link href={getHomeUrl()} className={styles.titleLink}>
-              <Image
-                src="/images/server-icon.jpg"
-                alt="Hukidamari Logo"
-                width={32}
-                height={32}
-                className={styles.logo}
-              />
-              <h1 className={`${styles.title} ${wendyOne.variable}`}>hukidamariHUB</h1>
-            </Link>
-            <nav className={styles.nav}>
-              <ul className={styles.navUl}>
-                <li className={styles.navLi}>
-                  <Link href={getHomeUrl()}>
-                    <Home size={18} />
-                    <span>Home</span>
-                  </Link>
-                </li>
-                <li className={styles.navLi}>
-                  <Link href={getPostsUrl()}>
-                    <BookOpen size={18} />
-                    <span>Articles</span>
-                  </Link>
-                </li>
-                <li className={styles.navLi}>
-                  <Link href={getTagsUrl()}>
-                    <Tags size={18} />
-                    <span>Tags</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-            <div className={styles.searchBoxContainer}>
-              <SearchBox />
-            </div>
+          <Link href={getHomeUrl()} className={styles.titleLink}>
+            <Image
+              src="/images/server-icon.jpg"
+              alt="Hukidamari Logo"
+              width={32}
+              height={32}
+              className={styles.logo}
+            />
+            <h1 className={`${styles.title} ${wendyOne.variable}`}>
+              {SITE_TITLE_EN}
+            </h1>
+          </Link>
+          <nav className={styles.nav}>
+            <ul className={styles.navUl}>
+              <li className={styles.navLi}>
+                <Link href={getHomeUrl()}>
+                  <Home size={18} />
+                  <span>Home</span>
+                </Link>
+              </li>
+              <li className={styles.navLi}>
+                <Link href={getPostsUrl()}>
+                  <BookOpen size={18} />
+                  <span>Articles</span>
+                </Link>
+              </li>
+              <li className={styles.navLi}>
+                <Link href={getTagsUrl()}>
+                  <Tags size={18} />
+                  <span>Tags</span>
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <div className={styles.searchBoxContainer}>
+            <SearchBox />
+          </div>
         </header>
-        <div className={styles.mainContainer}>
-          {children}
-        </div>
+        <div className={styles.mainContainer}>{children}</div>
         <footer className={styles.footer}>
           <nav>
             <ul className={styles.footerNav}>
@@ -112,7 +110,9 @@ export default function RootLayout({
               </li>
             </ul>
           </nav>
-          <div className={styles.copyright}>&copy; hukidamari {new Date().getFullYear()}</div>
+          <div className={styles.copyright}>
+            &copy; hukidamari {new Date().getFullYear()}
+          </div>
         </footer>
       </body>
     </html>
