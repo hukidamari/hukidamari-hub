@@ -40,7 +40,15 @@ const PostCard = ({ post }: { post: PostMeta }) => {
         {/* 4. Tag */}
         <ul className={styles.tagContainer}>
           {post.tags.map((tag) => (
-            <li key={tag}>{<object><Link href={`/tags/${tag}`}><Tag>{`#${tag}`}</Tag></Link></object>}</li>
+            <li key={tag}>
+              {
+                <object>
+                  <Link href={`/tags/${tag}`}>
+                    <Tag>{`#${tag}`}</Tag>
+                  </Link>
+                </object>
+              }
+            </li>
           ))}
         </ul>
 

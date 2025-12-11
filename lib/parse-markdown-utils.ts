@@ -2,7 +2,7 @@ import matter from "gray-matter";
 import { FrontMatter, PostMd, PostMeta } from "../types/post";
 import * as fs from "fs";
 import { getPostMdFilePath } from "./path-utils";
-import { POST_DESCRIPTION_LIMIT } from "../config/post-settings";
+import { POST_DESCRIPTION_LIMIT, TIME_ZONE } from "../config/post-settings";
 
 export const extractFrontMatter = (filePath: string) => {
   const fileContent = fs.readFileSync(filePath, "utf-8");
@@ -21,8 +21,8 @@ export const parseFrontMatter = (
     tags: fm.tags ?? [],
     description: generateDescription(fm.description, content),
     thumbnail: fm.thumbnail ? getThumbnailFilename(fm.thumbnail) : null,
-    createdAt: new Date(fm.createdAt),
-    updatedAt: new Date(fm.updatedAt),
+    createdAt: fixDate(new Date(fm.createdAt)),
+    updatedAt: fixDate(new Date(fm.updatedAt)),
   };
 };
 
@@ -34,12 +34,36 @@ export const generateDescription = (
     return pre;
   }
 
-  const cleanText = content.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").replace(/\[\[(.*?)\]\]/g, (match, p1) => p1 || match).trim();
+  const cleanText = content
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .replace(/\[\[(.*?)\]\]/g, (match, p1) => p1 || match)
+    .trim();
 
   if (cleanText.length > POST_DESCRIPTION_LIMIT) {
     return cleanText.slice(0, POST_DESCRIPTION_LIMIT) + "...";
   }
   return cleanText;
+};
+
+const fixDate = (date: Date, tz: string = TIME_ZONE): Date => {
+  // まず ISO 文字列を取得（例: "2025-12-11T16:30:00.000Z"）
+  const iso = date.toISOString();
+
+  // ミリ秒を削除して "YYYY-MM-DDTHH:mm:ss" に整形
+  const base = iso.replace(/\.\d{3}Z$/, "");
+
+  // タイムゾーン付き ("...Z" or "...+09:00")
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(Z|[+-]\d{2}:\d{2})$/.test(base)) {
+    return new Date(base); // そのまま Date に
+  }
+
+  // タイムゾーンなし ("YYYY-MM-DDTHH:mm:ss")
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(base)) {
+    return new Date(base + tz); // tz を付けて Date 化
+  }
+
+  throw new Error(`Invalid date format: ${base}`);
 };
 
 export const getPostMd = (filename: string): PostMd => {
