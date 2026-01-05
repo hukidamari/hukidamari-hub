@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { SITE_TITLE } from "../../config/site-settings";
+import MyCalendar from "@/components/my-calendar";
 
 const DOCS_TAG = "docs";
 const ABOUT_TAG = "about";
@@ -118,6 +119,14 @@ export default async function Home() {
             View All Articles
           </Link>
         </div>
+      </section>
+
+      <section className={styles.section}>
+        <h2>
+          <Megaphone color="var(--color-brand-primary)" />
+          イベントカレンダー
+        </h2>
+        <MyCalendar />
       </section>
     </main>
   );
