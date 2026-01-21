@@ -4,6 +4,7 @@
     "about-cahnnels",
     "rulebook",
     "about-deadline-friends",
+    "about-seizon-hokoku",
     "about-bot"
   ],
   "docs": [
@@ -11,13 +12,18 @@
     "rulebook",
     "link-map",
     "about-deadline-friends",
+    "about-seizon-hokoku",
     "about-bot"
   ],
   "activity": [
-    "about-deadline-friends"
+    "about-deadline-friends",
+    "about-seizon-hokoku"
   ],
   "デッドライン友の会": [
     "about-deadline-friends"
+  ],
+  "生存報告の会": [
+    "about-seizon-hokoku"
   ],
   "えびふらい": [
     "about-bot"
