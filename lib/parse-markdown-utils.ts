@@ -17,7 +17,7 @@ export const parseFrontMatter = (
   return {
     slug: fm.slug,
     title: fm.title ?? filename.replace(".md", ""),
-    filename: filename,
+    filename: filename.normalize('NFC'),
     tags: fm.tags ?? [],
     description: generateDescription(fm.description, content),
     thumbnail: fm.thumbnail ? getThumbnailFilename(fm.thumbnail) : null,

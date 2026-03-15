@@ -1,7 +1,7 @@
 {
   "about": {
     "slug": "about",
-    "title": "ふきだまりとは？",
+    "title": "ふきだまりとは？",
     "filename": "ふきだまりとは？.md",
     "tags": [
       "about"
@@ -16,13 +16,13 @@
     "title": "チャンネルガイド",
     "filename": "ふきだまりチャンネルガイド.md",
     "tags": [
-      "docs",
-      "about"
+      "about",
+      "docs"
     ],
-    "description": "ふきだまりの各チャンネルの紹介&説明をします。 ## カテゴリの使い分け ふきだまりにはカテゴリが6つあり、それぞれ下記のような使い分けを想定しています。 - **🎈 案内** - ふきだまりの基本的な情報やメンバーの自己紹介 - **💭 一般** - な...",
+    "description": "ふきだまり の各チャンネルの紹介&説明をします。 ## カテゴリの使い分け ふきだまり にはカテゴリが 6 つあり、それぞれ下記のような使い分けを想定しています。 - **🎈 案内** - ふきだまり の基本的な情報やメンバーの自己紹介 - **💭 一般*...",
     "thumbnail": null,
     "createdAt": "2025-12-06T15:30:00.000Z",
-    "updatedAt": "2025-12-11T07:30:00.000Z"
+    "updatedAt": "2026-03-15T04:30:00.000Z"
   },
   "rulebook": {
     "slug": "rulebook",
@@ -51,7 +51,7 @@
   },
   "about-deadline-friends": {
     "slug": "about-deadline-friends",
-    "title": "デッドライン友の会とは？",
+    "title": "デッドライン友の会とは？",
     "filename": "デッドライン友の会とは？.md",
     "tags": [
       "docs",
@@ -81,7 +81,7 @@
   },
   "about-bot": {
     "slug": "about-bot",
-    "title": "自作Bot「えびふらい」",
+    "title": "自作Bot「えびふらい」",
     "filename": "自作Bot「えびふらい」.md",
     "tags": [
       "docs",
