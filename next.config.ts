@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
+  // Prism loads language files dynamically on the server.
+  serverExternalPackages: ["prismjs"],
   images: {
     localPatterns: [
       {
