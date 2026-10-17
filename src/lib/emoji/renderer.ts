@@ -17,47 +17,59 @@ export async function createEmojiRenderer(host: HTMLElement) {
   host.appendChild(canvas);
   const artwork = new Container();
   app.stage.addChild(artwork);
-  const picture = new Sprite();
-  picture.anchor.set(0.5);
-  const lettering = new Text({ text: "", resolution: 2 });
-  lettering.anchor.set(0.5);
-  artwork.addChild(picture, lettering);
+  const objects = new Map<ElementId, Sprite | Text>();
+  const textures = new Map<HTMLImageElement, Texture>();
   const wave = createWaveFilter();
   const effects = { wave, glow: createEffectFilter("glow"), pixel: createEffectFilter("pixel"), rgb: createEffectFilter("rgb") };
   // Keep effect coordinates stable when text or image bounds change.
   artwork.filterArea = new Rectangle(0, 0, STAGE_SIZE, STAGE_SIZE);
-  let source: HTMLImageElement | null = null;
-  let texture: Texture | null = null;
 
   return {
-    render(draft: EmojiDraft, image: HTMLImageElement | null): RenderResult {
-      if (source !== image) {
-        if (texture) texture.destroy(true);
-        source = image;
-        texture = image ? Texture.from(image) : null;
-        picture.texture = texture ?? Texture.EMPTY;
+    render(draft: EmojiDraft): RenderResult {
+      const ids = new Set(draft.layers.map(layer => layer.id));
+      for (const [id, object] of objects) {
+        if (!ids.has(id)) { object.destroy(); objects.delete(id); }
       }
-      picture.visible = Boolean(image);
-      if (image) {
-        const fit = (draft.text.trim() ? 300 : 430) / Math.max(image.naturalWidth, image.naturalHeight);
-        picture.scale.set(fit * draft.image.scale);
-        picture.position.set(draft.image.x, draft.image.y);
+      const sources = new Set(draft.layers.flatMap(layer => layer.kind === "image" ? [layer.source] : []));
+      const bounds: RenderResult["bounds"] = {};
+      for (const [index, layer] of draft.layers.entries()) {
+        let object = objects.get(layer.id);
+        if (!object) {
+          object = layer.kind === "text" ? new Text({ text: "", resolution: 2 }) : new Sprite();
+          object.anchor.set(0.5);
+          objects.set(layer.id, object);
+          artwork.addChild(object);
+        }
+        artwork.setChildIndex(object, index);
+        object.visible = layer.kind === "image" || Boolean(layer.text.trim());
+        if (layer.kind === "image" && object instanceof Sprite) {
+          let texture = textures.get(layer.source);
+          if (!texture) { texture = Texture.from(layer.source); textures.set(layer.source, texture); }
+          object.texture = texture;
+          const fit = 430 / Math.max(layer.source.naturalWidth, layer.source.naturalHeight);
+          object.scale.set(fit * layer.transform.scale);
+        } else if (layer.kind === "text" && object instanceof Text) {
+          object.text = layer.text;
+          object.style = {
+            fontFamily: FONT_FAMILIES[layer.font], fontSize: 170,
+            fontWeight: layer.font === "sans" || layer.font === "serif" ? "bold" : "normal",
+            fill: layer.color, align: "center", padding: 32,
+            stroke: layer.outline ? { color: layer.outlineColor, width: layer.outline, join: "round" } : undefined,
+            dropShadow: layer.shadow || layer.shadowBlur ? { color: layer.shadowColor, alpha: 0.65, blur: layer.shadowBlur, distance: layer.shadow, angle: Math.PI / 4 } : undefined,
+            wordWrap: false,
+          };
+          object.scale.set(1);
+          const fit = Math.min(1, 450 / Math.max(object.width, 1), 440 / Math.max(object.height, 1));
+          object.scale.set(fit * layer.transform.scale);
+        }
+        object.position.set(layer.transform.x, layer.transform.y);
+        if (object.visible) {
+          const b = object.getBounds();
+          bounds[layer.id] = { x: b.x, y: b.y, width: b.width, height: b.height };
+        }
       }
-      lettering.visible = Boolean(draft.text.trim());
-      if (lettering.visible) {
-        lettering.text = draft.text;
-        lettering.style = {
-          fontFamily: FONT_FAMILIES[draft.font], fontSize: image ? 116 : 170,
-          fontWeight: draft.font === "sans" || draft.font === "serif" ? "bold" : "normal",
-          fill: draft.color, align: "center", padding: 32,
-          stroke: draft.outline ? { color: draft.outlineColor, width: draft.outline, join: "round" } : undefined,
-          dropShadow: draft.shadow || draft.shadowBlur ? { color: draft.shadowColor, alpha: 0.65, blur: draft.shadowBlur, distance: draft.shadow, angle: Math.PI / 4 } : undefined,
-          wordWrap: false,
-        };
-        lettering.scale.set(1);
-        const fit = Math.min(1, 450 / Math.max(lettering.width, 1), (image ? 190 : 440) / Math.max(lettering.height, 1));
-        lettering.scale.set(fit * draft.lettering.scale);
-        lettering.position.set(draft.lettering.x, draft.lettering.y);
+      for (const [source, texture] of textures) {
+        if (!sources.has(source)) { texture.destroy(true); textures.delete(source); }
       }
       wave.resources.waveUniforms.uniforms.uStrength = draft.effectSettings.wave.strength;
       wave.resources.waveUniforms.uniforms.uPhase = draft.effectSettings.wave.phase;
@@ -71,13 +83,6 @@ export async function createEmojiRenderer(host: HTMLElement) {
         effects[id].resources.effectUniforms.uniforms.uStrength = draft.effectSettings[id].strength;
       }
       artwork.filters = draft.effects.filter(id => draft.effectSettings[id].strength > 0).map(id => effects[id]);
-      const bounds: RenderResult["bounds"] = {};
-      for (const [id, item] of [["image", picture], ["text", lettering]] as const) {
-        if (item.visible) {
-          const b = item.getBounds();
-          bounds[id] = { x: b.x, y: b.y, width: b.width, height: b.height };
-        }
-      }
       app.render();
       // A fixed frame keeps empty margins and clips artwork to the same square
       // as the editor. The selection controls/background are not in this scene.
@@ -99,7 +104,9 @@ export async function createEmojiRenderer(host: HTMLElement) {
       artwork.filters = [];
       for (const effect of Object.values(effects)) effect.destroy();
       app.destroy(true, { children: true, texture: false, textureSource: false });
-      texture?.destroy(true);
+      for (const texture of textures.values()) texture.destroy(true);
+      textures.clear();
+      objects.clear();
     },
   };
 }

@@ -106,3 +106,22 @@
 .guideX, .guideY { position: absolute; pointer-events: none; z-index: 3; background: #f29df1; box-shadow: 0 0 0 1px #25272d55; }
 .guideX { top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
 .guideY { left: 0; right: 0; height: 1px; transform: translateY(-50%); }
+
+.layerAdd { display: flex; gap: 8px; margin-bottom: 10px; }
+.layerAdd > button, .addImage { flex: 1; display: flex; justify-content: center; align-items: center; gap: 6px; min-width: 0; border: 1px solid #515662; border-radius: 6px; background: #303238; color: #dce0e6; font: inherit; font-size: 12px; padding: 9px 5px; cursor: pointer; }
+.addImage { position: relative; }
+.addImage input { position: absolute; inset: 0; opacity: 0; width: 100%; cursor: pointer; }
+.addImage:focus-within { outline: 2px solid #5ccad3; outline-offset: 2px; }
+.layerAdd button:disabled, .addImage[aria-disabled="true"] { opacity: 0.45; cursor: default; }
+.layerList { list-style: none; padding: 0; margin: 0; max-height: 144px; overflow-y: auto; border: 1px solid #44474e; border-radius: 6px; overscroll-behavior: contain; }
+.layerList button { width: 100%; display: flex; align-items: center; gap: 8px; min-width: 0; padding: 9px 10px; border: 0; border-bottom: 1px solid #44474e; background: transparent; color: #bcc2cc; text-align: left; cursor: pointer; font: inherit; font-size: 12px; }
+.layerList button svg { flex-shrink: 0; }
+.layerList button span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.layerList button[aria-pressed="true"] { color: #d2f8fc; background: #5ccad31a; box-shadow: inset 3px 0 #5ccad3; }
+.layerActions { display: flex; justify-content: flex-end; gap: 6px; margin: 8px 0 16px; }
+.layerActions button { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid #515662; border-radius: 5px; background: #303238; color: #dce0e6; cursor: pointer; }
+.layerActions button:disabled { opacity: 0.3; cursor: default; }
+.layerHint { color: #a0a7b2; font-size: 12px; margin: 12px 0; }
+
+.layerActions > span { margin-right: auto; align-self: center; color: #a0a7b2; font-size: 11px; }
+.layerList:empty { display: none; }

@@ -1,7 +1,7 @@
 export const STAGE_SIZE = 512;
 export const OUTPUT_SIZE = 128;
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
-export type ElementId = "image" | "text";
+export type ElementId = string;
 export type Transform = { x: number; y: number; scale: number };
 export const EFFECTS = {
   wave: { name: "うねうね", control: "強さ" },
@@ -10,8 +10,7 @@ export const EFFECTS = {
   rgb: { name: "ずれ", control: "ずれ幅" },
 } as const;
 export type EffectId = keyof typeof EFFECTS;
-export type EmojiDraft = {
-  text: string;
+export type TextAppearance = {
   font: FontId;
   color: string;
   outlineColor: string;
@@ -19,6 +18,12 @@ export type EmojiDraft = {
   shadow: number;
   shadowColor: string;
   shadowBlur: number;
+};
+export type TextLayer = TextAppearance & { id: ElementId; kind: "text"; text: string; transform: Transform };
+export type ImageLayer = { id: ElementId; kind: "image"; source: HTMLImageElement; name: string; transform: Transform };
+export type EmojiLayer = TextLayer | ImageLayer;
+export type EmojiDraft = {
+  layers: EmojiLayer[];
   effects: EffectId[];
   effectSettings: {
     wave: { strength: number; phase: number; angle: number };
@@ -26,8 +31,6 @@ export type EmojiDraft = {
     pixel: { strength: number };
     rgb: { strength: number; angle: number };
   };
-  image: Transform;
-  lettering: Transform;
 };
 export const FONTS = {
   dela: { name: "Dela Gothic One", family: "Emoji dela", file: "/fonts/dela-gothic-one/DelaGothicOne-Regular.ttf" },
@@ -48,21 +51,23 @@ export const FONTS = {
 export type FontId = keyof typeof FONTS;
 export const FONT_FAMILIES = Object.fromEntries(Object.entries(FONTS).map(([id, font]) =>
   [id, font.file ? `"${font.family}", sans-serif` : font.family])) as Record<FontId, string>;
-export function layout(hasImage: boolean, hasText: boolean) {
+export function createTextLayer(id: string, text = "文字"): TextLayer {
   return {
-    image: { x: 256, y: hasText ? 190 : 256, scale: 1 },
-    lettering: { x: 256, y: hasImage ? 394 : 256, scale: 1 },
+    id, kind: "text", text, font: "dela", color: "#ffe477", outlineColor: "#292329",
+    outline: 10, shadow: 0, shadowColor: "#121218", shadowBlur: 0,
+    transform: { x: 256, y: 256, scale: 1 },
   };
+}
+export function layerName(layer: EmojiLayer) {
+  return layer.kind === "text" ? layer.text.trim().replace(/\s+/g, " ") || "文字" : layer.name;
 }
 export function initialDraft(): EmojiDraft {
   return {
-    text: "えらい", font: "dela", color: "#ffe477", outlineColor: "#292329",
-    outline: 10, shadow: 0, shadowColor: "#121218", shadowBlur: 0, effects: [],
+    layers: [createTextLayer("initial-text", "えらい")], effects: [],
     effectSettings: {
       wave: { strength: 8, phase: 0, angle: 0 }, glow: { strength: 8, color: "#ffc740" },
       pixel: { strength: 8 }, rgb: { strength: 8, angle: 0 },
     },
-    ...layout(false, true),
   };
 }
 export function clamp(value: number, min: number, max: number) {
