@@ -1,17 +1,16 @@
 "use client";
 
-import { ArrowUp, ArrowDown, Copy, Trash2, Type, ImagePlus } from "lucide-react";
+import { ArrowUp, ArrowDown, Copy, Trash2, Type, ImagePlus, Sparkles } from "lucide-react";
 import { layerName, type EmojiLayer, type TextLayer, type TextAppearance } from "@/lib/emoji/model";
 import { ColorPalette, Slider } from "./editor-controls";
 import FontPicker from "./font-picker";
 import styles from "./emoji-editor.module.css";
 
 export const MAX_LAYERS = 16;
-export default function LayerPanel({ layers, selected, loading, imageError, onSelect, onAddText, onLoadImage, onMove, onDuplicate, onRemove, onTextChange }: {
+export default function LayerPanel({ layers, selected, loading, imageError, onSelect, onAddText, onLoadImage, onMove, onDuplicate, onRemove }: {
   layers: EmojiLayer[]; selected: EmojiLayer | undefined; loading: boolean; imageError: string;
   onSelect: (id: string) => void; onAddText: () => void; onLoadImage: (file?: File, replaceId?: string) => void;
   onMove: (id: string, delta: number) => void; onDuplicate: (id: string) => void; onRemove: (id: string) => void;
-  onTextChange: (change: Partial<TextAppearance & { text: string }>) => void;
 }) {
   const atLimit = layers.length >= MAX_LAYERS;
   const index = layers.findIndex(layer => layer.id === selected?.id);
@@ -27,7 +26,7 @@ export default function LayerPanel({ layers, selected, loading, imageError, onSe
     <ul className={styles.layerList} aria-label="レイヤー（上が手前）">
       {[...layers].reverse().map((layer, index) => <li key={layer.id}>
         <button type="button" aria-pressed={layer.id === selected?.id} data-layer-id={layer.id} aria-label={`レイヤー${layers.length - index}: ${layerName(layer)}`} onClick={() => onSelect(layer.id)}>
-          {layer.kind === "text" ? <Type size={14} /> : <ImagePlus size={14} />}<span>{layerName(layer)}</span>
+          {layer.kind === "text" ? <Type size={14} /> : <ImagePlus size={14} />}<span>{layerName(layer)}</span>{layer.effects.length > 0 && <Sparkles size={12} aria-label="効果あり" />}
         </button>
       </li>)}
     </ul>
@@ -40,12 +39,18 @@ export default function LayerPanel({ layers, selected, loading, imageError, onSe
     </div>}
     {imageError && <p className={styles.error} role="alert">{imageError}</p>}
     {!selected && <p className={styles.layerHint}>文字や画像を追加</p>}
-    {selected?.kind === "text" && <TextSettings layer={selected} onChange={onTextChange} />}
-    {selected?.kind === "image" && <label className={styles.upload}>
-      <ImagePlus size={24} /><span>{loading ? "読み込み中…" : "画像を変更"}</span><small>PNG・JPEG・WebP / 5 MBまで</small>
-      <input type="file" accept="image/png,image/jpeg,image/webp" aria-label="選択レイヤーの画像を変更" disabled={loading} onChange={event => { onLoadImage(event.target.files?.[0], selected.id); event.target.value = ""; }} />
-    </label>}
   </>;
+}
+
+export function LayerAppearance({ layer, loading, onTextChange, onLoadImage }: {
+  layer: EmojiLayer; loading: boolean; onTextChange: (change: Partial<TextAppearance & { text: string }>) => void;
+  onLoadImage: (file?: File, replaceId?: string) => void;
+}) {
+  if (layer.kind === "text") return <TextSettings layer={layer} onChange={onTextChange} />;
+  return <label className={styles.upload}>
+    <ImagePlus size={24} /><span>{loading ? "読み込み中…" : "画像を変更"}</span><small>PNG・JPEG・WebP / 5 MBまで</small>
+    <input type="file" accept="image/png,image/jpeg,image/webp" aria-label="選択レイヤーの画像を変更" disabled={loading} onChange={event => { onLoadImage(event.target.files?.[0], layer.id); event.target.value = ""; }} />
+  </label>;
 }
 
 function TextSettings({ layer, onChange }: { layer: TextLayer; onChange: (change: Partial<TextAppearance & { text: string }>) => void }) {

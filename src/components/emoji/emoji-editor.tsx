@@ -1,12 +1,13 @@
 "use client";
 
 import { Fragment, useEffect, useRef, useState, type PointerEvent } from "react";
-import { ArrowUp, ArrowDown, Download, Layers, RotateCcw, Sparkles } from "lucide-react";
-import { clamp, initialDraft, createTextLayer, layerName, MAX_IMAGE_BYTES, STAGE_SIZE, EFFECTS, type EffectId, type ElementId, type EmojiDraft, type Transform, type TextAppearance } from "@/lib/emoji/model";
+import { Download, Layers, RotateCcw, Sparkles } from "lucide-react";
+import { clamp, initialDraft, initialEffects, createTextLayer, layerName, MAX_IMAGE_BYTES, STAGE_SIZE, type EffectStack, type ElementId, type EmojiDraft, type Transform, type TextAppearance } from "@/lib/emoji/model";
 import type { createEmojiRenderer, RenderResult, ElementBounds } from "@/lib/emoji/renderer";
 import { loadFont } from "@/lib/emoji/fonts";
-import LayerPanel, { MAX_LAYERS } from "./layer-panel";
-import { Slider, ColorPalette } from "./editor-controls";
+import LayerPanel, { MAX_LAYERS, LayerAppearance } from "./layer-panel";
+import { Slider } from "./editor-controls";
+import EffectEditor from "./effect-editor";
 import { snapAxis } from "@/lib/emoji/snapping";
 import styles from "./emoji-editor.module.css";
 
@@ -15,6 +16,7 @@ export default function EmojiEditor() {
   const [draft, setDraft] = useState(initialDraft);
   const [selected, setSelected] = useState<ElementId | null>("initial-text");
   const [panel, setPanel] = useState<"layers" | "effects">("layers");
+  const [layerMode, setLayerMode] = useState<"appearance" | "effects">("appearance");
   const [ready, setReady] = useState(false);
   const [result, setResult] = useState<(RenderResult & { draft: EmojiDraft }) | null>(null);
   const [error, setError] = useState("");
@@ -73,26 +75,10 @@ export default function EmojiEditor() {
     return () => { cancelled = true; cancelAnimationFrame(frame); };
   }, [draft, ready]);
 
-  function update<K extends keyof EmojiDraft>(key: K, value: EmojiDraft[K]) {
-    setDraft((previous) => ({ ...previous, [key]: value }));
-  }
-  function toggleEffect(id: EffectId) {
-    setDraft(previous => ({ ...previous, effects: previous.effects.includes(id) ? previous.effects.filter(effect => effect !== id) : [...previous.effects, id] }));
-  }
-  function configureEffect<K extends EffectId>(id: K, change: Partial<EmojiDraft["effectSettings"][K]>) {
-    setDraft(previous => ({ ...previous, effectSettings: { ...previous.effectSettings, [id]: { ...previous.effectSettings[id], ...change } } }));
-  }
-  function moveEffect(id: EffectId, delta: number) {
-    setDraft(previous => {
-      const effects = [...previous.effects];
-      const index = effects.indexOf(id);
-      const target = index + delta;
-      if (index < 0 || target < 0 || target >= effects.length) return previous;
-      [effects[index], effects[target]] = [effects[target], effects[index]];
-      return { ...previous, effects };
-    });
-  }
   const selectedLayer = draft.layers.find(layer => layer.id === selected);
+  function updateLayerEffects(id: string, stack: EffectStack) {
+    setDraft(previous => ({ ...previous, layers: previous.layers.map(layer => layer.id === id ? { ...layer, ...stack } : layer) }));
+  }
   function updateText(change: Partial<TextAppearance & { text: string }>) {
     setDraft(previous => ({ ...previous, layers: previous.layers.map(layer => layer.id === selected && layer.kind === "text" ? { ...layer, ...change } : layer) }));
   }
@@ -104,6 +90,7 @@ export default function EmojiEditor() {
     if (loadingImage || draft.layers.length >= MAX_LAYERS) return;
     const layer = createTextLayer(crypto.randomUUID());
     setDraft(previous => ({ ...previous, layers: [...previous.layers, layer] }));
+    setLayerMode("appearance");
     selectLayer(layer.id);
   }
   function moveLayer(id: string, delta: number) {
@@ -119,7 +106,7 @@ export default function EmojiEditor() {
   function duplicateLayer(id: string) {
     const original = draft.layers.find(layer => layer.id === id);
     if (!original || loadingImage || draft.layers.length >= MAX_LAYERS) return;
-    const copy = { ...original, id: crypto.randomUUID(), transform: { ...original.transform, x: clamp(original.transform.x + 16, 0, STAGE_SIZE), y: clamp(original.transform.y + 16, 0, STAGE_SIZE) } };
+    const copy = { ...original, ...structuredClone({ effects: original.effects, effectSettings: original.effectSettings }), id: crypto.randomUUID(), transform: { ...original.transform, x: clamp(original.transform.x + 16, 0, STAGE_SIZE), y: clamp(original.transform.y + 16, 0, STAGE_SIZE) } };
     setDraft(previous => {
       const layers = [...previous.layers];
       layers.splice(layers.findIndex(layer => layer.id === id) + 1, 0, copy);
@@ -172,8 +159,8 @@ export default function EmojiEditor() {
       if (element.naturalWidth * element.naturalHeight > 16_000_000) throw new Error("large");
       if (!mounted.current || version !== uploadVersion.current) return;
       const id = replaceId ?? crypto.randomUUID();
-      setDraft(previous => ({ ...previous, layers: replaceId ? previous.layers.map(layer => layer.id === id && layer.kind === "image" ? { ...layer, source: element, name: file.name } : layer) : previous.layers.length < MAX_LAYERS ? [...previous.layers, { id, kind: "image", source: element, name: file.name, transform: { x: 256, y: 256, scale: 1 } }] : previous.layers }));
-      if (!replaceId || draft.layers.some(layer => layer.id === replaceId)) selectLayer(id);
+      setDraft(previous => ({ ...previous, layers: replaceId ? previous.layers.map(layer => layer.id === id && layer.kind === "image" ? { ...layer, source: element, name: file.name } : layer) : previous.layers.length < MAX_LAYERS ? [...previous.layers, { ...initialEffects(), id, kind: "image", source: element, name: file.name, transform: { x: 256, y: 256, scale: 1 } }] : previous.layers }));
+      if (!replaceId || draft.layers.some(layer => layer.id === replaceId)) { setLayerMode("appearance"); selectLayer(id); }
     } catch {
       if (mounted.current && version === uploadVersion.current) setImageError("画像を読み込めませんでした。縦×横が1600万画素以下の別の画像をお試しください。");
     } finally {
@@ -311,14 +298,25 @@ export default function EmojiEditor() {
       <section className={styles.inspector} aria-label="絵文字の編集">
         <nav className={styles.tools} aria-label="編集する対象">
           <button type="button" aria-pressed={panel === "layers"} onClick={() => setPanel("layers")}><Layers size={17} />レイヤー</button>
-          <button type="button" aria-pressed={panel === "effects"} onClick={() => setPanel("effects")}><Sparkles size={17} />効果</button>
+          <button type="button" aria-label="全体の効果" title={draft.effects.length ? `全体に${draft.effects.length}個の効果` : "全体の効果"} aria-pressed={panel === "effects"} onClick={() => setPanel("effects")}><Sparkles size={17} />全体の効果{draft.effects.length > 0 && <span aria-hidden="true" className={styles.effectBadge}>{draft.effects.length}</span>}</button>
         </nav>
         <div className={styles.settings}>
           {panel === "layers" && <>
             <LayerPanel layers={draft.layers} selected={selectedLayer} loading={loadingImage} imageError={imageError}
               onSelect={selectLayer} onAddText={addText} onLoadImage={(file, id) => { void loadImage(file, id); }}
-              onMove={moveLayer} onDuplicate={duplicateLayer} onRemove={removeLayer} onTextChange={updateText} />
-            {selectedLayer && currentTransform && <div className={styles.transform}>
+              onMove={moveLayer} onDuplicate={duplicateLayer} onRemove={removeLayer} />
+            {selectedLayer && <>
+              <div className={styles.layerInspectorHeader}>
+              <h2 className={styles.selectedLayerName} title={layerName(selectedLayer)}>{layerName(selectedLayer)}</h2>
+              <div className={styles.layerModes} aria-label="選択レイヤーの設定">
+                <button type="button" aria-pressed={layerMode === "appearance"} onClick={() => setLayerMode("appearance")}>見た目</button>
+                <button type="button" aria-pressed={layerMode === "effects"} onClick={() => setLayerMode("effects")}>効果</button>
+              </div>
+              </div>
+              {layerMode === "effects" && <EffectEditor value={selectedLayer} label="このレイヤーの効果" onChange={stack => updateLayerEffects(selectedLayer.id, stack)} />}
+              {layerMode === "appearance" && <LayerAppearance layer={selectedLayer} loading={loadingImage} onTextChange={updateText} onLoadImage={(file, id) => { void loadImage(file, id); }} />}
+            </>}
+            {selectedLayer && currentTransform && layerMode === "appearance" && <div className={styles.transform}>
               <Slider label="大きさ" value={Math.round(currentTransform.scale * 100)} min={20} max={200} unit="%" onChange={value => transform(selectedLayer.id, { scale: value / 100 })} />
               <details className={styles.details}>
                 <summary>位置を数値で調整</summary>
@@ -329,28 +327,7 @@ export default function EmojiEditor() {
               </details>
             </div>}
           </>}
-          {panel === "effects" && <>
-            <fieldset className={styles.effects}><legend>全体の効果</legend>
-              {(Object.keys(EFFECTS) as EffectId[]).map(effect =>
-                <button key={effect} type="button" aria-pressed={draft.effects.includes(effect)} onClick={() => toggleEffect(effect)}>{EFFECTS[effect].name}</button>)}
-            </fieldset>
-            {draft.effects.length > 0 && <div className={styles.effectTools}>
-              <span>{draft.effects.length > 1 ? "上から順に適用" : "適用中の効果"}</span>
-              <button type="button" onClick={() => update("effects", [])}>すべてオフ</button>
-            </div>}
-            {draft.effects.map((effect, index) => <section key={effect} className={styles.effectSettings} aria-label={`${EFFECTS[effect].name}の設定`}>
-              <header><h2>{EFFECTS[effect].name}</h2>
-                <div className={styles.effectOrder}>
-                  <button type="button" aria-label={`${EFFECTS[effect].name}を上へ`} disabled={index === 0} onClick={() => moveEffect(effect, -1)}><ArrowUp size={14} /></button>
-                  <button type="button" aria-label={`${EFFECTS[effect].name}を下へ`} disabled={index === draft.effects.length - 1} onClick={() => moveEffect(effect, 1)}><ArrowDown size={14} /></button>
-                </div>
-              </header>
-              <Slider label={EFFECTS[effect].control} value={draft.effectSettings[effect].strength} min={0} max={24} onChange={strength => configureEffect(effect, { strength })} />
-              {(effect === "wave" || effect === "rgb") && <Slider label="向き" unit="°" value={draft.effectSettings[effect].angle} min={0} max={360} onChange={angle => configureEffect(effect, { angle })} />}
-              {effect === "glow" && <div className={styles.effectColor}><ColorPalette label="光の色" value={draft.effectSettings.glow.color} onChange={color => configureEffect("glow", { color })} /></div>}
-              {effect === "wave" && <Slider label="波の位置" value={draft.effectSettings.wave.phase} min={0} max={6.28} step={0.05} onChange={phase => configureEffect("wave", { phase })} />}
-            </section>)}
-          </>}
+          {panel === "effects" && <EffectEditor value={draft} label="全体の効果" onChange={stack => setDraft(previous => ({ ...previous, ...stack }))} />}
         </div>
       </section>
     </div>

@@ -92,7 +92,7 @@
 .effectTools button { border: 0; background: transparent; color: #bdeaf0; font: inherit; cursor: pointer; padding: 4px; }
 .effectSettings { border-top: 1px solid #44474e; padding: 14px 0; }
 .effectSettings header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.effectSettings h2 { margin: 0; font-size: 12px; font-weight: 600; }
+.effectSettings h3 { margin: 0; font-size: 12px; font-weight: 600; }
 .effectOrder { display: flex; gap: 6px; }
 .effectOrder button { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid #515662; border-radius: 5px; background: #303238; color: #dce0e6; cursor: pointer; }
 .effectOrder button:disabled { opacity: 0.3; cursor: default; }
@@ -125,3 +125,14 @@
 
 .layerActions > span { margin-right: auto; align-self: center; color: #a0a7b2; font-size: 11px; }
 .layerList:empty { display: none; }
+
+
+.selectedLayerName { font-size: 12px; margin: 0 0 10px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.layerModes { display: flex; gap: 4px; padding: 3px; background: #202226; border-radius: 6px; margin-bottom: 0; }
+.layerModes button { flex: 1; border: 0; border-radius: 4px; color: #a9afba; padding: 8px; background: transparent; cursor: pointer; font: inherit; font-size: 12px; }
+.layerModes button[aria-pressed="true"] { background: #3b4149; color: #e5f8fa; }
+
+.layerInspectorHeader { position: sticky; top: -16px; z-index: 4; background: #292b30; padding: 12px 0 16px; margin-top: 4px; }
+@media (max-width: 700px) { .layerInspectorHeader { top: -12px; } }
+
+.effectBadge { display: inline-flex; align-items: center; justify-content: center; min-width: 16px; height: 16px; border-radius: 8px; background: #5ccad329; color: #a8eff4; font-size: 10px; }

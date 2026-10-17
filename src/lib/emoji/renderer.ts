@@ -1,6 +1,5 @@
 import { Application, Container, Rectangle, Sprite, Text, Texture } from "pixi.js";
-import { createEffectFilter } from "./effect-filters";
-import { createWaveFilter } from "./wave-filter";
+import { createEffectPipeline } from "./effect-pipeline";
 import { FONT_FAMILIES, OUTPUT_SIZE, STAGE_SIZE, type EmojiDraft, type ElementId } from "./model";
 
 export type ElementBounds = { x: number; y: number; width: number; height: number };
@@ -18,17 +17,23 @@ export async function createEmojiRenderer(host: HTMLElement) {
   const artwork = new Container();
   app.stage.addChild(artwork);
   const objects = new Map<ElementId, Sprite | Text>();
+  const layerRoots = new Map<ElementId, Container>();
   const textures = new Map<HTMLImageElement, Texture>();
-  const wave = createWaveFilter();
-  const effects = { wave, glow: createEffectFilter("glow"), pixel: createEffectFilter("pixel"), rgb: createEffectFilter("rgb") };
+  const globalEffects = createEffectPipeline();
+  const layerEffects = new Map<ElementId, ReturnType<typeof createEffectPipeline>>();
   // Keep effect coordinates stable when text or image bounds change.
   artwork.filterArea = new Rectangle(0, 0, STAGE_SIZE, STAGE_SIZE);
 
   return {
     render(draft: EmojiDraft): RenderResult {
       const ids = new Set(draft.layers.map(layer => layer.id));
-      for (const [id, object] of objects) {
-        if (!ids.has(id)) { object.destroy(); objects.delete(id); }
+      for (const id of objects.keys()) {
+        if (!ids.has(id)) {
+          const root = layerRoots.get(id)!;
+          root.filters = [];
+          layerEffects.get(id)?.destroy(); layerEffects.delete(id);
+          root.destroy({ children: true }); layerRoots.delete(id); objects.delete(id);
+        }
       }
       const sources = new Set(draft.layers.flatMap(layer => layer.kind === "image" ? [layer.source] : []));
       const bounds: RenderResult["bounds"] = {};
@@ -38,9 +43,17 @@ export async function createEmojiRenderer(host: HTMLElement) {
           object = layer.kind === "text" ? new Text({ text: "", resolution: 2 }) : new Sprite();
           object.anchor.set(0.5);
           objects.set(layer.id, object);
-          artwork.addChild(object);
+          // Filter areas are local to their container. Keep this wrapper untransformed
+          // so moving/scaling the object never shifts or crops the effect's stage frame.
+          const root = new Container();
+          root.addChild(object);
+          root.filterArea = new Rectangle(0, 0, STAGE_SIZE, STAGE_SIZE);
+          layerRoots.set(layer.id, root);
+          artwork.addChild(root);
+          layerEffects.set(layer.id, createEffectPipeline());
         }
-        artwork.setChildIndex(object, index);
+        const root = layerRoots.get(layer.id)!;
+        artwork.setChildIndex(root, index);
         object.visible = layer.kind === "image" || Boolean(layer.text.trim());
         if (layer.kind === "image" && object instanceof Sprite) {
           let texture = textures.get(layer.source);
@@ -63,6 +76,8 @@ export async function createEmojiRenderer(host: HTMLElement) {
           object.scale.set(fit * layer.transform.scale);
         }
         object.position.set(layer.transform.x, layer.transform.y);
+        root.visible = object.visible;
+        root.filters = layerEffects.get(layer.id)!.update(layer);
         if (object.visible) {
           const b = object.getBounds();
           bounds[layer.id] = { x: b.x, y: b.y, width: b.width, height: b.height };
@@ -71,18 +86,7 @@ export async function createEmojiRenderer(host: HTMLElement) {
       for (const [source, texture] of textures) {
         if (!sources.has(source)) { texture.destroy(true); textures.delete(source); }
       }
-      wave.resources.waveUniforms.uniforms.uStrength = draft.effectSettings.wave.strength;
-      wave.resources.waveUniforms.uniforms.uPhase = draft.effectSettings.wave.phase;
-      wave.resources.waveUniforms.uniforms.uAngle = draft.effectSettings.wave.angle * Math.PI / 180;
-      effects.rgb.resources.effectUniforms.uniforms.uAngle = draft.effectSettings.rgb.angle * Math.PI / 180;
-      const glowColor = Number.parseInt(draft.effectSettings.glow.color.slice(1), 16);
-      effects.glow.resources.effectUniforms.uniforms.uGlowColor = new Float32Array([
-        ((glowColor >> 16) & 255) / 255, ((glowColor >> 8) & 255) / 255, (glowColor & 255) / 255,
-      ]);
-      for (const id of ["glow", "pixel", "rgb"] as const) {
-        effects[id].resources.effectUniforms.uniforms.uStrength = draft.effectSettings[id].strength;
-      }
-      artwork.filters = draft.effects.filter(id => draft.effectSettings[id].strength > 0).map(id => effects[id]);
+      artwork.filters = globalEffects.update(draft);
       app.render();
       // A fixed frame keeps empty margins and clips artwork to the same square
       // as the editor. The selection controls/background are not in this scene.
@@ -102,11 +106,18 @@ export async function createEmojiRenderer(host: HTMLElement) {
     destroy() {
       canvas.remove();
       artwork.filters = [];
-      for (const effect of Object.values(effects)) effect.destroy();
+      globalEffects.destroy();
+      for (const [id, pipeline] of layerEffects) {
+        const root = layerRoots.get(id);
+        if (root) root.filters = [];
+        pipeline.destroy();
+      }
+      layerEffects.clear();
       app.destroy(true, { children: true, texture: false, textureSource: false });
       for (const texture of textures.values()) texture.destroy(true);
       textures.clear();
       objects.clear();
+      layerRoots.clear();
     },
   };
 }

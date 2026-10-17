@@ -1,0 +1,38 @@
+"use client";
+
+import { ArrowUp, ArrowDown } from "lucide-react";
+import { EFFECTS, type EffectId, type EffectStack } from "@/lib/emoji/model";
+import { ColorPalette, Slider } from "./editor-controls";
+import styles from "./emoji-editor.module.css";
+
+export default function EffectEditor({ value, label, onChange }: { value: EffectStack; label: string; onChange: (next: EffectStack) => void }) {
+  function configure<K extends EffectId>(id: K, change: Partial<EffectStack["effectSettings"][K]>) {
+    onChange({ effects: value.effects, effectSettings: { ...value.effectSettings, [id]: { ...value.effectSettings[id], ...change } } });
+  }
+  function move(id: EffectId, delta: number) {
+    const effects = [...value.effects];
+    const index = effects.indexOf(id), target = index + delta;
+    if (index < 0 || target < 0 || target >= effects.length) return;
+    [effects[index], effects[target]] = [effects[target], effects[index]];
+    onChange({ effects, effectSettings: value.effectSettings });
+  }
+  return <>
+    <fieldset className={styles.effects}><legend>{label}</legend>
+      {(Object.keys(EFFECTS) as EffectId[]).map(effect => <button key={effect} type="button" aria-pressed={value.effects.includes(effect)} onClick={() => onChange({ effects: value.effects.includes(effect) ? value.effects.filter(id => id !== effect) : [...value.effects, effect], effectSettings: value.effectSettings })}>{EFFECTS[effect].name}</button>)}
+    </fieldset>
+    {value.effects.length > 0 && <div className={styles.effectTools}>
+      <span>{value.effects.length > 1 ? "上から順に適用" : "適用中の効果"}</span>
+      <button type="button" onClick={() => onChange({ effects: [], effectSettings: value.effectSettings })}>すべてオフ</button>
+    </div>}
+    {value.effects.map((effect, index) => <section key={effect} className={styles.effectSettings} aria-label={`${EFFECTS[effect].name}の設定`}>
+      <header><h3>{EFFECTS[effect].name}</h3><div className={styles.effectOrder}>
+        <button type="button" aria-label={`${EFFECTS[effect].name}を上へ`} disabled={index === 0} onClick={() => move(effect, -1)}><ArrowUp size={14} /></button>
+        <button type="button" aria-label={`${EFFECTS[effect].name}を下へ`} disabled={index === value.effects.length - 1} onClick={() => move(effect, 1)}><ArrowDown size={14} /></button>
+      </div></header>
+      <Slider label={EFFECTS[effect].control} value={value.effectSettings[effect].strength} min={0} max={24} onChange={strength => configure(effect, { strength })} />
+      {(effect === "wave" || effect === "rgb") && <Slider label="向き" unit="°" value={value.effectSettings[effect].angle} min={0} max={360} onChange={angle => configure(effect, { angle })} />}
+      {effect === "glow" && <div className={styles.effectColor}><ColorPalette label="光の色" value={value.effectSettings.glow.color} onChange={color => configure("glow", { color })} /></div>}
+      {effect === "wave" && <Slider label="波の位置" value={value.effectSettings.wave.phase} min={0} max={6.28} step={0.05} onChange={phase => configure("wave", { phase })} />}
+    </section>)}
+  </>;
+}
