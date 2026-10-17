@@ -1,6 +1,6 @@
-.picker { margin-bottom: 16px; }
-.label { display: block; font-size: 12px; margin-bottom: 8px; }
-.trigger { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border: 1px solid #4b4f59; border-radius: 6px; background: #303238; color: #edf0f4; text-align: left; cursor: pointer; font: inherit; font-size: 13px; }
+.picker { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.label { display: block; flex-shrink: 0; font-size: 12px; }
+.trigger { flex: 1; min-width: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 10px; border: 1px solid #4b4f59; border-radius: 6px; background: #303238; color: #edf0f4; text-align: left; cursor: pointer; font: inherit; font-size: 13px; }
 .dialog { padding: 20px; width: min(680px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 48px); box-sizing: border-box; border: 1px solid #555962; border-radius: 12px; background: #25272d; color: #edf0f4; overflow: hidden; }
 .dialog[open] { display: flex; flex-direction: column; gap: 16px; }
 .dialog::backdrop { background: #0009; }
@@ -16,3 +16,5 @@
 .sample { display: block; font-size: 32px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 100px; overflow: hidden; font-weight: normal; }
 .dialog button:focus-visible, .trigger:focus-visible { outline: 2px solid #5ccad3; outline-offset: 2px; }
 @media (max-width: 480px) { .dialog { padding: 16px; } .list { grid-template-columns: 1fr; } }
+
+.trigger > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

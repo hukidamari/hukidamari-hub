@@ -1,22 +1,2 @@
-.shell {
-  height: 100dvh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.shell > header { flex-shrink: 0; position: static; }
-.content {
-  flex: 1;
-  min-height: 0;
-  min-width: 0;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 24px;
-  overflow: hidden;
-}
-@media (max-width: 700px) {
-  .content { padding: 10px 12px; }
-}
+.shell { height: 100dvh; overflow: hidden; display: flex; flex-direction: column; }
+.content { flex: 1; min-height: 0; min-width: 0; display: flex; justify-content: center; width: 100%; margin: 0 auto; padding: 16px 20px; overflow: hidden; }

@@ -16,9 +16,9 @@ export default function LayerPanel({ layers, selected, loading, imageError, onSe
   const index = layers.findIndex(layer => layer.id === selected?.id);
   return <>
     <div className={styles.layerAdd}>
-      <button type="button" onClick={onAddText} disabled={atLimit || loading}><Type size={15} />文字を追加</button>
+      <button type="button" aria-label="文字を追加" title="文字を追加" onClick={onAddText} disabled={atLimit || loading}><Type size={15} />文字</button>
       <label className={styles.addImage} aria-disabled={loading || atLimit}>
-        <ImagePlus size={15} />{loading ? "読み込み中…" : "画像を追加"}
+        <ImagePlus size={15} />{loading ? "読込中…" : "画像"}
         <input type="file" accept="image/png,image/jpeg,image/webp" aria-label="画像を追加" disabled={loading || atLimit} onChange={event => { onLoadImage(event.target.files?.[0]); event.target.value = ""; }} />
       </label>
     </div>
@@ -31,14 +31,13 @@ export default function LayerPanel({ layers, selected, loading, imageError, onSe
       </li>)}
     </ul>
     {selected && <div className={styles.layerActions} aria-label="選択レイヤーの操作">
-      <span>上が手前</span>
       <button type="button" aria-label="レイヤーを手前へ" title="手前へ" disabled={index === layers.length - 1} onClick={() => onMove(selected.id, 1)}><ArrowUp size={15} /></button>
       <button type="button" aria-label="レイヤーを奥へ" title="奥へ" disabled={index === 0} onClick={() => onMove(selected.id, -1)}><ArrowDown size={15} /></button>
       <button type="button" aria-label="レイヤーを複製" title="複製" disabled={atLimit || loading} onClick={() => onDuplicate(selected.id)}><Copy size={15} /></button>
       <button type="button" aria-label="レイヤーを削除" title="削除" onClick={() => onRemove(selected.id)}><Trash2 size={15} /></button>
     </div>}
     {imageError && <p className={styles.error} role="alert">{imageError}</p>}
-    {!selected && <p className={styles.layerHint}>文字や画像を追加</p>}
+    {layers.length === 0 && <p className={styles.layerHint}>文字や画像を追加</p>}
   </>;
 }
 
