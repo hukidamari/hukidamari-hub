@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useRef, useState, type PointerEvent } from "react";
-import { Download, ImagePlus, RotateCcw, Sparkles, Type, X } from "lucide-react";
+import { ArrowUp, ArrowDown, Download, ImagePlus, RotateCcw, Sparkles, Type, X } from "lucide-react";
 import { clamp, initialDraft, layout, MAX_IMAGE_BYTES, STAGE_SIZE, EFFECTS, type EffectId, type ElementId, type EmojiDraft, type Transform } from "@/lib/emoji/model";
 import type { createEmojiRenderer, RenderResult } from "@/lib/emoji/renderer";
 import { loadFont } from "@/lib/emoji/fonts";
@@ -93,6 +93,22 @@ export default function EmojiEditor() {
 
   function update<K extends keyof EmojiDraft>(key: K, value: EmojiDraft[K]) {
     setDraft((previous) => ({ ...previous, [key]: value }));
+  }
+  function toggleEffect(id: EffectId) {
+    setDraft(previous => ({ ...previous, effects: previous.effects.includes(id) ? previous.effects.filter(effect => effect !== id) : [...previous.effects, id] }));
+  }
+  function configureEffect(id: EffectId, change: Partial<EmojiDraft["effectSettings"][EffectId]>) {
+    setDraft(previous => ({ ...previous, effectSettings: { ...previous.effectSettings, [id]: { ...previous.effectSettings[id], ...change } } }));
+  }
+  function moveEffect(id: EffectId, delta: number) {
+    setDraft(previous => {
+      const effects = [...previous.effects];
+      const index = effects.indexOf(id);
+      const target = index + delta;
+      if (index < 0 || target < 0 || target >= effects.length) return previous;
+      [effects[index], effects[target]] = [effects[target], effects[index]];
+      return { ...previous, effects };
+    });
   }
   function transform(id: ElementId, change: Partial<Transform>) {
     const key = id === "image" ? "image" : "lettering";
@@ -299,12 +315,22 @@ export default function EmojiEditor() {
           {activeTool === "effects" && <>
             <fieldset className={styles.effects}><legend>全体の効果</legend>
               {(Object.keys(EFFECTS) as EffectId[]).map(effect =>
-                <button key={effect} type="button" aria-pressed={draft.effect === effect} onClick={() => update("effect", effect)}>{EFFECTS[effect].name}</button>)}
+                <button key={effect} type="button" aria-pressed={draft.effects.includes(effect)} onClick={() => toggleEffect(effect)}>{EFFECTS[effect].name}</button>)}
             </fieldset>
-            {draft.effect !== "none" && <Slider label={EFFECTS[draft.effect].control} value={draft.strength} min={0} max={24} onChange={(value) => update("strength", value)} />}
-            {draft.effect === "wave" && <>
-              <Slider label="波の位置" value={draft.phase} min={0} max={6.28} step={0.05} onChange={(value) => update("phase", value)} />
-            </>}
+            {draft.effects.length > 0 && <div className={styles.effectTools}>
+              <span>{draft.effects.length > 1 ? "上から順に適用" : "適用中の効果"}</span>
+              <button type="button" onClick={() => update("effects", [])}>すべてオフ</button>
+            </div>}
+            {draft.effects.map((effect, index) => <section key={effect} className={styles.effectSettings} aria-label={`${EFFECTS[effect].name}の設定`}>
+              <header><h2>{EFFECTS[effect].name}</h2>
+                <div className={styles.effectOrder}>
+                  <button type="button" aria-label={`${EFFECTS[effect].name}を上へ`} disabled={index === 0} onClick={() => moveEffect(effect, -1)}><ArrowUp size={14} /></button>
+                  <button type="button" aria-label={`${EFFECTS[effect].name}を下へ`} disabled={index === draft.effects.length - 1} onClick={() => moveEffect(effect, 1)}><ArrowDown size={14} /></button>
+                </div>
+              </header>
+              <Slider label={EFFECTS[effect].control} value={draft.effectSettings[effect].strength} min={0} max={24} onChange={strength => configureEffect(effect, { strength })} />
+              {effect === "wave" && <Slider label="波の位置" value={draft.effectSettings.wave.phase} min={0} max={6.28} step={0.05} onChange={phase => configureEffect("wave", { phase })} />}
+            </section>)}
           </>}
         </div>
       </section>

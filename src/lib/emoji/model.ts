@@ -4,7 +4,6 @@ export const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 export type ElementId = "image" | "text";
 export type Transform = { x: number; y: number; scale: number };
 export const EFFECTS = {
-  none: { name: "なし", control: "強さ" },
   wave: { name: "うねうね", control: "強さ" },
   glow: { name: "ふちが光る", control: "光の広がり" },
   pixel: { name: "ドット", control: "粗さ" },
@@ -18,9 +17,8 @@ export type EmojiDraft = {
   outlineColor: string;
   outline: number;
   shadow: number;
-  effect: EffectId;
-  strength: number;
-  phase: number;
+  effects: EffectId[];
+  effectSettings: Record<EffectId, { strength: number; phase: number }>;
   image: Transform;
   lettering: Transform;
 };
@@ -52,7 +50,11 @@ export function layout(hasImage: boolean, hasText: boolean) {
 export function initialDraft(): EmojiDraft {
   return {
     text: "えらい", font: "dela", color: "#ffe477", outlineColor: "#292329",
-    outline: 10, shadow: 0, effect: "none", strength: 8, phase: 0,
+    outline: 10, shadow: 0, effects: [],
+    effectSettings: {
+      wave: { strength: 8, phase: 0 }, glow: { strength: 8, phase: 0 },
+      pixel: { strength: 8, phase: 0 }, rgb: { strength: 8, phase: 0 },
+    },
     ...layout(false, true),
   };
 }

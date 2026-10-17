@@ -59,12 +59,12 @@ export async function createEmojiRenderer(host: HTMLElement) {
         lettering.scale.set(fit * draft.lettering.scale);
         lettering.position.set(draft.lettering.x, draft.lettering.y);
       }
-      wave.resources.waveUniforms.uniforms.uStrength = draft.strength;
-      wave.resources.waveUniforms.uniforms.uPhase = draft.phase;
-      for (const effect of [effects.glow, effects.pixel, effects.rgb]) {
-        effect.resources.effectUniforms.uniforms.uStrength = draft.strength;
+      wave.resources.waveUniforms.uniforms.uStrength = draft.effectSettings.wave.strength;
+      wave.resources.waveUniforms.uniforms.uPhase = draft.effectSettings.wave.phase;
+      for (const id of ["glow", "pixel", "rgb"] as const) {
+        effects[id].resources.effectUniforms.uniforms.uStrength = draft.effectSettings[id].strength;
       }
-      artwork.filters = draft.effect === "none" || draft.strength === 0 ? [] : [effects[draft.effect]];
+      artwork.filters = draft.effects.filter(id => draft.effectSettings[id].strength > 0).map(id => effects[id]);
       const bounds: RenderResult["bounds"] = {};
       for (const [id, item] of [["image", picture], ["text", lettering]] as const) {
         if (item.visible) {
