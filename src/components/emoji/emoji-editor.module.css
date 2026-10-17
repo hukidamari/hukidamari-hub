@@ -96,3 +96,6 @@
 .effectOrder { display: flex; gap: 6px; }
 .effectOrder button { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid #515662; border-radius: 5px; background: #303238; color: #dce0e6; cursor: pointer; }
 .effectOrder button:disabled { opacity: 0.3; cursor: default; }
+
+.effectColor { margin-top: 16px; }
+.effectColor fieldset { margin-bottom: 0; }

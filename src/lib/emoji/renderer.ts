@@ -61,6 +61,12 @@ export async function createEmojiRenderer(host: HTMLElement) {
       }
       wave.resources.waveUniforms.uniforms.uStrength = draft.effectSettings.wave.strength;
       wave.resources.waveUniforms.uniforms.uPhase = draft.effectSettings.wave.phase;
+      wave.resources.waveUniforms.uniforms.uAngle = draft.effectSettings.wave.angle * Math.PI / 180;
+      effects.rgb.resources.effectUniforms.uniforms.uAngle = draft.effectSettings.rgb.angle * Math.PI / 180;
+      const glowColor = Number.parseInt(draft.effectSettings.glow.color.slice(1), 16);
+      effects.glow.resources.effectUniforms.uniforms.uGlowColor = new Float32Array([
+        ((glowColor >> 16) & 255) / 255, ((glowColor >> 8) & 255) / 255, (glowColor & 255) / 255,
+      ]);
       for (const id of ["glow", "pixel", "rgb"] as const) {
         effects[id].resources.effectUniforms.uniforms.uStrength = draft.effectSettings[id].strength;
       }

@@ -18,7 +18,12 @@ export type EmojiDraft = {
   outline: number;
   shadow: number;
   effects: EffectId[];
-  effectSettings: Record<EffectId, { strength: number; phase: number }>;
+  effectSettings: {
+    wave: { strength: number; phase: number; angle: number };
+    glow: { strength: number; color: string };
+    pixel: { strength: number };
+    rgb: { strength: number; angle: number };
+  };
   image: Transform;
   lettering: Transform;
 };
@@ -52,8 +57,8 @@ export function initialDraft(): EmojiDraft {
     text: "えらい", font: "dela", color: "#ffe477", outlineColor: "#292329",
     outline: 10, shadow: 0, effects: [],
     effectSettings: {
-      wave: { strength: 8, phase: 0 }, glow: { strength: 8, phase: 0 },
-      pixel: { strength: 8, phase: 0 }, rgb: { strength: 8, phase: 0 },
+      wave: { strength: 8, phase: 0, angle: 0 }, glow: { strength: 8, color: "#ffc740" },
+      pixel: { strength: 8 }, rgb: { strength: 8, angle: 0 },
     },
     ...layout(false, true),
   };

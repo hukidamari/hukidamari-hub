@@ -25,10 +25,13 @@ uniform highp vec4 uInputSize;
 uniform vec4 uInputClamp;
 uniform float uStrength;
 uniform float uPhase;
+uniform float uAngle;
 void main() {
   vec2 uv = vTextureCoord;
-  float y = uv.y * uInputSize.y;
-  uv.x += sin(y * 0.045 + uPhase) * uStrength * uInputSize.z;
+  vec2 direction = vec2(cos(uAngle), sin(uAngle));
+  vec2 perpendicular = vec2(-direction.y, direction.x);
+  float distance = dot(uv * uInputSize.xy, perpendicular);
+  uv += direction * sin(distance * 0.045 + uPhase) * uStrength * uInputSize.zw;
   if (uv.x < uInputClamp.x || uv.y < uInputClamp.y ||
       uv.x > uInputClamp.z || uv.y > uInputClamp.w) {
     finalColor = vec4(0.0);
@@ -44,6 +47,7 @@ export function createWaveFilter() {
       waveUniforms: {
         uStrength: { value: 8, type: "f32" },
         uPhase: { value: 0, type: "f32" },
+        uAngle: { value: 0, type: "f32" },
       },
     },
   });

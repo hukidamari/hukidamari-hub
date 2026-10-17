@@ -18,6 +18,7 @@ vec4 sampleAt(vec2 uv) {
 
 const fragments = {
   glow: `
+uniform vec3 uGlowColor;
 void main() {
   vec4 center = sampleAt(vTextureCoord);
   float halo = 0.0;
@@ -32,7 +33,7 @@ void main() {
   halo = min(1.0, halo / 12.0) * (1.0 - center.a);
   if (uStrength == 0.0) halo = 0.0;
   // Pixi textures use premultiplied alpha, including the transparent halo.
-  finalColor = center + vec4(vec3(1.0, 0.78, 0.25) * halo, halo);
+  finalColor = center + vec4(uGlowColor * halo, halo);
 }`,
   pixel: `
 void main() {
@@ -43,8 +44,9 @@ void main() {
   finalColor = sampleAt(snapped * uInputSize.zw);
 }`,
   rgb: `
+uniform float uAngle;
 void main() {
-  vec2 offset = vec2(uStrength * uInputSize.z, 0.0);
+  vec2 offset = vec2(cos(uAngle), sin(uAngle)) * uStrength * uInputSize.zw;
   vec4 red = sampleAt(vTextureCoord - offset);
   vec4 green = sampleAt(vTextureCoord);
   vec4 blue = sampleAt(vTextureCoord + offset);
@@ -59,6 +61,10 @@ export function createEffectFilter(effect: keyof typeof fragments) {
       name: `emoji-${effect}`, preferredFragmentPrecision: "highp",
     }),
     padding: 32,
-    resources: { effectUniforms: { uStrength: { value: 8, type: "f32" } } },
+    resources: { effectUniforms: {
+      uStrength: { value: 8, type: "f32" },
+      ...(effect === "rgb" ? { uAngle: { value: 0, type: "f32" } } : {}),
+      ...(effect === "glow" ? { uGlowColor: { value: new Float32Array([1, 0.78, 0.25]), type: "vec3<f32>" } } : {}),
+    } },
   });
 }

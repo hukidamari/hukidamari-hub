@@ -97,7 +97,7 @@ export default function EmojiEditor() {
   function toggleEffect(id: EffectId) {
     setDraft(previous => ({ ...previous, effects: previous.effects.includes(id) ? previous.effects.filter(effect => effect !== id) : [...previous.effects, id] }));
   }
-  function configureEffect(id: EffectId, change: Partial<EmojiDraft["effectSettings"][EffectId]>) {
+  function configureEffect<K extends EffectId>(id: K, change: Partial<EmojiDraft["effectSettings"][K]>) {
     setDraft(previous => ({ ...previous, effectSettings: { ...previous.effectSettings, [id]: { ...previous.effectSettings[id], ...change } } }));
   }
   function moveEffect(id: EffectId, delta: number) {
@@ -329,6 +329,8 @@ export default function EmojiEditor() {
                 </div>
               </header>
               <Slider label={EFFECTS[effect].control} value={draft.effectSettings[effect].strength} min={0} max={24} onChange={strength => configureEffect(effect, { strength })} />
+              {(effect === "wave" || effect === "rgb") && <Slider label="向き" unit="°" value={draft.effectSettings[effect].angle} min={0} max={360} onChange={angle => configureEffect(effect, { angle })} />}
+              {effect === "glow" && <div className={styles.effectColor}><ColorPalette label="光の色" value={draft.effectSettings.glow.color} onChange={color => configureEffect("glow", { color })} /></div>}
               {effect === "wave" && <Slider label="波の位置" value={draft.effectSettings.wave.phase} min={0} max={6.28} step={0.05} onChange={phase => configureEffect("wave", { phase })} />}
             </section>)}
           </>}
