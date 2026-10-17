@@ -51,7 +51,7 @@ export async function createEmojiRenderer(host: HTMLElement) {
           fontWeight: draft.font === "sans" || draft.font === "serif" ? "bold" : "normal",
           fill: draft.color, align: "center", padding: 32,
           stroke: draft.outline ? { color: draft.outlineColor, width: draft.outline, join: "round" } : undefined,
-          dropShadow: draft.shadow ? { color: "#121218", alpha: 0.65, blur: draft.shadow, distance: draft.shadow, angle: Math.PI / 4 } : undefined,
+          dropShadow: draft.shadow || draft.shadowBlur ? { color: draft.shadowColor, alpha: 0.65, blur: draft.shadowBlur, distance: draft.shadow, angle: Math.PI / 4 } : undefined,
           wordWrap: false,
         };
         lettering.scale.set(1);

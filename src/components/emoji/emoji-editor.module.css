@@ -99,3 +99,6 @@
 
 .effectColor { margin-top: 16px; }
 .effectColor fieldset { margin-bottom: 0; }
+
+.appearance > label:only-of-type { grid-column: 1 / -1; }
+.shadowSettings { margin-top: 16px; }

@@ -17,6 +17,8 @@ export type EmojiDraft = {
   outlineColor: string;
   outline: number;
   shadow: number;
+  shadowColor: string;
+  shadowBlur: number;
   effects: EffectId[];
   effectSettings: {
     wave: { strength: number; phase: number; angle: number };
@@ -55,7 +57,7 @@ export function layout(hasImage: boolean, hasText: boolean) {
 export function initialDraft(): EmojiDraft {
   return {
     text: "えらい", font: "dela", color: "#ffe477", outlineColor: "#292329",
-    outline: 10, shadow: 0, effects: [],
+    outline: 10, shadow: 0, shadowColor: "#121218", shadowBlur: 0, effects: [],
     effectSettings: {
       wave: { strength: 8, phase: 0, angle: 0 }, glow: { strength: 8, color: "#ffc740" },
       pixel: { strength: 8 }, rgb: { strength: 8, angle: 0 },

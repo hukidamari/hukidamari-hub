@@ -291,7 +291,11 @@ export default function EmojiEditor() {
             <div className={styles.appearance}>
               <ColorPalette label="縁の色" value={draft.outlineColor} onChange={(color) => update("outlineColor", color)} />
               <Slider label="縁の太さ" value={draft.outline} min={0} max={24} onChange={(value) => update("outline", value)} />
-              <Slider label="影" value={draft.shadow} min={0} max={24} onChange={(value) => update("shadow", value)} />
+            </div>
+            <div className={`${styles.appearance} ${styles.shadowSettings}`}>
+              <ColorPalette label="影の色" value={draft.shadowColor} onChange={color => update("shadowColor", color)} />
+              <Slider label="影の距離" value={draft.shadow} min={0} max={24} onChange={value => update("shadow", value)} />
+              <Slider label="ぼかし" value={draft.shadowBlur} min={0} max={24} onChange={value => update("shadowBlur", value)} />
             </div>
           </>}
           {activeTool === "image" && <>
