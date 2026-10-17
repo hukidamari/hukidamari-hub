@@ -3,6 +3,14 @@ export const OUTPUT_SIZE = 128;
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 export type ElementId = "image" | "text";
 export type Transform = { x: number; y: number; scale: number };
+export const EFFECTS = {
+  none: { name: "なし", control: "強さ" },
+  wave: { name: "うねうね", control: "強さ" },
+  glow: { name: "ふちが光る", control: "光の広がり" },
+  pixel: { name: "ドット", control: "粗さ" },
+  rgb: { name: "ずれ", control: "ずれ幅" },
+} as const;
+export type EffectId = keyof typeof EFFECTS;
 export type EmojiDraft = {
   text: string;
   font: FontId;
@@ -10,7 +18,7 @@ export type EmojiDraft = {
   outlineColor: string;
   outline: number;
   shadow: number;
-  effect: "none" | "wave";
+  effect: EffectId;
   strength: number;
   phase: number;
   image: Transform;

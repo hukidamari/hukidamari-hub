@@ -2,7 +2,7 @@ import { Filter, GlProgram } from "pixi.js";
 
 // Pixi's filter frame can be larger than the artwork. Work in stage pixels so
 // changing an element's bounds doesn't change the wavelength.
-const vertex = `
+export const filterVertex = `
 precision highp float;
 in vec2 aPosition;
 out vec2 vTextureCoord;
@@ -38,7 +38,7 @@ void main() {
 }`.trim();
 export function createWaveFilter() {
   return new Filter({
-    glProgram: GlProgram.from({ vertex, fragment, name: "emoji-wave", preferredFragmentPrecision: "highp" }),
+    glProgram: GlProgram.from({ vertex: filterVertex, fragment, name: "emoji-wave", preferredFragmentPrecision: "highp" }),
     padding: 32,
     resources: {
       waveUniforms: {

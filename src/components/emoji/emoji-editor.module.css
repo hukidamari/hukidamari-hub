@@ -63,7 +63,8 @@
 .file { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; margin-top: 14px; }
 .file > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .file button { border: 0; background: transparent; color: #b8c0cb; padding: 4px; display: flex; cursor: pointer; }
-.effects button { background: #303238; color: #dce0e6; border: 1px solid #515662; border-radius: 6px; padding: 9px 14px; margin-right: 8px; cursor: pointer; }
+.effects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.effects button { background: #303238; color: #dce0e6; border: 1px solid #515662; border-radius: 6px; padding: 9px 14px; cursor: pointer; }
 .effects button[aria-pressed="true"] { border-color: #5ccad3; background: #5ccad310; }
 .error { margin: 12px 16px; color: #ffb3b3; font-size: 12px; }
 .workshop button:focus-visible, .workshop input:focus-visible, .workshop textarea:focus-visible, .workshop summary:focus-visible { outline: 2px solid #5ccad3; outline-offset: 3px; }

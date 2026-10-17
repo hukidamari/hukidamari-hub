@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { Download, ImagePlus, RotateCcw, Sparkles, Type, X } from "lucide-react";
-import { clamp, initialDraft, layout, MAX_IMAGE_BYTES, STAGE_SIZE, type ElementId, type EmojiDraft, type Transform } from "@/lib/emoji/model";
+import { clamp, initialDraft, layout, MAX_IMAGE_BYTES, STAGE_SIZE, EFFECTS, type EffectId, type ElementId, type EmojiDraft, type Transform } from "@/lib/emoji/model";
 import type { createEmojiRenderer, RenderResult } from "@/lib/emoji/renderer";
 import { loadFont } from "@/lib/emoji/fonts";
 import FontPicker from "./font-picker";
@@ -261,11 +261,11 @@ export default function EmojiEditor() {
           </div>}
           {activeTool === "effects" && <>
             <fieldset className={styles.effects}><legend>全体の効果</legend>
-              <button type="button" aria-pressed={draft.effect === "none"} onClick={() => update("effect", "none")}>なし</button>
-              <button type="button" aria-pressed={draft.effect === "wave"} onClick={() => update("effect", "wave")}>うねうね</button>
+              {(Object.keys(EFFECTS) as EffectId[]).map(effect =>
+                <button key={effect} type="button" aria-pressed={draft.effect === effect} onClick={() => update("effect", effect)}>{EFFECTS[effect].name}</button>)}
             </fieldset>
+            {draft.effect !== "none" && <Slider label={EFFECTS[draft.effect].control} value={draft.strength} min={0} max={24} onChange={(value) => update("strength", value)} />}
             {draft.effect === "wave" && <>
-              <Slider label="強さ" value={draft.strength} min={0} max={24} onChange={(value) => update("strength", value)} />
               <Slider label="波の位置" value={draft.phase} min={0} max={6.28} step={0.05} onChange={(value) => update("phase", value)} />
             </>}
           </>}

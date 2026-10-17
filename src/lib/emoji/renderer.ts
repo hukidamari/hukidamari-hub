@@ -1,4 +1,5 @@
 import { Application, Container, Rectangle, Sprite, Text, Texture } from "pixi.js";
+import { createEffectFilter } from "./effect-filters";
 import { createWaveFilter } from "./wave-filter";
 import { FONT_FAMILIES, OUTPUT_SIZE, STAGE_SIZE, type EmojiDraft, type ElementId } from "./model";
 
@@ -22,6 +23,9 @@ export async function createEmojiRenderer(host: HTMLElement) {
   lettering.anchor.set(0.5);
   artwork.addChild(picture, lettering);
   const wave = createWaveFilter();
+  const effects = { wave, glow: createEffectFilter("glow"), pixel: createEffectFilter("pixel"), rgb: createEffectFilter("rgb") };
+  // Keep effect coordinates stable when text or image bounds change.
+  artwork.filterArea = new Rectangle(0, 0, STAGE_SIZE, STAGE_SIZE);
   let source: HTMLImageElement | null = null;
   let texture: Texture | null = null;
 
@@ -57,7 +61,10 @@ export async function createEmojiRenderer(host: HTMLElement) {
       }
       wave.resources.waveUniforms.uniforms.uStrength = draft.strength;
       wave.resources.waveUniforms.uniforms.uPhase = draft.phase;
-      artwork.filters = draft.effect === "wave" ? [wave] : [];
+      for (const effect of [effects.glow, effects.pixel, effects.rgb]) {
+        effect.resources.effectUniforms.uniforms.uStrength = draft.strength;
+      }
+      artwork.filters = draft.effect === "none" || draft.strength === 0 ? [] : [effects[draft.effect]];
       const bounds: RenderResult["bounds"] = {};
       for (const [id, item] of [["image", picture], ["text", lettering]] as const) {
         if (item.visible) {
@@ -84,7 +91,7 @@ export async function createEmojiRenderer(host: HTMLElement) {
     destroy() {
       canvas.remove();
       artwork.filters = [];
-      wave.destroy();
+      for (const effect of Object.values(effects)) effect.destroy();
       app.destroy(true, { children: true, texture: false, textureSource: false });
       texture?.destroy(true);
     },
