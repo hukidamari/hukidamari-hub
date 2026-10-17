@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { Fragment, useEffect, useRef, useState, type PointerEvent } from "react";
 import { Download, ImagePlus, RotateCcw, Sparkles, Type, X } from "lucide-react";
 import { clamp, initialDraft, layout, MAX_IMAGE_BYTES, STAGE_SIZE, EFFECTS, type EffectId, type ElementId, type EmojiDraft, type Transform } from "@/lib/emoji/model";
 import type { createEmojiRenderer, RenderResult } from "@/lib/emoji/renderer";
@@ -46,7 +46,7 @@ export default function EmojiEditor() {
   const renderer = useRef<Renderer | null>(null);
   const uploadVersion = useRef(0);
   const mounted = useRef(true);
-  const drag = useRef<{ id: ElementId; pointer: number; x: number; y: number; start: Transform } | null>(null);
+  const drag = useRef<{ id: ElementId; pointer: number; x: number; y: number; start: Transform; resize?: { width: number; height: number; sx: number; sy: number } } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -147,10 +147,32 @@ export default function EmojiEditor() {
     event.currentTarget.setPointerCapture(event.pointerId);
     drag.current = { id, pointer: event.pointerId, x: event.clientX, y: event.clientY, start: { ...(id === "image" ? draft.image : draft.lettering) } };
   }
+  function beginResize(event: PointerEvent<HTMLButtonElement>, id: ElementId, sx: number, sy: number) {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    beginDrag(event, id);
+    const bounds = result?.bounds[id];
+    if (drag.current && bounds) drag.current.resize = { width: bounds.width, height: bounds.height, sx, sy };
+  }
   function moveDrag(event: PointerEvent<HTMLButtonElement>) {
     const current = drag.current;
     if (!current || current.pointer !== event.pointerId || !stage.current) return;
     const ratio = STAGE_SIZE / stage.current.getBoundingClientRect().width;
+    if (current.resize) {
+      const { width, height, sx, sy } = current.resize;
+      const dx = (event.clientX - current.x) * ratio;
+      const dy = (event.clientY - current.y) * ratio;
+      // Project onto the diagonal to preserve aspect ratio and the opposite corner.
+      const factor = 1 + (sx * dx * width + sy * dy * height) / Math.max(width * width + height * height, 1);
+      const scale = clamp(current.start.scale * factor, 0.2, 2);
+      const change = scale / current.start.scale - 1;
+      transform(current.id, {
+        scale,
+        x: clamp(current.start.x + sx * width * change / 2, 0, STAGE_SIZE),
+        y: clamp(current.start.y + sy * height * change / 2, 0, STAGE_SIZE),
+      });
+      return;
+    }
     transform(current.id, {
       x: clamp(current.start.x + (event.clientX - current.x) * ratio, 0, STAGE_SIZE),
       y: clamp(current.start.y + (event.clientY - current.y) * ratio, 0, STAGE_SIZE),
@@ -193,7 +215,7 @@ export default function EmojiEditor() {
             {result && (["image", "text"] as const).map((id) => {
               const b = result.bounds[id];
               if (!b || (id === "image" && !image) || (id === "text" && !draft.text.trim())) return null;
-              return <button key={id} type="button" aria-label={`${id === "image" ? "画像" : "文字"}を移動`} aria-pressed={selected === id && panel === "object"}
+              return <Fragment key={id}><button type="button" aria-label={`${id === "image" ? "画像" : "文字"}を移動`} aria-pressed={selected === id && panel === "object"}
                 title="ドラッグで移動・矢印キーで微調整"
                 className={`${styles.selection} ${selected === id && panel === "object" ? styles.selected : ""}`}
                 style={{ left: `${b.x / STAGE_SIZE * 100}%`, top: `${b.y / STAGE_SIZE * 100}%`, width: `${b.width / STAGE_SIZE * 100}%`, height: `${b.height / STAGE_SIZE * 100}%` }}
@@ -206,7 +228,22 @@ export default function EmojiEditor() {
                   event.preventDefault();
                   const position = id === "image" ? draft.image : draft.lettering;
                   transform(id, { x: clamp(position.x + offset[event.key][0], 0, STAGE_SIZE), y: clamp(position.y + offset[event.key][1], 0, STAGE_SIZE) });
-                }} />;
+                }} />
+                {selected === id && panel === "object" && ([[-1, -1, "左上"], [1, -1, "右上"], [-1, 1, "左下"], [1, 1, "右下"]] as const).map(([sx, sy, corner]) =>
+                  <button key={corner} type="button" className={styles.resizeHandle}
+                    aria-label={`${id === "image" ? "画像" : "文字"}の大きさを変更（${corner}）`}
+                    title="ドラッグで拡大・縮小／矢印キーで微調整"
+                    style={{ left: `clamp(12px, ${(b.x + (sx === 1 ? b.width : 0)) / STAGE_SIZE * 100}%, calc(100% - 12px))`, top: `clamp(12px, ${(b.y + (sy === 1 ? b.height : 0)) / STAGE_SIZE * 100}%, calc(100% - 12px))`, cursor: sx === sy ? "nwse-resize" : "nesw-resize" }}
+                    onPointerDown={event => beginResize(event, id, sx, sy)} onPointerMove={moveDrag}
+                    onPointerUp={() => { drag.current = null; }} onPointerCancel={() => { drag.current = null; }} onLostPointerCapture={() => { drag.current = null; }}
+                    onKeyDown={event => {
+                      const direction = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1 }[event.key];
+                      if (!direction) return;
+                      event.preventDefault();
+                      const value = id === "image" ? draft.image : draft.lettering;
+                      transform(id, { scale: clamp(value.scale + direction * (event.shiftKey ? 0.1 : 0.01), 0.2, 2) });
+                    }} />)}
+              </Fragment>;
             })}
           </div>
         </div>
