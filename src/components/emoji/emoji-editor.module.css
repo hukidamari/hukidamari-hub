@@ -14,9 +14,9 @@
 .checker { background-color: #373940; background-image: conic-gradient(#41434b 25%, transparent 0 50%, #41434b 0 75%, transparent 0); background-size: 20px 20px; }
 .light { background: #f2f3f5; }
 .dark { background: #1e1f22; }
-.stageWrap { flex: 1; min-height: 0; container-type: size; display: flex; justify-content: center; align-items: center; }
-.stage { width: min(calc(100cqw - 32px), calc(100cqh - 32px), 440px); aspect-ratio: 1; position: relative; border-radius: 4px; overflow: hidden; box-shadow: 0 0 0 1px #ffffff12; }
-.canvasHost { position: absolute; inset: 0; pointer-events: none; }
+.stageWrap { overflow: hidden; flex: 1; min-height: 0; container-type: size; display: flex; justify-content: center; align-items: center; }
+.stage { width: min(calc(100cqw - 32px), calc(100cqh - 32px), 440px); aspect-ratio: 1; position: relative; border-radius: 4px; box-shadow: 0 0 0 1px #ffffff12; }
+.canvasHost { overflow: hidden; border-radius: inherit; position: absolute; inset: 0; pointer-events: none; }
 .canvasHost canvas { display: block; width: 100%; height: 100%; }
 .selection { position: absolute; background: transparent; border: 1px solid transparent; padding: 0; cursor: grab; touch-action: none; border-radius: 2px; min-width: 10px; min-height: 10px; }
 .selection:hover { border-color: #5ccad37a; }

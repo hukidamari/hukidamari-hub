@@ -233,7 +233,7 @@ export default function EmojiEditor() {
                   <button key={corner} type="button" className={styles.resizeHandle}
                     aria-label={`${id === "image" ? "画像" : "文字"}の大きさを変更（${corner}）`}
                     title="ドラッグで拡大・縮小／矢印キーで微調整"
-                    style={{ left: `clamp(12px, ${(b.x + (sx === 1 ? b.width : 0)) / STAGE_SIZE * 100}%, calc(100% - 12px))`, top: `clamp(12px, ${(b.y + (sy === 1 ? b.height : 0)) / STAGE_SIZE * 100}%, calc(100% - 12px))`, cursor: sx === sy ? "nwse-resize" : "nesw-resize" }}
+                    style={{ left: `${(b.x + (sx === 1 ? b.width : 0)) / STAGE_SIZE * 100}%`, top: `${(b.y + (sy === 1 ? b.height : 0)) / STAGE_SIZE * 100}%`, cursor: sx === sy ? "nwse-resize" : "nesw-resize" }}
                     onPointerDown={event => beginResize(event, id, sx, sy)} onPointerMove={moveDrag}
                     onPointerUp={() => { drag.current = null; }} onPointerCancel={() => { drag.current = null; }} onLostPointerCapture={() => { drag.current = null; }}
                     onKeyDown={event => {
