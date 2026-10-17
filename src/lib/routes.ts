@@ -28,3 +28,5 @@ export const getSearchUrl = (query: string = "") =>
  * RSS / フィードなど
  */
 export const getRssUrl = () => `/feed.xml`;
+
+export const getEmojiUrl = () => `/emoji`;

@@ -1,7 +1,7 @@
 import PostList from "@/components/post-list";
 import Tag from "@/components/tag";
 import { getAllTags, getPostsByTag } from "@/lib/blog-utils";
-import { PostTag } from "../../../../types/post";
+import { PostTag } from "../../../../../types/post";
 import styles from "../tags.module.css";
 import PageTitle from "@/components/page-title";
 import { TagIcon } from "lucide-react";

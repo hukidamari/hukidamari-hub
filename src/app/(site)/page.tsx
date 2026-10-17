@@ -14,7 +14,7 @@ import {
   Megaphone,
 } from "lucide-react";
 import Image from "next/image";
-import { SITE_TITLE } from "../../config/site-settings";
+import { SITE_TITLE } from "../../../config/site-settings";
 import MyCalendar from "@/components/my-calendar";
 
 const DOCS_TAG = "docs";

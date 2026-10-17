@@ -4,7 +4,7 @@ import {
   getPostBySlug,
   getRelatedPosts,
 } from "@/lib/blog-utils";
-import { PostSlug } from "../../../../types/post";
+import { PostSlug } from "../../../../../types/post";
 import styles from "./post.module.css";
 import Link from "next/link";
 import Tag from "@/components/tag";
@@ -23,7 +23,7 @@ export const generateStaticParams = (): { slug: PostSlug }[] => {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: PostSlug };
+  params: Promise<{ slug: PostSlug }>;
 }): Promise<Metadata> {
   const post = await getPostBySlug((await params).slug);
 
@@ -52,7 +52,7 @@ export async function generateMetadata({
 export default async function BlogPost({
   params,
 }: {
-  params: { slug: PostSlug };
+  params: Promise<{ slug: PostSlug }>;
 }) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);

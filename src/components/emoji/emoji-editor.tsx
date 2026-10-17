@@ -1,0 +1,276 @@
+"use client";
+
+import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { Download, ImagePlus, RotateCcw, Sparkles, Type, X } from "lucide-react";
+import { clamp, initialDraft, layout, MAX_IMAGE_BYTES, STAGE_SIZE, type ElementId, type EmojiDraft, type Transform } from "@/lib/emoji/model";
+import type { createEmojiRenderer, RenderResult } from "@/lib/emoji/renderer";
+import { loadFont } from "@/lib/emoji/fonts";
+import FontPicker from "./font-picker";
+import styles from "./emoji-editor.module.css";
+
+type Renderer = Awaited<ReturnType<typeof createEmojiRenderer>>;
+type LoadedImage = { element: HTMLImageElement; name: string };
+
+function Slider({ label, value, min, max, step = 1, unit = "", onChange }: {
+  label: string; value: number; min: number; max: number; step?: number; unit?: string; onChange: (value: number) => void;
+}) {
+  return <label className={styles.slider}><span>{label}<output>{Math.round(value * 100) / 100}{unit}</output></span>
+    <input type="range" min={min} max={max} step={step} value={value} onChange={(event) => onChange(Number(event.target.value))} />
+  </label>;
+}
+
+const swatches = ["#ffffff", "#ffe477", "#ff8a9e", "#a7e4df", "#86baff", "#292329"];
+
+function ColorPalette({ label, value, onChange }: {
+  label: string; value: string; onChange: (value: string) => void;
+}) {
+  return <fieldset className={styles.palette}><legend>{label}</legend>
+    {swatches.map(color => <button key={color} type="button" title={color} aria-label={`${label} ${color}`} aria-pressed={value.toLowerCase() === color} style={{ backgroundColor: color }} onClick={() => onChange(color)} />)}
+    <label className={styles.customColor} title={`その他の${label}`} style={!swatches.includes(value.toLowerCase()) ? { backgroundColor: value, outline: "2px solid #5ccad3", outlineOffset: 2 } : undefined}><input type="color" aria-label={`その他の${label}`} value={value} onChange={(event) => onChange(event.target.value)} /><span aria-hidden="true">＋</span></label>
+  </fieldset>;
+}
+
+export default function EmojiEditor() {
+  const [draft, setDraft] = useState(initialDraft);
+  const [image, setImage] = useState<LoadedImage | null>(null);
+  const [selected, setSelected] = useState<ElementId>("text");
+  const [panel, setPanel] = useState<"object" | "effects">("object");
+  const [ready, setReady] = useState(false);
+  const [result, setResult] = useState<(RenderResult & { draft: EmojiDraft; image: LoadedImage | null }) | null>(null);
+  const [error, setError] = useState("");
+  const [imageError, setImageError] = useState("");
+  const [loadingImage, setLoadingImage] = useState(false);
+  const [background, setBackground] = useState("checker");
+  const host = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
+  const renderer = useRef<Renderer | null>(null);
+  const uploadVersion = useRef(0);
+  const mounted = useRef(true);
+  const drag = useRef<{ id: ElementId; pointer: number; x: number; y: number; start: Transform } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    mounted.current = true;
+    async function init() {
+      try {
+        await loadFont("dela");
+        const { createEmojiRenderer } = await import("@/lib/emoji/renderer");
+        if (cancelled || !host.current) return;
+        const instance = await createEmojiRenderer(host.current);
+        if (cancelled) { instance.destroy(); return; }
+        renderer.current = instance;
+        setReady(true);
+      } catch {
+        if (!cancelled) setError("描画を開始できませんでした。WebGLを利用できるブラウザで再読み込みしてください。");
+      }
+    }
+    void init();
+    return () => {
+      cancelled = true;
+      mounted.current = false;
+      renderer.current?.destroy();
+      renderer.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!ready) return;
+    let cancelled = false;
+    let frame = 0;
+    void loadFont(draft.font).then(() => {
+      if (cancelled) return;
+      frame = requestAnimationFrame(() => {
+        try {
+          const next = renderer.current?.render(draft, image?.element ?? null);
+          if (next) { setResult({ ...next, draft, image }); setError(""); }
+        } catch {
+          setError("プレビューを描画できませんでした。画像やエフェクトの設定を変更してみてください。");
+        }
+      });
+    }).catch(() => { if (!cancelled) setError("フォントを読み込めませんでした。もう一度選んでください。"); });
+    return () => { cancelled = true; cancelAnimationFrame(frame); };
+  }, [draft, image, ready]);
+
+  function update<K extends keyof EmojiDraft>(key: K, value: EmojiDraft[K]) {
+    setDraft((previous) => ({ ...previous, [key]: value }));
+  }
+  function transform(id: ElementId, change: Partial<Transform>) {
+    const key = id === "image" ? "image" : "lettering";
+    setDraft((previous) => ({ ...previous, [key]: { ...previous[key], ...change } }));
+  }
+  function autoLayout() {
+    setDraft((previous) => ({ ...previous, ...layout(Boolean(image), Boolean(previous.text.trim())) }));
+  }
+  async function loadImage(file?: File) {
+    if (!file) return;
+    const version = ++uploadVersion.current;
+    setImageError("");
+    if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+      setLoadingImage(false);
+      setImageError("PNG・JPEG・WebPの画像を選んでください。"); return;
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+      setLoadingImage(false);
+      setImageError("画像は5 MB以下にしてください。"); return;
+    }
+    setLoadingImage(true);
+    const url = URL.createObjectURL(file);
+    try {
+      const element = new Image();
+      element.src = url;
+      await element.decode();
+      if (element.naturalWidth * element.naturalHeight > 16_000_000) throw new Error("large");
+      if (!mounted.current || version !== uploadVersion.current) return;
+      setImage({ element, name: file.name });
+      setDraft((previous) => ({ ...previous, ...layout(true, Boolean(previous.text.trim())) }));
+      setSelected("image");
+      setPanel("object");
+    } catch {
+      if (mounted.current && version === uploadVersion.current) setImageError("画像を読み込めませんでした。縦×横が1600万画素以下の別の画像をお試しください。");
+    } finally {
+      URL.revokeObjectURL(url);
+      if (mounted.current && version === uploadVersion.current) setLoadingImage(false);
+    }
+  }
+  function removeImage() {
+    ++uploadVersion.current;
+    setLoadingImage(false);
+    setImage(null);
+    setSelected("text");
+    setPanel("object");
+    setDraft((previous) => ({ ...previous, ...layout(false, Boolean(previous.text.trim())) }));
+  }
+  function beginDrag(event: PointerEvent<HTMLButtonElement>, id: ElementId) {
+    if (event.button !== 0) return;
+    setSelected(id);
+    setPanel("object");
+    event.currentTarget.setPointerCapture(event.pointerId);
+    drag.current = { id, pointer: event.pointerId, x: event.clientX, y: event.clientY, start: { ...(id === "image" ? draft.image : draft.lettering) } };
+  }
+  function moveDrag(event: PointerEvent<HTMLButtonElement>) {
+    const current = drag.current;
+    if (!current || current.pointer !== event.pointerId || !stage.current) return;
+    const ratio = STAGE_SIZE / stage.current.getBoundingClientRect().width;
+    transform(current.id, {
+      x: clamp(current.start.x + (event.clientX - current.x) * ratio, 0, STAGE_SIZE),
+      y: clamp(current.start.y + (event.clientY - current.y) * ratio, 0, STAGE_SIZE),
+    });
+  }
+  const hasContent = Boolean(image || draft.text.trim());
+  const currentTransform = selected === "image" ? draft.image : draft.lettering;
+  const currentResult = result?.draft === draft && result?.image === image && !error;
+  const canExport = ready && hasContent && currentResult && !loadingImage;
+
+  const activeTool = panel === "effects" ? "effects" : selected;
+  function selectTool(tool: ElementId | "effects") {
+    if (tool === "effects") setPanel("effects");
+    else { setSelected(tool); setPanel("object"); }
+  }
+
+  return <main className={styles.workshop}>
+    <div className={styles.heading}>
+      <h1>絵文字工房</h1>
+      <button className={styles.download} type="button" disabled={!canExport} onClick={() => {
+        if (!result || !canExport) return;
+        const link = document.createElement("a");
+        link.href = result.url; link.download = "hukidamari-emoji.png"; link.click();
+      }}><Download size={16} /> PNGを保存</button>
+    </div>
+    <div className={styles.workspace}>
+      <section className={styles.previewPanel} aria-label="絵文字のプレビュー">
+        <div className={styles.previewTools}>
+          <button type="button" className={styles.quietButton} onClick={autoLayout} title="画像と文字の位置・大きさを自動で整える"><RotateCcw size={14} /> 自動配置</button>
+          <div className={styles.backgrounds} aria-label="確認用の背景色">
+            {[["checker", "透明"], ["light", "明るい背景"], ["dark", "暗い背景"]].map(([value, label]) =>
+              <button key={value} type="button" className={styles[value]} title={label} aria-label={label} onClick={() => setBackground(value)} aria-pressed={background === value} />)}
+          </div>
+        </div>
+        <div className={styles.stageWrap}>
+          <div ref={stage} className={`${styles.stage} ${styles[background]}`}>
+            <div ref={host} className={styles.canvasHost} />
+            {ready && !hasContent && <p className={styles.empty}>文字か画像を追加</p>}
+            {!ready && !error && <p className={styles.empty}>読み込み中…</p>}
+            {result && (["image", "text"] as const).map((id) => {
+              const b = result.bounds[id];
+              if (!b || (id === "image" && !image) || (id === "text" && !draft.text.trim())) return null;
+              return <button key={id} type="button" aria-label={`${id === "image" ? "画像" : "文字"}を移動`} aria-pressed={selected === id && panel === "object"}
+                title="ドラッグで移動・矢印キーで微調整"
+                className={`${styles.selection} ${selected === id && panel === "object" ? styles.selected : ""}`}
+                style={{ left: `${b.x / STAGE_SIZE * 100}%`, top: `${b.y / STAGE_SIZE * 100}%`, width: `${b.width / STAGE_SIZE * 100}%`, height: `${b.height / STAGE_SIZE * 100}%` }}
+                onPointerDown={(event) => beginDrag(event, id)} onPointerMove={moveDrag}
+                onPointerUp={() => { drag.current = null; }} onPointerCancel={() => { drag.current = null; }}
+                onFocus={() => selectTool(id)} onKeyDown={(event) => {
+                  const delta = event.shiftKey ? 10 : 2;
+                  const offset: Record<string, [number, number]> = { ArrowLeft: [-delta, 0], ArrowRight: [delta, 0], ArrowUp: [0, -delta], ArrowDown: [0, delta] };
+                  if (!offset[event.key]) return;
+                  event.preventDefault();
+                  const position = id === "image" ? draft.image : draft.lettering;
+                  transform(id, { x: clamp(position.x + offset[event.key][0], 0, STAGE_SIZE), y: clamp(position.y + offset[event.key][1], 0, STAGE_SIZE) });
+                }} />;
+            })}
+          </div>
+        </div>
+        <div className={styles.previewFooter}>
+          <div className={`${styles.actualSize} ${styles[background]}`} aria-label="小さい表示で確認">
+            <span className={styles.smallEmoji} role="img" aria-label="32pxの絵文字" style={{ backgroundImage: result ? `url("${result.url}")` : undefined }} />
+            <span className={styles.tinyEmoji} role="img" aria-label="16pxの絵文字" style={{ backgroundImage: result ? `url("${result.url}")` : undefined }} />
+          </div>
+          <span className={styles.muted}>128 × 128 · 透明PNG</span>
+        </div>
+        {error && <p className={styles.error} role="alert">{error}</p>}
+      </section>
+      <section className={styles.inspector} aria-label="絵文字の編集">
+        <nav className={styles.tools} aria-label="編集する対象">
+          <button type="button" aria-pressed={activeTool === "text"} onClick={() => selectTool("text")}><Type size={17} />文字</button>
+          <button type="button" aria-pressed={activeTool === "image"} onClick={() => selectTool("image")}><ImagePlus size={17} />画像</button>
+          <button type="button" aria-pressed={activeTool === "effects"} onClick={() => selectTool("effects")}><Sparkles size={17} />効果</button>
+        </nav>
+        <div className={styles.settings}>
+          {activeTool === "text" && <>
+            <label className={styles.field}><span>文字 <small>{draft.text.length}/40</small></span>
+              <textarea rows={2} maxLength={40} value={draft.text} placeholder="文字を入力" onChange={(event) => {
+                const text = event.target.value;
+                setDraft((previous) => ({ ...previous, text, ...(Boolean(previous.text.trim()) !== Boolean(text.trim()) ? layout(Boolean(image), Boolean(text.trim())) : {}) }));
+              }} />
+            </label>
+            <FontPicker value={draft.font} text={draft.text} onChange={(font) => update("font", font)} />
+            <ColorPalette label="文字色" value={draft.color} onChange={(color) => update("color", color)} />
+            <div className={styles.appearance}>
+              <ColorPalette label="縁の色" value={draft.outlineColor} onChange={(color) => update("outlineColor", color)} />
+              <Slider label="縁の太さ" value={draft.outline} min={0} max={24} onChange={(value) => update("outline", value)} />
+              <Slider label="影" value={draft.shadow} min={0} max={24} onChange={(value) => update("shadow", value)} />
+            </div>
+          </>}
+          {activeTool === "image" && <>
+            <label className={styles.upload}>
+              <ImagePlus size={24} /><span>{loadingImage ? "読み込み中…" : image ? "画像を変更" : "画像を選ぶ"}</span><small>PNG・JPEG・WebP / 5 MBまで</small>
+              <input type="file" accept="image/png,image/jpeg,image/webp" aria-label="画像を読み込む" onChange={(event) => { void loadImage(event.target.files?.[0]); event.target.value = ""; }} />
+            </label>
+            {image && <div className={styles.file}><span>{image.name}</span><button type="button" aria-label="画像を取り除く" title="画像を取り除く" onClick={removeImage}><X size={16} /></button></div>}
+            {imageError && <p className={styles.error} role="alert">{imageError}</p>}
+          </>}
+          {activeTool !== "effects" && (activeTool === "text" || image) && <div className={styles.transform}>
+            <Slider label="大きさ" value={Math.round(currentTransform.scale * 100)} min={20} max={200} unit="%" onChange={(value) => transform(selected, { scale: value / 100 })} />
+            <details className={styles.details}>
+              <summary>位置を数値で調整</summary>
+              <div className={styles.positionFields}>
+                <label>横<input type="number" min={0} max={128} value={Math.round(currentTransform.x / 4)} onChange={(event) => transform(selected, { x: clamp(Number(event.target.value) * 4, 0, STAGE_SIZE) })} /></label>
+                <label>縦<input type="number" min={0} max={128} value={Math.round(currentTransform.y / 4)} onChange={(event) => transform(selected, { y: clamp(Number(event.target.value) * 4, 0, STAGE_SIZE) })} /></label>
+              </div>
+            </details>
+          </div>}
+          {activeTool === "effects" && <>
+            <fieldset className={styles.effects}><legend>全体の効果</legend>
+              <button type="button" aria-pressed={draft.effect === "none"} onClick={() => update("effect", "none")}>なし</button>
+              <button type="button" aria-pressed={draft.effect === "wave"} onClick={() => update("effect", "wave")}>うねうね</button>
+            </fieldset>
+            {draft.effect === "wave" && <>
+              <Slider label="強さ" value={draft.strength} min={0} max={24} onChange={(value) => update("strength", value)} />
+              <Slider label="波の位置" value={draft.phase} min={0} max={6.28} step={0.05} onChange={(value) => update("phase", value)} />
+            </>}
+          </>}
+        </div>
+      </section>
+    </div>
+  </main>;
+}

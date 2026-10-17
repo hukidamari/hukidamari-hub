@@ -14,7 +14,7 @@ export const generateStaticParams = (): { page: string }[] => {
 export default async function BlogPosts({
   params,
 }: {
-  params: { page: string };
+  params: Promise<{ page: string }>;
 }) {
   const page = parseInt((await params).page);
   const totalPages = Math.ceil(getAllSlugs().length / POST_PER_PAGE);

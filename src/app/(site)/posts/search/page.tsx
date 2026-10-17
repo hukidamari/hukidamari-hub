@@ -2,7 +2,7 @@
 
 import { POST_PER_PAGE } from "@/config/pagination";
 import { useEffect, useState, Suspense } from "react";
-import { PostMeta, PostSlug } from "../../../../types/post";
+import { PostMeta, PostSlug } from "../../../../../types/post";
 import { useSearchParams } from "next/navigation";
 import Paginate from "@/components/paginate";
 import styles from "./search.module.css";
