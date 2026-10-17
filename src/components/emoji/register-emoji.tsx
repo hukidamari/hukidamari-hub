@@ -68,7 +68,11 @@ export default function RegisterEmoji({ identity, image, canExport }: { identity
   }
   return <>
     <button type="button" className={styles.open} disabled={!canExport && !submission} onClick={open}><Send size={15} />サーバーに追加</button>
-    <dialog ref={dialog} className={styles.dialog} aria-labelledby="register-title" onCancel={event => { if (busy) event.preventDefault(); }}>
+    <dialog ref={dialog} className={styles.dialog} aria-labelledby="register-title" onClose={() => {
+      if (outcome?.status === "succeeded") {
+        setSubmission(null); setOutcome(null); setError(""); setName(""); setPreview(null);
+      }
+    }} onCancel={event => { if (busy) event.preventDefault(); }}>
       <header><h2 id="register-title">サーバーに絵文字を追加</h2><button type="button" aria-label="登録画面を閉じる" disabled={busy} onClick={() => dialog.current?.close()}><X size={20} /></button></header>
       <p className={styles.destination}>登録先：{identity?.guild?.name || "ログイン後に表示されます"}</p>
       {preview && <div className={styles.preview} role="img" aria-label="登録する絵文字" style={{ backgroundImage: `url("${preview}")` }} />}
@@ -84,7 +88,7 @@ export default function RegisterEmoji({ identity, image, canExport }: { identity
         {error && <p role="alert" className={styles.error}>{error}</p>}
         {unresolved && !busy && <p className={styles.notice}>結果の確認では画像を再送しません。同じ名前の登録をやり直す前に、Discord側の一覧も確認してください。</p>}
         <div className={styles.actions}>
-          {unresolved ? <button type="button" disabled={busy || !allowed} onClick={() => void check()}>{busy ? "処理中…" : "登録結果を確認"}</button> : submission ? <button type="button" onClick={() => { setSubmission(null); setOutcome(null); setError(""); setPreview(image || null); }}>{outcome?.status === "succeeded" ? "別の絵文字を登録" : "内容を見直す"}</button> : <button type="submit" disabled={busy || !allowed || !emojiName(name) || !preview}>{busy ? "登録中…" : "この内容で追加"}</button>}
+          {unresolved ? <button type="button" disabled={busy || !allowed} onClick={() => void check()}>{busy ? "処理中…" : "登録結果を確認"}</button> : outcome?.status === "succeeded" ? null : submission ? <button type="button" onClick={() => { setSubmission(null); setOutcome(null); setError(""); setPreview(image || null); }}>内容を見直す</button> : <button type="submit" disabled={busy || !allowed || !emojiName(name) || !preview}>{busy ? "登録中…" : "この内容で追加"}</button>}
           <button type="button" disabled={busy} onClick={() => dialog.current?.close()}>閉じる</button>
         </div>
       </form>
