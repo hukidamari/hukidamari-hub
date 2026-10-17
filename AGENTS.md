@@ -13,6 +13,7 @@
 - Next.js App Router / React / TypeScript / CSS Modules。パッケージ管理はpnpm、ロックファイルも更新する。
 - 通常ページは `src/app/(site)`、絵文字エディタは `src/app/(editor)`。Route Groupの変更では既存URLを維持する。
 - 絵文字の状態・描画は `src/lib/emoji`、操作UIは `src/components/emoji`。PixiJSはブラウザでのみ動的ロードする。
+- Discord認証・共有素材は `src/lib/server` と `/api/auth`・`/api/emoji/assets`。秘密情報・Supabaseのservice role keyはサーバー限定にし、すべての共有APIでサーバー所属、変更時は本人・管理者権限とOriginを検証する。開発時も認証バイパスや公開Storageを設けない。接続手順は `docs/emoji-sharing-setup.md`。
 - エディタは画面内に収め、設定欄やフォント一覧を内部スクロールにする。通常ページのフッターは維持する。
 - 外部素材・フォントを追加するときはWeb配信・再配布・変換の条件を確認し、ライセンスと著作権表示、取得元を残す。
 - フォントは必要に応じて読み込み、全テキストレイヤーの読み込み完了後に描画・PNG出力する。
@@ -25,12 +26,15 @@
   ```sh
   pnpm exec tsc --noEmit
   pnpm lint
+  pnpm test:emoji
   SITE_URL=http://localhost:3000 pnpm build
   ```
 
 - ビルドの `postbuild` にも必要なため、`SITE_URL` はコマンドへ明示する。
 - 開発サーバーとビルドは同じ `.next` を同時更新しないようにする。停止した開発サーバーは検証後に再開する。
 - UI変更は利用可能なブラウザで実際に操作し、対象画面幅、キーボード操作、スクロールを確認する。絵文字工房は現在PCの操作性を先に整える段階なので、モバイルの再設計・検証は後工程とする。PNG出力に関わる変更は保存画像も確認する。
+- 認証・画像共有の変更では `test:emoji` で権限・入力検証・非公開DB・容量制限を確認する。実接続が未設定の場合は実ログインやSupabaseへの保存を確認済みとしない。
+- 認証ルートの変更は本番ビルド後に `pnpm test:emoji:http` でHTTP経由の拒否条件・OAuth state/PKCEも検証する。テストは一時ポートのNext.jsプロセスだけにダミーの接続設定を渡し、実際の `.env.local` は変更しない。
 - 検証用のスクリーンショットや一時ファイル、秘密情報、ローカル環境設定はコミットしない。生成物は意図した変更だけを含める。
 - 検証できなかった事項や既存警告は報告し、未確認のものを確認済みとしない。
 

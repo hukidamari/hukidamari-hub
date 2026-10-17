@@ -1,16 +1,18 @@
 "use client";
 
 import { ArrowUp, ArrowDown, Copy, Trash2, Type, ImagePlus, Sparkles } from "lucide-react";
+import type { ReactNode } from "react";
 import { layerName, type EmojiLayer, type TextLayer, type TextAppearance } from "@/lib/emoji/model";
 import { ColorPalette, Slider } from "./editor-controls";
 import FontPicker from "./font-picker";
 import styles from "./emoji-editor.module.css";
 
 export const MAX_LAYERS = 16;
-export default function LayerPanel({ layers, selected, loading, imageError, onSelect, onAddText, onLoadImage, onMove, onDuplicate, onRemove }: {
+export default function LayerPanel({ layers, selected, loading, imageError, onSelect, onAddText, onLoadImage, onMove, onDuplicate, onRemove, children }: {
   layers: EmojiLayer[]; selected: EmojiLayer | undefined; loading: boolean; imageError: string;
   onSelect: (id: string) => void; onAddText: () => void; onLoadImage: (file?: File, replaceId?: string) => void;
   onMove: (id: string, delta: number) => void; onDuplicate: (id: string) => void; onRemove: (id: string) => void;
+  children?: ReactNode;
 }) {
   const atLimit = layers.length >= MAX_LAYERS;
   const index = layers.findIndex(layer => layer.id === selected?.id);
@@ -22,6 +24,7 @@ export default function LayerPanel({ layers, selected, loading, imageError, onSe
         <input type="file" accept="image/png,image/jpeg,image/webp" aria-label="画像を追加" disabled={loading || atLimit} onChange={event => { onLoadImage(event.target.files?.[0]); event.target.value = ""; }} />
       </label>
     </div>
+    {children}
     {atLimit && <p className={styles.layerHint}>追加できるレイヤーは16個までです</p>}
     <ul className={styles.layerList} aria-label="レイヤー（上が手前）">
       {[...layers].reverse().map((layer, index) => <li key={layer.id}>

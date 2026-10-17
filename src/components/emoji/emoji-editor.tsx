@@ -9,11 +9,14 @@ import { loadFont } from "@/lib/emoji/fonts";
 import LayerPanel, { MAX_LAYERS, LayerAppearance } from "./layer-panel";
 import { Slider } from "./editor-controls";
 import EffectEditor from "./effect-editor";
+import SharedAssets from "./shared-assets";
+import { useWorkshopIdentity, WorkshopAccount } from "./workshop-account";
 import { snapAxis } from "@/lib/emoji/snapping";
 import styles from "./emoji-editor.module.css";
 
 type Renderer = Awaited<ReturnType<typeof createEmojiRenderer>>;
 export default function EmojiEditor() {
+  const { identity, error: identityError, refresh: refreshIdentity, setError: setIdentityError } = useWorkshopIdentity();
   const [draft, setDraft] = useState(initialDraft);
   const [selected, setSelected] = useState<ElementId | null>("initial-text");
   const [panel, setPanel] = useState<"layers" | "effects">("layers");
@@ -226,6 +229,7 @@ export default function EmojiEditor() {
   return <main className={styles.workshop}>
     <div className={styles.heading}>
       <div className={styles.headingIdentity}><Link href="/" className={styles.backLink}><ArrowLeft size={15} />ふきだまり</Link><h1>絵文字工房</h1></div>
+      <WorkshopAccount identity={identity} error={identityError} onRefresh={refreshIdentity} onError={setIdentityError} />
       <button className={styles.download} type="button" disabled={!canExport} onClick={() => {
         if (!result || !canExport) return;
         const link = document.createElement("a");
@@ -237,7 +241,9 @@ export default function EmojiEditor() {
         <div className={styles.sidebarHeading}><h2>レイヤー</h2><small>上が手前</small></div>
         <LayerPanel layers={draft.layers} selected={panel === "layers" ? selectedLayer : undefined} loading={loadingImage} imageError={imageError}
           onSelect={selectLayer} onAddText={addText} onLoadImage={(file, id) => { void loadImage(file, id); }}
-          onMove={moveLayer} onDuplicate={duplicateLayer} onRemove={removeLayer} />
+          onMove={moveLayer} onDuplicate={duplicateLayer} onRemove={removeLayer}>
+          <SharedAssets identity={identity} identityError={identityError} canAdd={!loadingImage && draft.layers.length < MAX_LAYERS} onUse={file => loadImage(file)} onRefreshIdentity={refreshIdentity} />
+        </LayerPanel>
       </aside>
       <section className={styles.previewPanel} aria-label="絵文字のプレビュー">
         <div className={styles.previewTools}>
