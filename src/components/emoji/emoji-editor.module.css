@@ -102,3 +102,7 @@
 
 .appearance > label:only-of-type { grid-column: 1 / -1; }
 .shadowSettings { margin-top: 16px; }
+
+.guideX, .guideY { position: absolute; pointer-events: none; z-index: 3; background: #f29df1; box-shadow: 0 0 0 1px #25272d55; }
+.guideX { top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
+.guideY { left: 0; right: 0; height: 1px; transform: translateY(-50%); }

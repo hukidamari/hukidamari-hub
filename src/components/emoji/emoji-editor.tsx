@@ -3,9 +3,10 @@
 import { Fragment, useEffect, useRef, useState, type PointerEvent } from "react";
 import { ArrowUp, ArrowDown, Download, ImagePlus, RotateCcw, Sparkles, Type, X } from "lucide-react";
 import { clamp, initialDraft, layout, MAX_IMAGE_BYTES, STAGE_SIZE, EFFECTS, type EffectId, type ElementId, type EmojiDraft, type Transform } from "@/lib/emoji/model";
-import type { createEmojiRenderer, RenderResult } from "@/lib/emoji/renderer";
+import type { createEmojiRenderer, RenderResult, ElementBounds } from "@/lib/emoji/renderer";
 import { loadFont } from "@/lib/emoji/fonts";
 import FontPicker from "./font-picker";
+import { snapAxis } from "@/lib/emoji/snapping";
 import styles from "./emoji-editor.module.css";
 
 type Renderer = Awaited<ReturnType<typeof createEmojiRenderer>>;
@@ -40,13 +41,14 @@ export default function EmojiEditor() {
   const [error, setError] = useState("");
   const [imageError, setImageError] = useState("");
   const [loadingImage, setLoadingImage] = useState(false);
+  const [guides, setGuides] = useState<{ x: number | null; y: number | null }>({ x: null, y: null });
   const [background, setBackground] = useState("checker");
   const host = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const renderer = useRef<Renderer | null>(null);
   const uploadVersion = useRef(0);
   const mounted = useRef(true);
-  const drag = useRef<{ id: ElementId; pointer: number; x: number; y: number; start: Transform; resize?: { width: number; height: number; sx: number; sy: number } } | null>(null);
+  const drag = useRef<{ id: ElementId; pointer: number; x: number; y: number; start: Transform; bounds?: ElementBounds; resize?: { width: number; height: number; sx: number; sy: number } } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -161,7 +163,7 @@ export default function EmojiEditor() {
     setSelected(id);
     setPanel("object");
     event.currentTarget.setPointerCapture(event.pointerId);
-    drag.current = { id, pointer: event.pointerId, x: event.clientX, y: event.clientY, start: { ...(id === "image" ? draft.image : draft.lettering) } };
+    drag.current = { id, pointer: event.pointerId, x: event.clientX, y: event.clientY, start: { ...(id === "image" ? draft.image : draft.lettering) }, bounds: result?.bounds[id] };
   }
   function beginResize(event: PointerEvent<HTMLButtonElement>, id: ElementId, sx: number, sy: number) {
     if (event.button !== 0) return;
@@ -189,11 +191,23 @@ export default function EmojiEditor() {
       });
       return;
     }
-    transform(current.id, {
-      x: clamp(current.start.x + (event.clientX - current.x) * ratio, 0, STAGE_SIZE),
-      y: clamp(current.start.y + (event.clientY - current.y) * ratio, 0, STAGE_SIZE),
-    });
+    const x = clamp(current.start.x + (event.clientX - current.x) * ratio, 0, STAGE_SIZE);
+    const y = clamp(current.start.y + (event.clientY - current.y) * ratio, 0, STAGE_SIZE);
+    if (event.shiftKey || !current.bounds) {
+      setGuides({ x: null, y: null });
+      transform(current.id, { x, y });
+      return;
+    }
+    const snapX = snapAxis(x, current.start.x, current.bounds.x, current.bounds.width, 6 * ratio);
+    const snapY = snapAxis(y, current.start.y, current.bounds.y, current.bounds.height, 6 * ratio);
+    setGuides({ x: snapX.guide, y: snapY.guide });
+    transform(current.id, { x: snapX.position, y: snapY.position });
   }
+  function finishDrag() {
+    drag.current = null;
+    setGuides({ x: null, y: null });
+  }
+
   const hasContent = Boolean(image || draft.text.trim());
   const currentTransform = selected === "image" ? draft.image : draft.lettering;
   const currentResult = result?.draft === draft && result?.image === image && !error;
@@ -232,11 +246,11 @@ export default function EmojiEditor() {
               const b = result.bounds[id];
               if (!b || (id === "image" && !image) || (id === "text" && !draft.text.trim())) return null;
               return <Fragment key={id}><button type="button" aria-label={`${id === "image" ? "画像" : "文字"}を移動`} aria-pressed={selected === id && panel === "object"}
-                title="ドラッグで移動・矢印キーで微調整"
+                title="ドラッグで移動・端や中央にスナップ／Shiftで解除・矢印キーで微調整"
                 className={`${styles.selection} ${selected === id && panel === "object" ? styles.selected : ""}`}
                 style={{ left: `${b.x / STAGE_SIZE * 100}%`, top: `${b.y / STAGE_SIZE * 100}%`, width: `${b.width / STAGE_SIZE * 100}%`, height: `${b.height / STAGE_SIZE * 100}%` }}
                 onPointerDown={(event) => beginDrag(event, id)} onPointerMove={moveDrag}
-                onPointerUp={() => { drag.current = null; }} onPointerCancel={() => { drag.current = null; }}
+                onPointerUp={finishDrag} onPointerCancel={finishDrag} onLostPointerCapture={finishDrag}
                 onFocus={() => selectTool(id)} onKeyDown={(event) => {
                   const delta = event.shiftKey ? 10 : 2;
                   const offset: Record<string, [number, number]> = { ArrowLeft: [-delta, 0], ArrowRight: [delta, 0], ArrowUp: [0, -delta], ArrowDown: [0, delta] };
@@ -251,7 +265,7 @@ export default function EmojiEditor() {
                     title="ドラッグで拡大・縮小／矢印キーで微調整"
                     style={{ left: `${(b.x + (sx === 1 ? b.width : 0)) / STAGE_SIZE * 100}%`, top: `${(b.y + (sy === 1 ? b.height : 0)) / STAGE_SIZE * 100}%`, cursor: sx === sy ? "nwse-resize" : "nesw-resize" }}
                     onPointerDown={event => beginResize(event, id, sx, sy)} onPointerMove={moveDrag}
-                    onPointerUp={() => { drag.current = null; }} onPointerCancel={() => { drag.current = null; }} onLostPointerCapture={() => { drag.current = null; }}
+                    onPointerUp={finishDrag} onPointerCancel={finishDrag} onLostPointerCapture={finishDrag}
                     onKeyDown={event => {
                       const direction = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1 }[event.key];
                       if (!direction) return;
@@ -261,6 +275,8 @@ export default function EmojiEditor() {
                     }} />)}
               </Fragment>;
             })}
+            {guides.x !== null && <span aria-hidden="true" data-snap-guide="x" className={styles.guideX} style={{ left: `${guides.x / STAGE_SIZE * 100}%` }} />}
+            {guides.y !== null && <span aria-hidden="true" data-snap-guide="y" className={styles.guideY} style={{ top: `${guides.y / STAGE_SIZE * 100}%` }} />}
           </div>
         </div>
         <div className={styles.previewFooter}>
