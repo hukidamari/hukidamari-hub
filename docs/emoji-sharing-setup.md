@@ -85,3 +85,45 @@ pnpm test:emoji:http
 接続設定後はテストサーバーのメンバー2名と管理者で、ログイン・メンバー外の拒否・素材登録・別メンバーからの利用・本人と管理者のみの変更/削除・ログアウト・再ログインを確認する。本番への公開前にこの実接続確認を完了する。
 
 実装時に型チェック・lint・本番ビルド、12件の単体/DB/保存処理テストとHTTP認証テストを実行した。lintは既存の未使用変数8件の警告のみ。ego-browserではPC画面で未設定時の表示と共有ダイアログ、APIが準備中として拒否することを確認した。Discord・Supabaseの実接続設定は未入力のため、実アカウントでのログイン・共有素材の保存と利用は未確認。
+
+
+## Discordサーバーへの絵文字登録
+
+ヘッダーの「サーバーに追加」から、画像・名前・登録先を確認して登録する。ログイン中のユーザーが対象サーバーの所有者、Administrator、または `CREATE_GUILD_EXPRESSIONS`（絵文字を作成、bit 43）を持つ場合に利用できる。所属だけでは登録不可。`MANAGE_GUILD_EXPRESSIONS` 単独も作成権限として扱わない。送信と結果確認のたびにDiscord OAuthで所属・権限を再取得する。
+
+### 接続設定
+
+1. 開発用DiscordアプリのBotページでTokenを取得し、Git管理外の `.env.local` に `DISCORD_BOT_TOKEN` を設定する。OAuthのClient Secretとは別の値。既存BotのTokenを不用意にリセットしない。
+2. Botを対象のテストサーバーに招待する。OAuth2 URL Generatorで `bot` スコープと `Create Expressions` 権限（`8796093022208`）を選ぶ。Administrator権限、Gateway接続、特権Intent、ebifryとの通信は不要。
+3. 開発用SupabaseのSQL Editorで `supabase/migrations/202610180002_emoji_registrations.sql` を適用する。登録記録と重複送信防止の予約関数が作られる。匿名・authenticatedからの直接操作は禁止。
+4. 開発サーバーを再起動する。`/api/auth/session` の `registrationConfigured` は必要な環境変数の有無を表すだけで、Botの招待・権限・DBの適用成功までは保証しない。
+5. 権限を持つ実アカウントで確認ダイアログから登録し、Discordの絵文字一覧で結果を確認する。実サーバーへのテスト登録はユーザーが確認した画像・名前で行う。
+
+### APIと制限
+
+- `POST /api/emoji/register`: 同一Origin/Host、毎回の所属・作成権限確認。multipartの `requestId`（UUID v4）、`name`、`file` を受け取る。サーバーID・ユーザーIDは認証情報から取得。
+- 名前は半角英数字・アンダースコア2〜32文字。同名（大文字小文字を無視）は登録前に拒否する。
+- 画像は128×128の静止PNG、256 KiB以下。実データの形式・寸法・アニメーションを検証し、サーバー側でPNGに再エンコードしてメタデータを除去する。
+- Bot TokenでDiscordのCreate Guild Emojiへ直接登録する。監査理由に操作ユーザーIDと登録番号を含める。空き枠はDiscordの実際の応答（30008）で判定し、枠数を固定値で推測しない。
+- `GET /api/emoji/register?requestId=...`: 本人の登録結果を再確認する。画像を再送しない。
+- 登録結果は `pending / succeeded / failed / unknown`。結果不明時は自動で再送しない。同じ登録番号は保存済み結果を返し、内容の差し替えは拒否。同じサーバー・名前の処理中/結果不明記録があれば新しい番号でも拒否する。
+- Supabaseのトランザクション内でサーバー単位に予約を直列化する。直近60秒の処理中登録がある間は次の登録を止める。Discordの429やrate-limitヘッダーによる待ち時間をDBへ保存し、次回の登録でも尊重する。
+- アプリ独自の連続操作制限はユーザーごとに10分間で5回。Discordの制限値を表すものではない。
+- ダイアログを閉じても登録状態を保持する。再読み込みに備えて登録番号と名前だけをsessionStorageへ保存する。画像・編集レシピは保存しない。登録記録にも画像やTokenは保存しない。
+
+### 結果不明の復旧
+
+Discordへの送信後にタイムアウト・5xx・DB保存失敗が起きた場合は、登録済みの可能性がある。同じ名前での再送を止め、「登録結果を確認」でDBの結果を読み直す。60秒以上のpendingも画面上は結果不明として扱う。
+
+サーバー管理者はDiscordの絵文字一覧と監査ログの登録番号を確認する。該当絵文字が確認できた場合に限り、管理用SQLで該当する `request_id` の記録を `succeeded` にして `emoji_id` を記録する。未登録だと確認できた場合に限り `failed` にする。根拠なく記録を削除・失敗へ変更すると重複登録のおそれがある。処理中プロセスが終了したことも確認する。
+
+Bot作成APIに冪等キーの保証がないため、通信断でのexactly-once成功は保証しない。不明な操作を自動再実行しないことで重複を抑える。登録記録の自動削除は行わず、復旧確認前の記録を残す。
+
+公式資料: [Create Guild Emoji](https://docs.discord.com/developers/resources/emoji#create-guild-emoji)、[Permissions](https://docs.discord.com/developers/topics/permissions)、[Rate Limits](https://docs.discord.com/developers/topics/rate-limits)。
+
+
+### 今回の検証記録
+
+2026-10-18: 型チェック、lint（既存警告8件のみ）、本番ビルドとpostbuild、18件の単体/DB/保存処理テスト、HTTP認証テスト1件が成功。追加マイグレーションを開発用Supabaseへ適用し、サーバーキーで登録テーブルの読み取り接続を確認。PCの1024×768・1440×900で未ログイン時の確認ダイアログ、画像・名前入力、送信禁止、Escapeとフォーカス復帰、横スクロールなしを確認した。
+
+Bot Tokenは未設定。実Discord登録、ログイン済みの登録成功画面、実際の権限不足/空き枠不足/429は未確認。これらのAPI分岐はテスト用Discord応答で検証した。次はBot設定・招待後にテストサーバーへの実登録を行う。

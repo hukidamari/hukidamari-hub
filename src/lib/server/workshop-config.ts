@@ -28,3 +28,5 @@ export function requireSameOrigin(request: Request) {
     throw new ApiError(403, "invalid_origin", "サイトを開き直してから操作してください。");
   }
 }
+
+export function registrationConfigured() { return Boolean(authConfig() && storageConfigured() && process.env.DISCORD_BOT_TOKEN); }

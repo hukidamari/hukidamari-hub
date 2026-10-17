@@ -5,7 +5,7 @@ import { discordGuild } from "./discord";
 import { ApiError } from "./http";
 import { requireAuthConfig } from "./workshop-config";
 
-export type Member = { user: { id: string; name: string }; guild: { id: string; name: string; isAdmin: boolean } };
+export type Member = { user: { id: string; name: string }; guild: { id: string; name: string; isAdmin: boolean; canCreateEmoji?: boolean } };
 type LoginSession = Member & { token: string; expiresAt: number; checkedAt: number };
 type OAuthAttempt = { state: string; verifier: string; createdAt: number };
 export async function loginSession() {

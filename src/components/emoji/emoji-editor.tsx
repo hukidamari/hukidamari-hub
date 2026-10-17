@@ -10,6 +10,7 @@ import LayerPanel, { MAX_LAYERS, LayerAppearance } from "./layer-panel";
 import { Slider } from "./editor-controls";
 import EffectEditor from "./effect-editor";
 import SharedAssets from "./shared-assets";
+import RegisterEmoji from "./register-emoji";
 import { useWorkshopIdentity, WorkshopAccount } from "./workshop-account";
 import { snapAxis } from "@/lib/emoji/snapping";
 import styles from "./emoji-editor.module.css";
@@ -230,6 +231,7 @@ export default function EmojiEditor() {
     <div className={styles.heading}>
       <div className={styles.headingIdentity}><Link href="/" className={styles.backLink}><ArrowLeft size={15} />ふきだまり</Link><h1>絵文字工房</h1></div>
       <WorkshopAccount identity={identity} error={identityError} onRefresh={refreshIdentity} onError={setIdentityError} />
+      <RegisterEmoji key={`${identity?.user?.id || "guest"}:${identity?.guild?.id || ""}`} identity={identity} image={result?.url} canExport={!!canExport} />
       <button className={styles.download} type="button" disabled={!canExport} onClick={() => {
         if (!result || !canExport) return;
         const link = document.createElement("a");

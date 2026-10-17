@@ -1,5 +1,5 @@
 import "server-only";
-import { guildAdministrator } from "@/lib/emoji/shared";
+import { guildAdministrator, guildEmojiCreator } from "@/lib/emoji/shared";
 import { ApiError } from "./http";
 import { requireAuthConfig } from "./workshop-config";
 
@@ -15,7 +15,7 @@ export async function discordGuild(token: string) {
   const guilds: { id: string; name: string; owner?: boolean; permissions?: string }[] = await (await discordRequest("/users/@me/guilds?limit=200", token)).json();
   const guild = guilds.find(item => item.id === guildId);
   if (!guild) throw new ApiError(403, "not_member", "このサーバーのメンバーだけが共有素材を利用できます。");
-  return { id: guild.id, name: guild.name, isAdmin: guildAdministrator(guild) };
+  return { id: guild.id, name: guild.name, isAdmin: guildAdministrator(guild), canCreateEmoji: guildEmojiCreator(guild) };
 }
 export async function exchangeDiscordCode(code: string, verifier: string) {
   const config = requireAuthConfig();

@@ -18,7 +18,7 @@ test("HTTP authentication boundary, OAuth state/PKCE, expiry and CSRF", { timeou
   const guildId = "223456789012345678";
   const server = spawn(process.execPath, ["node_modules/next/dist/bin/next", "start", "--hostname", "127.0.0.1", "--port", String(port)], {
     cwd: process.cwd(), stdio: ["ignore", "pipe", "pipe"],
-    env: { ...process.env, NODE_ENV: "production", SITE_URL: origin, DISCORD_CLIENT_ID: "123456789012345678", DISCORD_CLIENT_SECRET: "test-only-unused-secret", DISCORD_GUILD_ID: guildId, SESSION_PASSWORD: password, SUPABASE_URL: "", SUPABASE_SERVICE_ROLE_KEY: "" },
+    env: { ...process.env, NODE_ENV: "production", SITE_URL: origin, DISCORD_CLIENT_ID: "123456789012345678", DISCORD_CLIENT_SECRET: "test-only-unused-secret", DISCORD_GUILD_ID: guildId, SESSION_PASSWORD: password, SUPABASE_URL: "", SUPABASE_SERVICE_ROLE_KEY: "", DISCORD_BOT_TOKEN: "" },
   });
   let logs = "";
   server.stdout.on("data", chunk => { logs += String(chunk); }); server.stderr.on("data", chunk => { logs += String(chunk); });
@@ -32,11 +32,11 @@ test("HTTP authentication boundary, OAuth state/PKCE, expiry and CSRF", { timeou
     }
     assert.ok(ready, logs);
     const request = (path: string, options?: RequestInit) => fetch(`${origin}${path}`, { ...options, redirect: "manual" });
-    assert.deepEqual(await (await request("/api/auth/session")).json(), { configured: true, storageConfigured: false, user: null, guild: null });
+    assert.deepEqual(await (await request("/api/auth/session")).json(), { configured: true, storageConfigured: false, registrationConfigured: false, user: null, guild: null });
     for (const path of ["/api/emoji/assets", "/api/emoji/assets/00000000-0000-4000-8000-000000000001/image"]) {
       const result = await request(path); assert.equal(result.status, 401); assert.match(result.headers.get("cache-control")!, /no-store/);
     }
-    for (const [method, path] of [["POST", "/api/emoji/assets"], ["PATCH", "/api/emoji/assets/00000000-0000-4000-8000-000000000001"], ["DELETE", "/api/emoji/assets/00000000-0000-4000-8000-000000000001"], ["POST", "/api/auth/logout"]]) {
+    for (const [method, path] of [["POST", "/api/emoji/register"], ["POST", "/api/emoji/assets"], ["PATCH", "/api/emoji/assets/00000000-0000-4000-8000-000000000001"], ["DELETE", "/api/emoji/assets/00000000-0000-4000-8000-000000000001"], ["POST", "/api/auth/logout"]]) {
       assert.equal((await request(path, { method, headers: { Origin: "https://untrusted.example" } })).status, 403);
       if (path !== "/api/auth/logout") assert.equal((await request(path, { method, headers: { Origin: origin } })).status, 401);
     }

@@ -17,8 +17,9 @@ export type SharedAsset = {
 export type WorkshopIdentity = {
   configured: boolean;
   storageConfigured: boolean;
+  registrationConfigured: boolean;
   user: { id: string; name: string } | null;
-  guild: { id: string; name: string; isAdmin: boolean } | null;
+  guild: { id: string; name: string; isAdmin: boolean; canCreateEmoji?: boolean } | null;
 };
 
 export function canManageAsset(ownerId: string, userId: string, isAdmin: boolean) {
@@ -32,4 +33,8 @@ export function assetName(value: unknown) {
 export function guildAdministrator(guild: { owner?: boolean; permissions?: string }) {
   // Discord's Administrator permission, plus the server owner.
   return guild.owner === true || (typeof guild.permissions === "string" && /^\d+$/.test(guild.permissions) && (BigInt(guild.permissions) & BigInt(8)) !== BigInt(0));
+}
+
+export function guildEmojiCreator(guild: { owner?: boolean; permissions?: string }) {
+  return guildAdministrator(guild) || (typeof guild.permissions === "string" && /^\d+$/.test(guild.permissions) && (BigInt(guild.permissions) & (BigInt(1) << BigInt(43))) !== BigInt(0));
 }
