@@ -7,8 +7,9 @@
 .download { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 7px; padding: 10px 16px; background: #5ccad3; color: #163235; font-size: 13px; font-weight: 700; cursor: pointer; }
 .download:hover { background: #7ddae1; }
 .download:disabled { background: #41494c; color: #9ca6aa; cursor: default; }
-.workspace { display: grid; grid-template-columns: 188px minmax(0, 1fr) 310px; flex: 1; min-height: 0; border: 1px solid #44474e; border-radius: 10px; overflow: hidden; background: #292b30; }
-.layerSidebar { width: auto; max-width: 100%; min-height: 0; min-width: 0; display: flex; flex-direction: column; border-right: 1px solid #44474e; padding: 14px 10px 10px; }
+.workspace { display: grid; grid-template-columns: 260px minmax(0, 1fr) 310px; flex: 1; min-height: 0; border: 1px solid #44474e; border-radius: 10px; overflow: hidden; background: #292b30; }
+.assetSidebar { width: auto; max-width: 100%; min-width: 0; min-height: 0; display: flex; flex-direction: column; border-right: 1px solid #44474e; }
+.layerSidebar { flex: 0 0 36%; min-height: 190px; min-width: 0; display: flex; flex-direction: column; border-top: 1px solid #44474e; padding: 12px 10px 10px; box-sizing: border-box; }
 .sidebarHeading { display: flex; justify-content: space-between; align-items: center; margin: 0 4px 14px; gap: 10px; }
 .sidebarHeading h2, .inspectorHeading h2, .effectTools h2 { margin: 0; font-size: 12px; font-weight: 600; }
 .sidebarHeading small { font-size: 10px; color: #939ca9; }

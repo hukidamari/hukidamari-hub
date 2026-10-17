@@ -239,13 +239,16 @@ export default function EmojiEditor() {
       }}><Download size={16} /> PNGを保存</button>
     </div>
     <div className={styles.workspace}>
-      <aside className={styles.layerSidebar} aria-label="レイヤー一覧">
-        <div className={styles.sidebarHeading}><h2>レイヤー</h2><small>上が手前</small></div>
-        <LayerPanel layers={draft.layers} selected={panel === "layers" ? selectedLayer : undefined} loading={loadingImage} imageError={imageError}
-          onSelect={selectLayer} onAddText={addText} onLoadImage={(file, id) => { void loadImage(file, id); }}
-          onMove={moveLayer} onDuplicate={duplicateLayer} onRemove={removeLayer}>
-          <SharedAssets identity={identity} identityError={identityError} canAdd={!loadingImage && draft.layers.length < MAX_LAYERS} onUse={file => loadImage(file)} onRefreshIdentity={refreshIdentity} />
-        </LayerPanel>
+      <aside className={styles.assetSidebar} aria-label="共有素材とレイヤー">
+        <SharedAssets key={`${identity?.user?.id || "guest"}:${identity?.guild?.id || ""}`} identity={identity} identityError={identityError}
+          canAdd={!loadingImage && draft.layers.length < MAX_LAYERS} onUse={file => loadImage(file)} onRefreshIdentity={refreshIdentity}
+          canvasImage={canExport ? result?.url : undefined} canvasName={draft.layers.filter(layer => layer.kind === "text").map(layer => layer.text).join(" ").slice(0, 80)} />
+        <section className={styles.layerSidebar} aria-label="レイヤー一覧">
+          <div className={styles.sidebarHeading}><h2>レイヤー</h2><small>上が手前</small></div>
+          <LayerPanel layers={draft.layers} selected={panel === "layers" ? selectedLayer : undefined} loading={loadingImage} imageError={imageError}
+            onSelect={selectLayer} onAddText={addText} onLoadImage={(file, id) => { void loadImage(file, id); }}
+            onMove={moveLayer} onDuplicate={duplicateLayer} onRemove={removeLayer} />
+        </section>
       </aside>
       <section className={styles.previewPanel} aria-label="絵文字のプレビュー">
         <div className={styles.previewTools}>
